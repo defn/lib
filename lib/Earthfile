@@ -1,6 +1,6 @@
 VERSION 0.6
 
-IMPORT github.com/katt-org/p/lib:master AS lib
+IMPORT github.com/defn/cloud/lib:master AS lib
 
 ARG stack
 ARG target
