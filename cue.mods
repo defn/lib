@@ -1,0 +1,5 @@
+module github.com/defn/template
+
+cue v0.4.0
+
+require github.com/defn/boot v0.0.98
