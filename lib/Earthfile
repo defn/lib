@@ -1,0 +1,52 @@
+VERSION 0.6
+
+IMPORT github.com/katt-org/p/lib:master AS lib
+
+ARG stack
+ARG target
+ARG script=main.py
+
+platform:
+    FROM registry.fly.io/defn:dev-tower
+    RUN echo '{ "language": "python", "app": "poetry run python -m main" }' > cdktf.json
+    COPY pyproject.toml poetry.lock .
+    RUN md5sum pyproject.toml poetry.lock
+    RUN ~/bin/e poetry install
+
+update:
+    FROM lib+platform
+    RUN ~/bin/e poetry update
+    RUN md5sum pyproject.toml poetry.lock
+    SAVE ARTIFACT poetry.lock
+
+synth:
+    FROM lib+platform
+    COPY ${target}/${script} main.py
+    RUN ~/bin/e poetry run python -m main
+    SAVE ARTIFACT cdktf.out
+
+init:
+    FROM lib+platform
+    COPY +synth/cdktf.out/stacks/${stack}/cdk.tf.json .
+    RUN ~/bin/e terraform init
+    SAVE ARTIFACT .terraform.lock.hcl
+
+plan:
+    FROM +init
+    COPY +synth/cdktf.out/stacks/${stack}/cdk.tf.json .
+    RUN find .terraform.d .terraform -ls
+    RUN --no-cache --secret DIGITALOCEAN_TOKEN ~/bin/e terraform plan -out=.plan
+    SAVE ARTIFACT .plan
+
+apply:
+    FROM +init
+    COPY +plan/.plan .
+    COPY --if-exists cdktf.out/stacks/${stack}/terraform.tfstate .
+    RUN --no-cache --secret DIGITALOCEAN_TOKEN ~/bin/e terraform apply .plan
+    SAVE ARTIFACT terraform.tfstate
+
+fit:
+    FROM +apply
+    SAVE ARTIFACT cdk.tf.json +synth/cdktf.out/stacks/${stack}/cdk.tf.json
+    SAVE ARTIFACT .plan +plan/.plan
+    SAVE ARTIFACT terraform.tfstate +apply/terraform.tfstate
