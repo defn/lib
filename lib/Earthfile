@@ -20,6 +20,7 @@ update:
 synth:
     FROM ${target}
     RUN ~/bin/e poetry run python -m main
+    RUN --no-cache find cdktf.out -ls
     SAVE ARTIFACT cdktf.out
 
 init:
@@ -30,9 +31,9 @@ init:
 plan:
     FROM +init --target=${target} --stack=${stack}
     RUN --no-cache --secret DIGITALOCEAN_TOKEN cd cdktf.out/stacks/${stack} && ~/bin/e terraform plan -out=.plan
-    SAVE ARTIFACT cdktf.out/stacks/${stack}
+    SAVE ARTIFACT cdktf.out AS LOCAL cdktf.out
 
 apply:
     FROM +plan --target=${target} --stack=${stack}
     RUN --no-cache --secret DIGITALOCEAN_TOKEN cd cdktf.out/stacks/${stack} && ~/bin/e terraform apply .plan
-    SAVE ARTIFACT cdktf.out/stacks/${stack}
+    SAVE ARTIFACT cdktf.out AS LOCAL cdktf.out
