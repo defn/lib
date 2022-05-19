@@ -20,23 +20,21 @@ update:
 synth:
     FROM ${target}
     RUN ~/bin/e poetry run python -m main
-    RUN --no-cache find cdktf.out -ls
     SAVE ARTIFACT cdktf.out
 
 init:
     FROM +synth --target=${target}
-    RUN ~/bin/e terraform init
+    RUN cd cdktf.out/stacks/${stack} && ~/bin/e terraform init
     SAVE ARTIFACT .terraform.lock.hcl
 
 plan:
     FROM +init --target=${target} --stack=${stack}
-    RUN find .terraform.d .terraform -ls
-    RUN --no-cache --secret DIGITALOCEAN_TOKEN ~/bin/e terraform plan -out=.plan
+    RUN --no-cache --secret DIGITALOCEAN_TOKEN cd cdktf.out/stacks/${stack} && ~/bin/e terraform plan -out=.plan
     SAVE ARTIFACT .plan
 
 apply:
     FROM +plan --target=${target} --stack=${stack}
-    RUN --no-cache --secret DIGITALOCEAN_TOKEN ~/bin/e terraform apply .plan
+    RUN --no-cache --secret DIGITALOCEAN_TOKEN cd cdktf.out/stacks/${stack} && ~/bin/e terraform apply .plan
     SAVE ARTIFACT terraform.tfstate
     SAVE ARTIFACT cdk.tf.json
     SAVE ARTIFACT .plan
