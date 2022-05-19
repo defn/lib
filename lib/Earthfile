@@ -6,7 +6,6 @@ FROM registry.fly.io/defn:dev-tower
 
 ARG stack
 ARG target
-ARG script=main.py
 
 platform:
     RUN echo '{ "language": "python", "app": "poetry run python -m main" }' > cdktf.json
@@ -20,28 +19,23 @@ update:
 
 synth:
     FROM ${target}
-    COPY ${script} main.py
     RUN ~/bin/e poetry run python -m main
     RUN --no-cache find cdktf.out -ls
     SAVE ARTIFACT cdktf.out
 
 init:
     FROM +synth --target=${target}
-    COPY cdktf.out/stacks/${stack}/cdk.tf.json .
     RUN ~/bin/e terraform init
     SAVE ARTIFACT .terraform.lock.hcl
 
 plan:
     FROM +init --target=${target} --stack=${stack}
-    COPY cdktf.out/stacks/${stack}/cdk.tf.json .
     RUN find .terraform.d .terraform -ls
     RUN --no-cache --secret DIGITALOCEAN_TOKEN ~/bin/e terraform plan -out=.plan
     SAVE ARTIFACT .plan
 
 apply:
     FROM +plan --target=${target} --stack=${stack}
-    COPY .plan .
-    COPY --if-exists cdktf.out/stacks/${stack}/terraform.tfstate .
     RUN --no-cache --secret DIGITALOCEAN_TOKEN ~/bin/e terraform apply .plan
     SAVE ARTIFACT terraform.tfstate
     SAVE ARTIFACT cdk.tf.json
