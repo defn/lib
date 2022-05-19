@@ -26,7 +26,7 @@ init:
     FROM +synth --target=${target}
     RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache sudo chown -v ubuntu:ubuntu /home/ubuntu/.terraform.d/plugin-cache
     RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache \
-        cd cdktf.out/stacks/${stack} && ~/bin/e terraform init && time ~/bin/make-files .terraform/providers 
+        cd cdktf.out/stacks/${stack} && ~/bin/e terraform init && ~/bin/make-files .terraform/providers 
     RUN --no-cache find cdktf.out/stacks/${stack}  -ls
     SAVE ARTIFACT cdktf.out/stacks/${stack}
 
