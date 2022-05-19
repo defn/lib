@@ -25,8 +25,7 @@ synth:
 init:
     FROM +synth --target=${target}
     RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache \
-        cd cdktf.out/stacks/${stack} && ~/bin/e terraform init \
-        && cd .terraform/providers && for f in $$(find -type l); do cp --remove-destination $$(readlink $$f) $$f;done;
+        cd cdktf.out/stacks/${stack} && ~/bin/e terraform init && ~/bin/make-files .terraform/providers 
     SAVE ARTIFACT cdktf.out/stacks/${stack}
 
 plan:
