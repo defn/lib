@@ -20,7 +20,6 @@ update:
 synth:
     FROM ${target}
     RUN ~/bin/e poetry run python -m main
-    RUN --no-cache find cdktf.out -ls
     SAVE ARTIFACT cdktf.out
 
 init:
