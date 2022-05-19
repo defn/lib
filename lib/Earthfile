@@ -25,16 +25,14 @@ synth:
 init:
     FROM +synth --target=${target}
     RUN cd cdktf.out/stacks/${stack} && ~/bin/e terraform init
-    SAVE ARTIFACT .terraform.lock.hcl
+    SAVE ARTIFACT cdktf.out/stacks/${stack}
 
 plan:
     FROM +init --target=${target} --stack=${stack}
     RUN --no-cache --secret DIGITALOCEAN_TOKEN cd cdktf.out/stacks/${stack} && ~/bin/e terraform plan -out=.plan
-    SAVE ARTIFACT .plan
+    SAVE ARTIFACT cdktf.out/stacks/${stack}
 
 apply:
     FROM +plan --target=${target} --stack=${stack}
     RUN --no-cache --secret DIGITALOCEAN_TOKEN cd cdktf.out/stacks/${stack} && ~/bin/e terraform apply .plan
-    SAVE ARTIFACT terraform.tfstate
-    SAVE ARTIFACT cdk.tf.json
-    SAVE ARTIFACT .plan
+    SAVE ARTIFACT cdktf.out/stacks/${stack}
