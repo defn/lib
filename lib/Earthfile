@@ -25,24 +25,23 @@ synth:
     SAVE ARTIFACT cdktf.out
 
 init:
-    FROM +synth
-    COPY +synth/cdktf.out/stacks/${stack}/cdk.tf.json .
+    FROM +synth --target=${target}
+    COPY cdktf.out/stacks/${stack}/cdk.tf.json .
     RUN ~/bin/e terraform init
     SAVE ARTIFACT .terraform.lock.hcl
 
 plan:
-    FROM +init
-    COPY +synth/cdktf.out/stacks/${stack}/cdk.tf.json .
+    FROM +init --target=${target}
+    COPY cdktf.out/stacks/${stack}/cdk.tf.json .
     RUN find .terraform.d .terraform -ls
     RUN --no-cache --secret DIGITALOCEAN_TOKEN ~/bin/e terraform plan -out=.plan
     SAVE ARTIFACT .plan
 
 apply:
-    FROM +init
-    COPY +plan/.plan .
+    FROM +plan --target=${target}
+    COPY .plan .
     COPY --if-exists cdktf.out/stacks/${stack}/terraform.tfstate .
     RUN --no-cache --secret DIGITALOCEAN_TOKEN ~/bin/e terraform apply .plan
     SAVE ARTIFACT terraform.tfstate
-    SAVE ARTIFACT cdk.tf.json +synth/cdktf.out/stacks/${stack}/cdk.tf.json
-    SAVE ARTIFACT .plan +plan/.plan
-
+    SAVE ARTIFACT cdk.tf.json
+    SAVE ARTIFACT .plan
