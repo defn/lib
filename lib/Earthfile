@@ -13,16 +13,13 @@ platform:
     COPY pyproject.toml poetry.lock .
     RUN ~/bin/e poetry install
 
-warm:
-    FROM ${target}
-
 update:
-    FROM +warm
+    FROM ${target}
     RUN ~/bin/e poetry update
     SAVE ARTIFACT poetry.lock
 
 synth:
-    FROM +warm
+    FROM ${target}
     COPY ${script} main.py
     RUN ~/bin/e poetry run python -m main
     SAVE ARTIFACT cdktf.out
