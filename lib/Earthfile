@@ -8,28 +8,27 @@ ARG stack
 ARG target
 ARG script=main.py
 
-
-warm:
+platform:
+    RUN echo '{ "language": "python", "app": "poetry run python -m main" }' > cdktf.json
     COPY pyproject.toml poetry.lock .
     RUN ~/bin/e poetry install
-    RUN echo '{ "language": "python", "app": "poetry run python -m main" }' > cdktf.json
+
+warm:
+    FROM ${target}
 
 update:
     FROM +warm
     RUN ~/bin/e poetry update
     SAVE ARTIFACT poetry.lock
 
-platform:
-    FROM +warm
-
 synth:
-    FROM lib+platform
-    COPY ${target}/${script} main.py
+    FROM +warm
+    COPY ${script} main.py
     RUN ~/bin/e poetry run python -m main
     SAVE ARTIFACT cdktf.out
 
 init:
-    FROM lib+platform
+    FROM +synth
     COPY +synth/cdktf.out/stacks/${stack}/cdk.tf.json .
     RUN ~/bin/e terraform init
     SAVE ARTIFACT .terraform.lock.hcl
