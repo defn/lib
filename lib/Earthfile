@@ -1,23 +1,26 @@
-VERSION 0.6
+VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-arg --use-copy-link 0.6
 
 IMPORT github.com/defn/cloud/lib:master AS lib
+
+FROM registry.fly.io/defn:dev-tower
 
 ARG stack
 ARG target
 ARG script=main.py
 
-platform:
-    FROM registry.fly.io/defn:dev-tower
-    RUN echo '{ "language": "python", "app": "poetry run python -m main" }' > cdktf.json
+
+warm:
     COPY pyproject.toml poetry.lock .
-    RUN md5sum pyproject.toml poetry.lock
     RUN ~/bin/e poetry install
+    RUN echo '{ "language": "python", "app": "poetry run python -m main" }' > cdktf.json
 
 update:
-    FROM lib+platform
+    FROM +warm
     RUN ~/bin/e poetry update
-    RUN md5sum pyproject.toml poetry.lock
     SAVE ARTIFACT poetry.lock
+
+platform:
+    FROM +warm
 
 synth:
     FROM lib+platform
@@ -44,9 +47,6 @@ apply:
     COPY --if-exists cdktf.out/stacks/${stack}/terraform.tfstate .
     RUN --no-cache --secret DIGITALOCEAN_TOKEN ~/bin/e terraform apply .plan
     SAVE ARTIFACT terraform.tfstate
-
-fit:
-    FROM +apply
     SAVE ARTIFACT cdk.tf.json +synth/cdktf.out/stacks/${stack}/cdk.tf.json
     SAVE ARTIFACT .plan +plan/.plan
-    SAVE ARTIFACT terraform.tfstate +apply/terraform.tfstate
+
