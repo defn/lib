@@ -22,6 +22,7 @@ synth:
     FROM ${target}
     COPY ${script} main.py
     RUN ~/bin/e poetry run python -m main
+    RUN --no-cacge find cdktf.out -ls
     SAVE ARTIFACT cdktf.out
 
 init:
