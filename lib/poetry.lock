@@ -55,7 +55,7 @@ publication = ">=0.0.3"
 
 [[package]]
 name = "cdktf-cdktf-provider-aws"
-version = "7.0.58"
+version = "7.0.59"
 description = "Prebuilt aws Provider for Terraform CDK (cdktf)"
 category = "main"
 optional = false
@@ -215,8 +215,8 @@ cdktf = [
     {file = "cdktf-0.10.4.tar.gz", hash = "sha256:044eeececeac0cc4682275e54b6056a514480e0769e4dddad885102b3114f4eb"},
 ]
 cdktf-cdktf-provider-aws = [
-    {file = "cdktf-cdktf-provider-aws-7.0.58.tar.gz", hash = "sha256:9db50b3f1417901aec9a1b6f37eb7bde3760d0286b7c9274ec2b9c9f6db2e760"},
-    {file = "cdktf_cdktf_provider_aws-7.0.58-py3-none-any.whl", hash = "sha256:aa84d4278b83c2b5c7cc7c68141d792475ea4513d767cf23b610a113aac3f971"},
+    {file = "cdktf-cdktf-provider-aws-7.0.59.tar.gz", hash = "sha256:be80eb9e093edb6d89b4ab160307cdfa4104176f7940daa3b46ebb9654753291"},
+    {file = "cdktf_cdktf_provider_aws-7.0.59-py3-none-any.whl", hash = "sha256:f11a4700032d3b24503464632213f7b01ea6404d1f3648e845e4a34db4f2280a"},
 ]
 cdktf-cdktf-provider-digitalocean = [
     {file = "cdktf-cdktf-provider-digitalocean-0.0.40.tar.gz", hash = "sha256:3ae689bd21abfec23a05318b5c4b2b3b98daa3bf508b1eaeef6278cda0494f00"},
