@@ -1,6 +1,6 @@
 [[package]]
 name = "amanibhavam"
-version = "0.1.15"
+version = "0.1.16"
 description = ""
 category = "main"
 optional = false
@@ -222,12 +222,12 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "b8cb6561a0a8ecb46b6471c0d9d922bd99ef2f3f3645d34f89c0b48e4064f1ee"
+content-hash = "5e916fc27b149fe67b5393fca4d7e94ec21a329729d3a9b038b796ef11877a93"
 
 [metadata.files]
 amanibhavam = [
-    {file = "amanibhavam-0.1.15-py3-none-any.whl", hash = "sha256:2368f24b77acc67a96745665e67efb2baa2fae6a99e82602c41c896bd220ed41"},
-    {file = "amanibhavam-0.1.15.tar.gz", hash = "sha256:826e40895deff218e1c0bcfa18aca9a7e0646de1670afc4d2f80777fe8bc33fe"},
+    {file = "amanibhavam-0.1.16-py3-none-any.whl", hash = "sha256:324648174aac57209db139e9efcced82542e0c1c27619a2a75dbb055b37cb5e2"},
+    {file = "amanibhavam-0.1.16.tar.gz", hash = "sha256:46c4f727e5680bbff15053557d638cad925798467e1df34edf9e8d04fa651b53"},
 ]
 attrs = [
     {file = "attrs-21.4.0-py2.py3-none-any.whl", hash = "sha256:2d27e3784d7a565d36ab851fe94887c5eccd6a463168875832a1be79c82828b4"},
