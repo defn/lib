@@ -8,14 +8,14 @@ ARG stack
 ARG target=github.com/katt-org/p+warm
 
 platform:
-    RUN echo '{ "language": "python", "app": "poetry run python -m main" }' > cdktf.json
+    RUN echo '{ "language": "python", "app": "poetry run python -m foo.main" }' > cdktf.json
     COPY pyproject.toml poetry.lock .
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pip sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pip
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pip ~/bin/e poetry install
 
 synth:
     FROM ${target}
-    RUN ~/bin/e poetry run python -m main
+    RUN ~/bin/e poetry run python -m foo.main
     SAVE ARTIFACT cdktf.out
 
 init:
