@@ -12,11 +12,6 @@ platform:
     COPY pyproject.toml poetry.lock .
     RUN ~/bin/e poetry install
 
-update:
-    FROM ${target}
-    RUN ~/bin/e poetry update
-    SAVE ARTIFACT poetry.lock
-
 synth:
     FROM ${target}
     RUN ~/bin/e poetry run python -m main
