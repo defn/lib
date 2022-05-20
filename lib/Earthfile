@@ -21,7 +21,7 @@ synth:
 init:
     FROM +synth --target=${target}
     RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit sudo chown -v ubuntu:ubuntu /home/ubuntu/.terraform.d/plugin-cache-buildkit
-    RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit cd cdktf.out/stacks/${stack} && ~/bin/e env TF_PLUGIN_CACHE_DIR=/home/ubuntu/.terraform.d/plugin-cache-buildkit terraform init
+    RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io cd cdktf.out/stacks/${stack} && ~/bin/e env TF_PLUGIN_CACHE_DIR=/home/ubuntu/.terraform.d/plugin-cache-buildkit terraform init
     RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit mkdir -p /home/ubuntu/.terraform.d/plugin-cache && rsync -ia /home/ubuntu/.terraform.d/plugin-cache-buildkit/. /home/ubuntu/.terraform.d/plugin-cache/.
     RUN --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io cd cdktf.out/stacks/${stack} && ~/bin/e terraform init
     SAVE ARTIFACT cdktf.out
