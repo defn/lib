@@ -5,7 +5,7 @@ IMPORT github.com/defn/cloud/lib:master AS lib
 FROM registry.fly.io/defn:dev-tower
 
 ARG stack
-ARG target
+ARG target=github.com/katt-org/p+warm
 
 platform:
     RUN echo '{ "language": "python", "app": "poetry run python -m main" }' > cdktf.json
