@@ -6,7 +6,7 @@ version = "0.0.1"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-amanibhavam = "^0.1.16"
+amanibhavam = "^0.1.17"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
