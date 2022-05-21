@@ -15,7 +15,7 @@ platform:
 
 synth:
     FROM ${target}
-    RUN ~/bin/e poetry run python -m main synth
+    RUN ~/bin/e cdktf synth
     SAVE ARTIFACT cdktf.out
 
 init:
