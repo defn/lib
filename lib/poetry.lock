@@ -1,6 +1,6 @@
 [[package]]
 name = "amanibhavam"
-version = "0.1.18"
+version = "0.1.19"
 description = ""
 category = "main"
 optional = false
@@ -11,7 +11,6 @@ cdktf = ">=0.10.4,<0.11.0"
 cdktf-cdktf-provider-aws = ">=7.0.55,<8.0.0"
 cdktf-cdktf-provider-digitalocean = ">=0.0.40,<0.0.41"
 cdktf-cdktf-provider-github = ">=0.7.62,<0.8.0"
-cdktf-cdktf-provider-kubernetes = ">=0.7.63,<0.8.0"
 cdktf-cdktf-provider-null = ">=0.6.55,<0.7.0"
 cdktf-cdktf-provider-tfe = ">=0.2.58,<0.3.0"
 defn-cdktf-provider-boundary = ">=0.4.0,<0.5.0"
@@ -60,7 +59,7 @@ publication = ">=0.0.3"
 
 [[package]]
 name = "cdktf-cdktf-provider-aws"
-version = "7.0.61"
+version = "7.0.62"
 description = "Prebuilt aws Provider for Terraform CDK (cdktf)"
 category = "main"
 optional = false
@@ -90,20 +89,6 @@ publication = ">=0.0.3"
 name = "cdktf-cdktf-provider-github"
 version = "0.7.65"
 description = "Prebuilt github Provider for Terraform CDK (cdktf)"
-category = "main"
-optional = false
-python-versions = "~=3.7"
-
-[package.dependencies]
-cdktf = ">=0.10.3,<0.11.0"
-constructs = ">=10.0.0,<11.0.0"
-jsii = ">=1.59.0,<2.0.0"
-publication = ">=0.0.3"
-
-[[package]]
-name = "cdktf-cdktf-provider-kubernetes"
-version = "0.7.63"
-description = "Prebuilt kubernetes Provider for Terraform CDK (cdktf)"
 category = "main"
 optional = false
 python-versions = "~=3.7"
@@ -261,12 +246,12 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "362952176ce96f697a4c4d728e083a6778921d79b1580ebac39787b2b976569f"
+content-hash = "01c64e127267c8dfe0e764812b0b7f5985e0b7325ff0bd852845318605506e36"
 
 [metadata.files]
 amanibhavam = [
-    {file = "amanibhavam-0.1.18-py3-none-any.whl", hash = "sha256:302c68a2a54da9bf7de6780e1934222a3a6e2a64d59ebedb00a87e82a5940f7b"},
-    {file = "amanibhavam-0.1.18.tar.gz", hash = "sha256:b8d8de312c573f87a017c5d377abf3f08e92ee63f169dea1544b860e2fd4ca83"},
+    {file = "amanibhavam-0.1.19-py3-none-any.whl", hash = "sha256:5069ddfdab49e34a03fdad579d263c2af665c7b379f2248e882658b1c3460d89"},
+    {file = "amanibhavam-0.1.19.tar.gz", hash = "sha256:45c05f69c69eaf282977c3b27d7eca13bd7d826d20fa369aabe9d8c384017799"},
 ]
 attrs = [
     {file = "attrs-21.4.0-py2.py3-none-any.whl", hash = "sha256:2d27e3784d7a565d36ab851fe94887c5eccd6a463168875832a1be79c82828b4"},
@@ -281,8 +266,8 @@ cdktf = [
     {file = "cdktf-0.10.4.tar.gz", hash = "sha256:044eeececeac0cc4682275e54b6056a514480e0769e4dddad885102b3114f4eb"},
 ]
 cdktf-cdktf-provider-aws = [
-    {file = "cdktf-cdktf-provider-aws-7.0.61.tar.gz", hash = "sha256:3b47127f171e7f11ec953eb7e9e1438452efd86607be1ea457d3edf5e9d26ba7"},
-    {file = "cdktf_cdktf_provider_aws-7.0.61-py3-none-any.whl", hash = "sha256:95ff03c17fcff657d69b8be6b6508877ab9805cc2a93c8eff189c0e43466fb02"},
+    {file = "cdktf-cdktf-provider-aws-7.0.62.tar.gz", hash = "sha256:d00638bf820219ecfe09a93b802657a9bd94e510994bed58be8cab644862d741"},
+    {file = "cdktf_cdktf_provider_aws-7.0.62-py3-none-any.whl", hash = "sha256:b9318c076959f5990752405b691837b2632abc9b7d2b24565da08dd2908d8ac2"},
 ]
 cdktf-cdktf-provider-digitalocean = [
     {file = "cdktf-cdktf-provider-digitalocean-0.0.40.tar.gz", hash = "sha256:3ae689bd21abfec23a05318b5c4b2b3b98daa3bf508b1eaeef6278cda0494f00"},
@@ -291,10 +276,6 @@ cdktf-cdktf-provider-digitalocean = [
 cdktf-cdktf-provider-github = [
     {file = "cdktf-cdktf-provider-github-0.7.65.tar.gz", hash = "sha256:53a9e1c7912ad322a46abf24b8b79203242b3fcdb81de93622f5bc15d87b4297"},
     {file = "cdktf_cdktf_provider_github-0.7.65-py3-none-any.whl", hash = "sha256:6d44c4e8b506ef5a54c5d96e9ee206d8c9b53deafcf0e394d753d935460b19c8"},
-]
-cdktf-cdktf-provider-kubernetes = [
-    {file = "cdktf-cdktf-provider-kubernetes-0.7.63.tar.gz", hash = "sha256:db2cc21c5a3d8d337f4d7ce88b9875df9e5e8ec8390cc33230dfdd3c8318982c"},
-    {file = "cdktf_cdktf_provider_kubernetes-0.7.63-py3-none-any.whl", hash = "sha256:8755db995d6fb01524cebb14266e02161642af8837e802be06fed2116a160f35"},
 ]
 cdktf-cdktf-provider-null = [
     {file = "cdktf-cdktf-provider-null-0.6.61.tar.gz", hash = "sha256:20bea8234510d1f84c5155c460c843e932f732bff3ce093177884d3b2a96bbed"},
