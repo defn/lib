@@ -5,8 +5,10 @@ backend_packages = [
   'pants.backend.python.lint.isort',
 ]
 
+pantsd = false
+
 [stats]
-log = true
+log = false
 
 [anonymous-telemetry]
 enabled = false
