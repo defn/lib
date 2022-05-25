@@ -1,19 +1,12 @@
 from cdktf import Fn, TerraformStack
-from cdktf_cdktf_provider_aws import (
-    AwsProvider,
-    DataAwsIdentitystoreGroup,
-    DataAwsIdentitystoreGroupFilter,
-)
-from cdktf_cdktf_provider_aws.organizations import (
-    OrganizationsAccount,
-    OrganizationsOrganization,
-)
-from cdktf_cdktf_provider_aws.ssoadmin import (
-    DataAwsSsoadminInstances,
-    SsoadminAccountAssignment,
-    SsoadminManagedPolicyAttachment,
-    SsoadminPermissionSet,
-)
+from cdktf_cdktf_provider_aws import (AwsProvider, DataAwsIdentitystoreGroup,
+                                      DataAwsIdentitystoreGroupFilter)
+from cdktf_cdktf_provider_aws.organizations import (OrganizationsAccount,
+                                                    OrganizationsOrganization)
+from cdktf_cdktf_provider_aws.ssoadmin import (DataAwsSsoadminInstances,
+                                               SsoadminAccountAssignment,
+                                               SsoadminManagedPolicyAttachment,
+                                               SsoadminPermissionSet)
 from constructs import Construct
 
 """ Creates Organizations, Accounts, and Administrator permission set """
