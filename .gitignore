@@ -2,3 +2,4 @@ cue.mod/pkg
 dist
 __pycache__
 .test
+*jsii.tgz

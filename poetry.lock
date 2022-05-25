@@ -109,7 +109,7 @@ publication = ">=0.0.3"
 
 [[package]]
 name = "constructs"
-version = "10.1.16"
+version = "10.1.17"
 description = "A programming model for software-defined state"
 category = "main"
 optional = false
@@ -262,8 +262,8 @@ cdktf-cdktf-provider-tfe = [
     {file = "cdktf_cdktf_provider_tfe-0.2.64-py3-none-any.whl", hash = "sha256:07bb41bdb784968b2d3c25ab0c5cd3b1c5253de736ac6444b3ccfa3add45f8c4"},
 ]
 constructs = [
-    {file = "constructs-10.1.16-py3-none-any.whl", hash = "sha256:4df8129baa45efb80e9c4d84aa4b5b37034ec62725a8ca63b327118821590b04"},
-    {file = "constructs-10.1.16.tar.gz", hash = "sha256:02ecbf4a2269fad8b3eeb719347fed4cc3fd8afed26f03dd5d0a017dddf348a5"},
+    {file = "constructs-10.1.17-py3-none-any.whl", hash = "sha256:6de2a1203678d08abf0e8870c0aca68e61393e68e3f0800cf612dc4ec76be8c9"},
+    {file = "constructs-10.1.17.tar.gz", hash = "sha256:9f7dd5869e6dcf40d6f3a7083e016094e94455795d3b131bc2407f0c38903fa2"},
 ]
 defn-cdktf-provider-boundary = [
     {file = "defn-cdktf-provider-boundary-0.4.0.tar.gz", hash = "sha256:b772b6d6cd01ef2dbef9d90df54bd1a592c549c359a54c582bc0195621718375"},

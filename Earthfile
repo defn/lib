@@ -12,10 +12,19 @@ build:
     FROM +warm
     COPY src src
     RUN ~/bin/e poetry build
-    SAVE ARTIFACT dist AS LOCAL dist
+    SAVE ARTIFACT dist/* AS LOCAL dist/
 
 publish:
     FROM +warm
     COPY dist dist
     RUN --push --secret POETRY_PYPI_TOKEN_PYPI ~/bin/e poetry publish
 
+get:
+    FROM +warm
+    COPY cdktf.json .
+    RUN ~/bin/e cdktf get
+    RUN --no-cache find .gen -ls
+    SAVE ARTIFACT .gen/boundary/* AS LOCAL src/defn_cdktf_provider_boundary/
+    SAVE ARTIFACT .gen/vault/* AS LOCAL src/defn_cdktf_provider_vault/
+    SAVE ARTIFACT .gen/cloudflare/* AS LOCAL src/defn_cdktf_provider_cloudflare/
+    SAVE ARTIFACT .gen/buildkite/* AS LOCAL src/defn_cdktf_provider_buildkite/

@@ -1,0 +1,10 @@
+{
+  "language": "python",
+  "app": "poetry run python -m main",
+  "terraformProviders": [
+    "hashicorp/boundary@~> 1.0.7",
+    "hashicorp/vault@~> 3.6.0",
+    "cloudflare/cloudflare@~> 3.15.0",
+    "buildkite/buildkite@~> 0.9.0"
+  ]
+}
