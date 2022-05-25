@@ -1,4 +1,5 @@
-import foo.init
+from foo.init import once
+
 
 """ init must run before cdktf """
 
@@ -8,6 +9,8 @@ from cdktf import App
 from foo.demo import DemoStack
 from foo.textual import GridTest
 
+
+once()
 cli = typer.Typer()
 
 
@@ -15,7 +18,7 @@ cli = typer.Typer()
 def synth(name: str = "demo"):
     app = App()
 
-    stack = DemoStack(app, name)
+    DemoStack(app, name)
 
     app.synth()
 

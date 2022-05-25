@@ -4,7 +4,6 @@ backend_packages = [
   'pants.backend.python.lint.black',
   'pants.backend.python.lint.isort',
   'pants.backend.python.lint.flake8',
-  'pants.backend.python.typecheck.mypy'
 ]
 
 pantsd = false
@@ -27,8 +26,8 @@ enable_resolves = true
 lockfile_generator = 'pex'
 interpreter_constraints = ["CPython>=3.8,<4"]
 
+[isort]
+config = [".isort.cfg"]
+
 [flake8]
 config = ".flake8"
-
-[mypy]
-config = ".mypy.ini"
