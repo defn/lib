@@ -1,0 +1,14 @@
+[GLOBAL]
+backend_packages = [
+  'pants.backend.python',
+  'pants.backend.python.lint.black',
+  'pants.backend.python.lint.isort',
+]
+
+[anonymous-telemetry]
+enabled = false
+
+[python]
+enable_resolves = true
+lockfile_generator = 'pex'
+interpreter_constraints = ["CPython>=3.8,<4"]

@@ -22,7 +22,7 @@ get:
     COPY cdktf.json .
     RUN ~/bin/e cdktf get
     RUN --no-cache find .gen -ls
-    SAVE ARTIFACT .gen/boundary/* AS LOCAL src/defn_cdktf_provider_boundary/
-    SAVE ARTIFACT .gen/vault/* AS LOCAL src/defn_cdktf_provider_vault/
-    SAVE ARTIFACT .gen/cloudflare/* AS LOCAL src/defn_cdktf_provider_cloudflare/
-    SAVE ARTIFACT .gen/buildkite/* AS LOCAL src/defn_cdktf_provider_buildkite/
+    SAVE ARTIFACT .gen/boundary/* AS LOCAL provider/defn_cdktf_provider_boundary/
+    SAVE ARTIFACT .gen/vault/* AS LOCAL provider/defn_cdktf_provider_vault/
+    SAVE ARTIFACT .gen/cloudflare/* AS LOCAL provider/defn_cdktf_provider_cloudflare/
+    SAVE ARTIFACT .gen/buildkite/* AS LOCAL provider/defn_cdktf_provider_buildkite/

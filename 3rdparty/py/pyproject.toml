@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "foo"
+description = ""
+authors = []
+version = "0.0.1"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+typer = "^0.4.1"
+textual = "^0.1.18"
+cdktf = "^0.10.4"
+cdktf-cdktf-provider-null = "^0.6.55"
+cdktf-cdktf-provider-aws = "^7.0.55"
+cdktf-cdktf-provider-digitalocean = "^0.0.40"
+cdktf-cdktf-provider-tfe = "^0.2.58"
+cdktf-cdktf-provider-github = "^0.7.62"
+
+[tool.poetry.dev-dependencies]
+black = {version = "^22.3.0", allow-prereleases = true}
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
