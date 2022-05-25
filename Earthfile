@@ -5,8 +5,6 @@ IMPORT github.com/defn/cloud/lib:master AS lib
 FROM lib+platform
 
 warm:
-    COPY pyproject.toml poetry.lock .
-    RUN ~/bin/e poetry install
 
 build:
     FROM +warm
