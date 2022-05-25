@@ -1,4 +1,0 @@
-steps:
-  - command: "env DOCKER_HOST=localhost:2375 earthly +image"
-    artifact_paths:
-      - "hello"
