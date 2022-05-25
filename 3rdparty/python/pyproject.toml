@@ -15,11 +15,6 @@ cdktf-cdktf-provider-digitalocean = "^0.0.40"
 cdktf-cdktf-provider-tfe = "^0.2.58"
 cdktf-cdktf-provider-github = "^0.7.62"
 
-[tool.poetry.dev-dependencies]
-black = {version = "^22.3.0", allow-prereleases = true}
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.isort]
-profile = "black"
