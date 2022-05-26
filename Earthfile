@@ -13,6 +13,7 @@ warm:
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants list ::
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants fmt lint check ::
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package ::
+    RUN ~/bin/e dist/src.defn/main.pex synth
 
 build:
     FROM +warm
