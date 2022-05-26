@@ -7,6 +7,7 @@ backend_packages = [
 ]
 
 pantsd = false
+pants_version = '2.11.0'
 
 [source]
 root_patterns = [
