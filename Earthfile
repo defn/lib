@@ -5,7 +5,7 @@ IMPORT github.com/defn/cloud/lib:master AS lib
 FROM lib+platform
 
 warm:
-    RUN echo '{ "language": "python", "app": "dist/src.defn/main.pex synth" }' > cdktf.json
+    RUN --no-cache echo '{ "language": "python", "app": "dist/src.defn/main.pex synth" }' > cdktf.json
     COPY --dir provider src 3rdparty .
     COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
