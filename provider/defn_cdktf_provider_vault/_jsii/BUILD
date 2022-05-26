@@ -5,7 +5,7 @@ python_sources(
     dependencies=[":jsii"],
 )
 
-file(
+resource(
     name="jsii",
     source="hashicorp_vault@0.0.0.jsii.tgz",
 )

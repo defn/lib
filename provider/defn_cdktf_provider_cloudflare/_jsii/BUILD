@@ -5,7 +5,7 @@ python_sources(
     dependencies=[":jsii"],
 )
 
-file(
+resource(
     name="jsii",
     source="cloudflare_cloudflare@0.0.0.jsii.tgz",
 )

@@ -1,0 +1,50 @@
+python_distribution(
+    name="defn_cdktf_provider_boundary",
+    dependencies=[
+        "provider/defn_cdktf_provider_boundary",
+        "provider/defn_cdktf_provider_boundary/_jsii",
+    ],
+    provides=python_artifact(
+        name="defn_cdktf_provider_boundary",
+        version="0.4.0",
+    ),
+    sdist=False,
+)
+
+python_distribution(
+    name="defn_cdktf_provider_vault",
+    dependencies=[
+        "provider/defn_cdktf_provider_vault",
+        "provider/defn_cdktf_provider_vault/_jsii",
+    ],
+    provides=python_artifact(
+        name="defn_cdktf_provider_vault",
+        version="0.4.0",
+    ),
+    sdist=False,
+)
+python_distribution(
+    name="defn_cdktf_provider_buildkite",
+    dependencies=[
+        "provider/defn_cdktf_provider_buildkite",
+        "provider/defn_cdktf_provider_buildkite/_jsii",
+    ],
+    provides=python_artifact(
+        name="defn_cdktf_provider_buildkite",
+        version="0.4.0",
+    ),
+    sdist=False,
+)
+
+python_distribution(
+    name="defn_cdktf_provider_cloudflare",
+    dependencies=[
+        "provider/defn_cdktf_provider_cloudflare",
+        "provider/defn_cdktf_provider_cloudflare/_jsii",
+    ],
+    provides=python_artifact(
+        name="defn_cdktf_provider_cloudflare",
+        version="0.4.0",
+    ),
+    sdist=False,
+)
