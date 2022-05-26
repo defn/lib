@@ -15,6 +15,8 @@ warm:
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants fmt lint check ::
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package ::
     RUN ~/bin/e dist/src.defn/main.pex synth
+    SAVE ARTIFACT dist/* AS LOCAL dist/
+    SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
 
 build:
     FROM +warm
