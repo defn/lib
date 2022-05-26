@@ -9,7 +9,6 @@ ARG target=github.com/katt-org/p+warm
 
 platform:
     RUN echo '{ "language": "python", "app": "pants run main synth" }' > cdktf.json
-    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
 
 synth:
     FROM ${target}

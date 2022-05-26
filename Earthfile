@@ -5,6 +5,11 @@ IMPORT github.com/defn/cloud/lib:master AS lib
 FROM lib+platform
 
 warm:
+    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
+    COPY --dir provider src 3rdparty .
+    COPY BUILDROOT pants pants.toml .
+    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants list ::
+    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package ::
 
 build:
     FROM +warm
