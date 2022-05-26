@@ -3,10 +3,10 @@ from cdktf_cdktf_provider_github import GithubProvider
 from cdktf_cdktf_provider_null import NullProvider
 from cdktf_cdktf_provider_tfe import TfeProvider
 from constructs import Construct
-from defn_cdktf_provider_boundary.boundary import BoundaryProvider
-from defn_cdktf_provider_buildkite.buildkite import BuildkiteProvider
-from defn_cdktf_provider_cloudflare.cloudflare import CloudflareProvider
-from defn_cdktf_provider_vault.vault import VaultProvider
+from defn_cdktf_provider_boundary import BoundaryProvider
+from defn_cdktf_provider_buildkite import BuildkiteProvider
+from defn_cdktf_provider_cloudflare import CloudflareProvider
+from defn_cdktf_provider_vault import VaultProvider
 
 
 class DemoStack(TerraformStack):

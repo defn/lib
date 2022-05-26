@@ -11,6 +11,7 @@ warm:
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e find ~/.local/bin -ls
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants list ::
+    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants update-build-files --check
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants fmt lint check ::
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package ::
     RUN ~/bin/e dist/src.defn/main.pex synth
