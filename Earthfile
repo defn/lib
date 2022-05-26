@@ -17,6 +17,7 @@ warm:
     RUN ~/bin/e dist/src.defn/main.pex synth
     SAVE ARTIFACT dist/* AS LOCAL dist/
     SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
+    SAVE IMAGE --push registry.fly.io/defn:cloud
 
 build:
     FROM +warm
