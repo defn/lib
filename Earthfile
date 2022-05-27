@@ -4,6 +4,8 @@ IMPORT github.com/defn/cloud/lib:master AS lib
 
 FROM lib+platform
 
+ARG target=github.com/defn/cloud:master+warm
+
 warm:
     RUN --no-cache echo '{ "language": "python", "app": "dist/src.defn/main.pex synth" }' > cdktf.json
     COPY --dir provider src 3rdparty .
@@ -15,17 +17,6 @@ warm:
     SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
     SAVE IMAGE --push registry.fly.io/defn:cloud
 
-build:
-    FROM +warm
-    COPY src src
-    #RUN ~/bin/e poetry build
-    SAVE ARTIFACT dist/* AS LOCAL dist/
-
-publish:
-    FROM +warm
-    COPY dist dist
-    #RUN --push --secret POETRY_PYPI_TOKEN_PYPI ~/bin/e poetry publish
-
 get:
     FROM +warm
     COPY cdktf.json .
@@ -35,3 +26,13 @@ get:
     SAVE ARTIFACT .gen/vault/* AS LOCAL provider/defn_cdktf_provider_vault/
     SAVE ARTIFACT .gen/cloudflare/* AS LOCAL provider/defn_cdktf_provider_cloudflare/
     SAVE ARTIFACT .gen/buildkite/* AS LOCAL provider/defn_cdktf_provider_buildkite/
+
+plan:
+    FROM lib+plan --target=${target} --stack=${stack}
+    SAVE ARTIFACT dist/* AS LOCAL dist/
+    SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
+
+apply:
+    FROM lib+apply --target=${target} --stack=${stack}
+    SAVE ARTIFACT dist/* AS LOCAL dist/
+    SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/

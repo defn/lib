@@ -5,7 +5,7 @@ IMPORT github.com/defn/cloud/lib:master AS lib
 FROM registry.fly.io/defn:dev-tower
 
 ARG stack
-ARG target=github.com/defn/cloud:master+warm
+ARG target
 
 platform:
 
@@ -28,7 +28,7 @@ plan:
         cd cdktf.out/stacks/${stack} && ~/bin/e terraform plan -out=.plan
     SAVE ARTIFACT cdktf.out AS LOCAL cdktf.out
 
-apply:
+
     FROM +plan --target=${target} --stack=${stack}
     RUN --push --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
         cd cdktf.out/stacks/${stack} && ~/bin/e terraform apply .plan
