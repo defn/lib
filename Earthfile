@@ -22,8 +22,9 @@ warm:
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package src/defn:main
 
 plan:
-    FROM lib+plan --target=${target} --stack=${stack}
-    SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
+    FROM lib+init --target=${target} --stack=${stack}
+    DO lib+PLAN --stack=${stack}
+    #SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
 
 show:
     FROM lib+init --target=${target} --stack=${stack}

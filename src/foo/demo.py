@@ -25,6 +25,7 @@ class DemoStack(TerraformStack):
 
         Resource(self, "ex1")
         Resource(self, "ex2")
+        Resource(self, "ex3")
 
         w = NamedRemoteWorkspace(name="bootstrap")
         RemoteBackend(self, organization="defn", workspaces=w)
