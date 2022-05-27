@@ -52,14 +52,14 @@ def account(
     sso_permission_set_admin,
 ):
     """Create the organization account."""
-    if acct == "org":
+    if acct == org:
         # The master organization account can't set
         # iam_user_access_to_billing, role_name
         organizations_account = OrganizationsAccount(
             self,
             acct,
             name=acct,
-            email=f"{prefix}{org}+{acct}@{domain}",
+            email=f"{prefix}{org}@{domain}",
             tags={"ManagedBy": "Terraform"},
         )
     else:
@@ -150,10 +150,10 @@ class AwsOrganizationStack(TerraformStack):
     ):
         super().__init__(scope, namespace)
 
-        AwsProvider(self, "organ", region=region)
+        AwsProvider(self, "aws_sso", region=region)
 
         accounts = [
-            "org",
+            org,
             "net",
             "log",
             "lib",

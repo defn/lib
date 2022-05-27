@@ -18,7 +18,14 @@ cli = typer.Typer()
 def synth(name: str = "spiral"):
     app = App()
 
-    DemoStack(app, namespace="spiral", prefix="aws-", org="spiral", domain="defn.us", region="us-west-2")
+    DemoStack(
+        app,
+        namespace=name,
+        prefix="aws-",
+        org=name,
+        domain="defn.us",
+        region="us-west-2",
+    )
 
     app.synth()
 

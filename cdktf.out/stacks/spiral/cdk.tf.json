@@ -151,19 +151,6 @@
           "ManagedBy": "Terraform"
         }
       },
-      "org": {
-        "//": {
-          "metadata": {
-            "path": "spiral/org",
-            "uniqueId": "org"
-          }
-        },
-        "email": "aws-spiral+org@defn.us",
-        "name": "org",
-        "tags": {
-          "ManagedBy": "Terraform"
-        }
-      },
       "pub": {
         "//": {
           "metadata": {
@@ -190,6 +177,19 @@
         "iam_user_access_to_billing": "ALLOW",
         "name": "sec",
         "role_name": "OrganizationAccountAccessRole",
+        "tags": {
+          "ManagedBy": "Terraform"
+        }
+      },
+      "spiral": {
+        "//": {
+          "metadata": {
+            "path": "spiral/spiral",
+            "uniqueId": "spiral"
+          }
+        },
+        "email": "aws-spiral@defn.us",
+        "name": "spiral",
         "tags": {
           "ManagedBy": "Terraform"
         }
@@ -317,20 +317,6 @@
         "target_id": "${aws_organizations_account.ops.id}",
         "target_type": "AWS_ACCOUNT"
       },
-      "org_admin_sso_account_assignment": {
-        "//": {
-          "metadata": {
-            "path": "spiral/org_admin_sso_account_assignment",
-            "uniqueId": "org_admin_sso_account_assignment"
-          }
-        },
-        "instance_arn": "${aws_ssoadmin_permission_set.admin_sso_permission_set.instance_arn}",
-        "permission_set_arn": "${aws_ssoadmin_permission_set.admin_sso_permission_set.arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
-        "principal_type": "GROUP",
-        "target_id": "${aws_organizations_account.org.id}",
-        "target_type": "AWS_ACCOUNT"
-      },
       "pub_admin_sso_account_assignment": {
         "//": {
           "metadata": {
@@ -357,6 +343,20 @@
         "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.sec.id}",
+        "target_type": "AWS_ACCOUNT"
+      },
+      "spiral_admin_sso_account_assignment": {
+        "//": {
+          "metadata": {
+            "path": "spiral/spiral_admin_sso_account_assignment",
+            "uniqueId": "spiral_admin_sso_account_assignment"
+          }
+        },
+        "instance_arn": "${aws_ssoadmin_permission_set.admin_sso_permission_set.instance_arn}",
+        "permission_set_arn": "${aws_ssoadmin_permission_set.admin_sso_permission_set.arn}",
+        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_type": "GROUP",
+        "target_id": "${aws_organizations_account.spiral.id}",
         "target_type": "AWS_ACCOUNT"
       }
     },

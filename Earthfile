@@ -20,6 +20,14 @@ init:
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package src/defn:main
     DO lib+INIT --stack=${stack}
 
+edit:
+    FROM +init
+    ARG stack
+    RUN --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret AWS_ACCESS_KEY_ID --secret AWS_SECRET_ACCESS_KEY \
+        cd cdktf.out/stacks/${stack} && ~/bin/e terraform import aws_organizations_organization.organization o-something
+    RUN --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret AWS_ACCESS_KEY_ID --secret AWS_SECRET_ACCESS_KEY \
+        cd cdktf.out/stacks/${stack} && ~/bin/e terraform import aws_organizations_account.spiral 11111111111
+
 plan:
     FROM +init
     ARG stack

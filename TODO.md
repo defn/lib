@@ -21,3 +21,5 @@ Configure organization:
     - Enable SSO in the right region, which creates the organization
     - Create the Administrators group
         - https://us-west-2.console.aws.amazon.com/singlesignon/identity/home?region=us-west-2#!/groups
+    - terraform import aws_organizations_organization.organization o-something
+    - terraform import aws_organizations_account.spiral 11111111111111
