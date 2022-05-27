@@ -11,7 +11,7 @@ warm:
     COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package src/defn:main
-    RUN --no-cache echo '{ "language": "python", "app": "dist/src.defn/main.pex synth" }' > cdktf.json
+    RUN echo '{ "language": "python", "app": "dist/src.defn/main.pex synth" }' > cdktf.json
 
 get:
     FROM +warm
