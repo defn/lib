@@ -1,0 +1,4 @@
+get:
+	earthly +get
+	rsync -ia provider.new/. provider/.
+	rm -rf provider.new

@@ -202,6 +202,8 @@ class BuildkiteProvider(
         api_token: builtins.str,
         organization: builtins.str,
         alias: typing.Optional[builtins.str] = None,
+        graphql_url: typing.Optional[builtins.str] = None,
+        rest_url: typing.Optional[builtins.str] = None,
     ) -> None:
         '''Create a new {@link https://www.terraform.io/docs/providers/buildkite buildkite} Resource.
 
@@ -210,9 +212,15 @@ class BuildkiteProvider(
         :param api_token: API token with GraphQL access and ``write_pipelines, read_pipelines`` scopes. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#api_token BuildkiteProvider#api_token}
         :param organization: The Buildkite organization ID. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#organization BuildkiteProvider#organization}
         :param alias: Alias name. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#alias BuildkiteProvider#alias}
+        :param graphql_url: Base URL for the GraphQL API to use. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#graphql_url BuildkiteProvider#graphql_url}
+        :param rest_url: Base URL for the REST API to use. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#rest_url BuildkiteProvider#rest_url}
         '''
         config = BuildkiteProviderConfig(
-            api_token=api_token, organization=organization, alias=alias
+            api_token=api_token,
+            organization=organization,
+            alias=alias,
+            graphql_url=graphql_url,
+            rest_url=rest_url,
         )
 
         jsii.create(self.__class__, self, [scope, id, config])
@@ -220,6 +228,14 @@ class BuildkiteProvider(
     @jsii.member(jsii_name="resetAlias")
     def reset_alias(self) -> None:
         return typing.cast(None, jsii.invoke(self, "resetAlias", []))
+
+    @jsii.member(jsii_name="resetGraphqlUrl")
+    def reset_graphql_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetGraphqlUrl", []))
+
+    @jsii.member(jsii_name="resetRestUrl")
+    def reset_rest_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetRestUrl", []))
 
     @jsii.member(jsii_name="synthesizeAttributes")
     def _synthesize_attributes(self) -> typing.Mapping[builtins.str, typing.Any]:
@@ -241,9 +257,19 @@ class BuildkiteProvider(
         return typing.cast(typing.Optional[builtins.str], jsii.get(self, "apiTokenInput"))
 
     @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="graphqlUrlInput")
+    def graphql_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "graphqlUrlInput"))
+
+    @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="organizationInput")
     def organization_input(self) -> typing.Optional[builtins.str]:
         return typing.cast(typing.Optional[builtins.str], jsii.get(self, "organizationInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="restUrlInput")
+    def rest_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "restUrlInput"))
 
     @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="alias")
@@ -264,6 +290,15 @@ class BuildkiteProvider(
         jsii.set(self, "apiToken", value)
 
     @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="graphqlUrl")
+    def graphql_url(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "graphqlUrl"))
+
+    @graphql_url.setter
+    def graphql_url(self, value: typing.Optional[builtins.str]) -> None:
+        jsii.set(self, "graphqlUrl", value)
+
+    @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="organization")
     def organization(self) -> typing.Optional[builtins.str]:
         return typing.cast(typing.Optional[builtins.str], jsii.get(self, "organization"))
@@ -271,6 +306,15 @@ class BuildkiteProvider(
     @organization.setter
     def organization(self, value: typing.Optional[builtins.str]) -> None:
         jsii.set(self, "organization", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="restUrl")
+    def rest_url(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "restUrl"))
+
+    @rest_url.setter
+    def rest_url(self, value: typing.Optional[builtins.str]) -> None:
+        jsii.set(self, "restUrl", value)
 
 
 @jsii.data_type(
@@ -280,6 +324,8 @@ class BuildkiteProvider(
         "api_token": "apiToken",
         "organization": "organization",
         "alias": "alias",
+        "graphql_url": "graphqlUrl",
+        "rest_url": "restUrl",
     },
 )
 class BuildkiteProviderConfig:
@@ -289,11 +335,15 @@ class BuildkiteProviderConfig:
         api_token: builtins.str,
         organization: builtins.str,
         alias: typing.Optional[builtins.str] = None,
+        graphql_url: typing.Optional[builtins.str] = None,
+        rest_url: typing.Optional[builtins.str] = None,
     ) -> None:
         '''
         :param api_token: API token with GraphQL access and ``write_pipelines, read_pipelines`` scopes. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#api_token BuildkiteProvider#api_token}
         :param organization: The Buildkite organization ID. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#organization BuildkiteProvider#organization}
         :param alias: Alias name. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#alias BuildkiteProvider#alias}
+        :param graphql_url: Base URL for the GraphQL API to use. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#graphql_url BuildkiteProvider#graphql_url}
+        :param rest_url: Base URL for the REST API to use. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#rest_url BuildkiteProvider#rest_url}
         '''
         self._values: typing.Dict[str, typing.Any] = {
             "api_token": api_token,
@@ -301,6 +351,10 @@ class BuildkiteProviderConfig:
         }
         if alias is not None:
             self._values["alias"] = alias
+        if graphql_url is not None:
+            self._values["graphql_url"] = graphql_url
+        if rest_url is not None:
+            self._values["rest_url"] = rest_url
 
     @builtins.property
     def api_token(self) -> builtins.str:
@@ -329,6 +383,24 @@ class BuildkiteProviderConfig:
         Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#alias BuildkiteProvider#alias}
         '''
         result = self._values.get("alias")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    @builtins.property
+    def graphql_url(self) -> typing.Optional[builtins.str]:
+        '''Base URL for the GraphQL API to use.
+
+        Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#graphql_url BuildkiteProvider#graphql_url}
+        '''
+        result = self._values.get("graphql_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    @builtins.property
+    def rest_url(self) -> typing.Optional[builtins.str]:
+        '''Base URL for the REST API to use.
+
+        Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/buildkite#rest_url BuildkiteProvider#rest_url}
+        '''
+        result = self._values.get("rest_url")
         return typing.cast(typing.Optional[builtins.str], result)
 
     def __eq__(self, rhs: typing.Any) -> builtins.bool:
