@@ -9,11 +9,6 @@
     }
   },
   "provider": {
-    "boundary": [
-      {
-        "addr": ""
-      }
-    ],
     "buildkite": [
       {
         "api_token": "",
@@ -35,11 +30,6 @@
     ],
     "tfe": [
       {
-      }
-    ],
-    "vault": [
-      {
-        "address": ""
       }
     ]
   },
@@ -81,10 +71,6 @@
       }
     },
     "required_providers": {
-      "boundary": {
-        "source": "hashicorp/boundary",
-        "version": "1.0.7"
-      },
       "buildkite": {
         "source": "buildkite/buildkite",
         "version": "0.11.0"
@@ -104,10 +90,6 @@
       "tfe": {
         "source": "hashicorp/tfe",
         "version": "0.26.1"
-      },
-      "vault": {
-        "source": "hashicorp/vault",
-        "version": "3.6.0"
       }
     }
   }

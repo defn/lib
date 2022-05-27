@@ -17,14 +17,6 @@ provider "registry.terraform.io/cloudflare/cloudflare" {
   ]
 }
 
-provider "registry.terraform.io/hashicorp/boundary" {
-  version     = "1.0.7"
-  constraints = "1.0.7"
-  hashes = [
-    "h1:w5ALzKyNSvgajqQvSE5iS7gvmo6ggYS3PO+KYTWq2dw=",
-  ]
-}
-
 provider "registry.terraform.io/hashicorp/null" {
   version     = "2.1.2"
   constraints = "2.1.2"
@@ -38,14 +30,6 @@ provider "registry.terraform.io/hashicorp/tfe" {
   constraints = "0.26.1"
   hashes = [
     "h1:EI3qNBH48uHsbsFQsz7b0EjtJsMEbTP+6L2AHKE6/pc=",
-  ]
-}
-
-provider "registry.terraform.io/hashicorp/vault" {
-  version     = "3.6.0"
-  constraints = "3.6.0"
-  hashes = [
-    "h1:bXAbuGy5MStp9n4dqmeueEutLHuuWpYWZBFb6YrPWu8=",
   ]
 }
 

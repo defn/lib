@@ -2,9 +2,6 @@ VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-ar
 
 IMPORT github.com/defn/cloud/lib:master AS lib
 
-ARG target=github.com/defn/cloud:master+warm
-ARG stack
-
 get:
     FROM registry.fly.io/defn:dev-tower
     COPY cdktf.json.get cdktf.json
@@ -14,21 +11,25 @@ get:
     SAVE ARTIFACT .gen/cloudflare/* AS LOCAL provider.new/defn_cdktf_provider_cloudflare/
     SAVE ARTIFACT .gen/buildkite/* AS LOCAL provider.new/defn_cdktf_provider_buildkite/
 
-warm:
+init:
     FROM registry.fly.io/defn:dev-tower
     COPY --dir provider src 3rdparty .
-    COPY BUILDROOT pants pants.toml .isort.cfg .flake8 cdktf.json .
+    COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package src/defn:main
+    DO lib+INIT
 
 plan:
-    FROM lib+init --target=${target} --stack=${stack}
+    FROM init
+    ARG stack
     DO lib+PLAN --stack=${stack}
 
 show:
-    FROM lib+init --target=${target} --stack=${stack}
+    FROM init
+    ARG stack
     DO lib+SHOW --stack=${stack}
 
 apply:
-    FROM lib+init --target=${target} --stack=${stack}
+    FROM init
+    ARG stack
     DO lib+APPLY --stack=${stack}
