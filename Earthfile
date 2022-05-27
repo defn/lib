@@ -8,7 +8,7 @@ ARG stack
 warm:
     FROM registry.fly.io/defn:dev-tower
     COPY --dir provider src 3rdparty .
-    COPY BUILDROOT pants pants.toml .
+    COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package src/defn:main
     RUN --no-cache echo '{ "language": "python", "app": "dist/src.defn/main.pex synth" }' > cdktf.json
