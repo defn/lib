@@ -1,10 +1,8 @@
 VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-arg --use-copy-link 0.6
 
-ARG stack
-ARG target
-
 INIT:
     COMMAND
+    ARG stack
     COPY cdktf.json .
     RUN ~/bin/e cdktf synth
     RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit sudo chown -v ubuntu:ubuntu /home/ubuntu/.terraform.d/plugin-cache-buildkit
@@ -14,12 +12,14 @@ INIT:
 
 PLAN:
     COMMAND
+    ARG stack
     RUN --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
         cd cdktf.out/stacks/${stack} && ~/bin/e terraform plan -out=.plan
     SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
 
 SHOW:
     COMMAND
+    ARG stack
     COPY cdktf.out/stacks/${stack}/.plan cdktf.out/stacks/${stack}/.plan
     COPY cdktf.out/stacks/${stack}/.terraform.lock.hcl cdktf.out/stacks/${stack}/.terraform.lock.hcl
     RUN --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
@@ -27,6 +27,7 @@ SHOW:
 
 APPLY:
     COMMAND
+    ARG stack
     COPY cdktf.out/stacks/${stack}/.plan cdktf.out/stacks/${stack}/.plan
     COPY cdktf.out/stacks/${stack}/.terraform.lock.hcl cdktf.out/stacks/${stack}/.terraform.lock.hcl
     RUN --push --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
