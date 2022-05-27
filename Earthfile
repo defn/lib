@@ -20,16 +20,16 @@ init:
     DO lib+INIT
 
 plan:
-    FROM init
+    FROM +init
     ARG stack
     DO lib+PLAN --stack=${stack}
 
 show:
-    FROM init
+    FROM +init
     ARG stack
     DO lib+SHOW --stack=${stack}
 
 apply:
-    FROM init
+    FROM +init
     ARG stack
     DO lib+APPLY --stack=${stack}
