@@ -60,6 +60,14 @@
             "uniqueId": "ex2"
           }
         }
+      },
+      "ex3": {
+        "//": {
+          "metadata": {
+            "path": "demo/ex3",
+            "uniqueId": "ex3"
+          }
+        }
       }
     }
   },
