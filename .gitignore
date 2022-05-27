@@ -4,3 +4,5 @@ __pycache__
 .test
 .pants.d
 .pids
+.plan
+.terraform
