@@ -44,6 +44,7 @@ def administrator(self, ssoadmin_instances):
 
 def account(
     self,
+    prefix: str,
     org: str,
     domain: str,
     acct: str,
@@ -58,7 +59,7 @@ def account(
             self,
             acct,
             name=acct,
-            email=f"{org}+{acct}@{domain}",
+            email=f"{prefix}{org}+{acct}@{domain}",
             tags={"ManagedBy": "Terraform"},
         )
     else:
@@ -67,7 +68,7 @@ def account(
             self,
             acct,
             name=acct,
-            email=f"{org}+{acct}@{domain}",
+            email=f"{prefix}{org}+{acct}@{domain}",
             iam_user_access_to_billing="ALLOW",
             role_name="OrganizationAccountAccessRole",
             tags={"ManagedBy": "Terraform"},
@@ -86,7 +87,7 @@ def account(
     )
 
 
-def organization(self, org: str, domain: str, accounts: list):
+def organization(self, prefix: str, org: str, domain: str, accounts: list):
     """The organization must be imported."""
     OrganizationsOrganization(
         self,
@@ -124,29 +125,33 @@ def organization(self, org: str, domain: str, accounts: list):
 
     # The master account (named "org") must be imported.
     for acct in accounts:
-        account(self, org, domain, acct, identitystore_group, sso_permission_set_admin)
+        account(
+            self,
+            prefix,
+            org,
+            domain,
+            acct,
+            identitystore_group,
+            sso_permission_set_admin,
+        )
 
 
 class AwsOrganizationStack(TerraformStack):
     """cdktf Stack for an organization with accounts, sso."""
 
     def __init__(
-        self, scope: Construct, namespace: str, org: str, domain: str, region: str
+        self,
+        scope: Construct,
+        namespace: str,
+        prefix: str,
+        org: str,
+        domain: str,
+        region: str,
     ):
         super().__init__(scope, namespace)
 
-        self.awsProviders(region)
+        AwsProvider(self, "organ", region=region)
 
-        self.awsOrganization(org, domain)
-
-    def awsProviders(self, region):
-        """AWS provider in a region with SSO."""
-        sso_region = region
-
-        AwsProvider(self, "aws", region=sso_region)
-
-    def awsOrganization(self, org, domain):
-        """Make an Organization with accounts, sso"""
         accounts = [
             "org",
             "net",
@@ -160,4 +165,4 @@ class AwsOrganizationStack(TerraformStack):
             "dmz",
         ]
 
-        organization(self, org, domain, accounts)
+        organization(self, prefix, org, domain, accounts)

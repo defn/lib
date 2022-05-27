@@ -15,10 +15,10 @@ cli = typer.Typer()
 
 
 @cli.command()
-def synth(name: str = "demo"):
+def synth(name: str = "spiral"):
     app = App()
 
-    DemoStack(app, name)
+    DemoStack(app, namespace="spiral", prefix="aws-", org="spiral", domain="defn.us", region="us-west-2")
 
     app.synth()
 

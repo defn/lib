@@ -1,11 +1,11 @@
 {
   "version": "0.10.4",
   "stacks": {
-    "demo": {
-      "name": "demo",
-      "constructPath": "demo",
-      "workingDirectory": "stacks/demo",
-      "synthesizedStackPath": "stacks/demo/cdk.tf.json",
+    "spiral": {
+      "name": "spiral",
+      "constructPath": "spiral",
+      "workingDirectory": "stacks/spiral",
+      "synthesizedStackPath": "stacks/spiral/cdk.tf.json",
       "annotations": [],
       "dependencies": []
     }

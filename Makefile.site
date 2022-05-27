@@ -7,10 +7,10 @@ venv:
 	cd 3rdparty/python && poetry install
 	
 plan:
-	earthly +plan --stack=demo
+	earthly +plan --stack=spiral
 
 show:
-	earthly +show --stack=demo
+	earthly +show --stack=spiral
 
 apply:
-	earthly --push +apply --stack=demo
+	earthly --push +apply --stack=spiral

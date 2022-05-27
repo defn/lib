@@ -10,6 +10,14 @@ Configure root account:
 
 Create Administrator IAM user:
     - enable MFA
+    - add roles:
+        - AdministratorAccess
+        - AWSSSOMasterAccountAdministrator
     - Generate access keys
         - AWS_ACCESS_KEY_ID
         - AWS_SECRET_ACCESS_KEY
+
+Configure organization:
+    - Enable SSO in the right region, which creates the organization
+    - Create the Administrators group
+        - https://us-west-2.console.aws.amazon.com/singlesignon/identity/home?region=us-west-2#!/groups
