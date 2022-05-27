@@ -34,6 +34,6 @@ plan:
 
 apply:
     FROM lib+init --target=${target} --stack=${stack}
-    DO lib+APPLY
+    DO lib+APPLY --stack=${stack}
     SAVE ARTIFACT dist/* AS LOCAL dist/
     SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
