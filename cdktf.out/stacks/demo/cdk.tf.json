@@ -43,6 +43,26 @@
       }
     ]
   },
+  "resource": {
+    "null_resource": {
+      "ex1": {
+        "//": {
+          "metadata": {
+            "path": "demo/ex1",
+            "uniqueId": "ex1"
+          }
+        }
+      },
+      "ex2": {
+        "//": {
+          "metadata": {
+            "path": "demo/ex2",
+            "uniqueId": "ex2"
+          }
+        }
+      }
+    }
+  },
   "terraform": {
     "backend": {
       "remote": {

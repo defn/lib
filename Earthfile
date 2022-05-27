@@ -27,6 +27,10 @@ plan:
     FROM lib+plan --target=${target} --stack=${stack}
     SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
 
+show:
+    FROM lib+init --target=${target} --stack=${stack}
+    DO lib+SHOW --stack=${stack}
+
 apply:
     FROM lib+init --target=${target} --stack=${stack}
     DO lib+APPLY --stack=${stack}
