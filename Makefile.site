@@ -4,4 +4,5 @@ get:
 	rm -rf provider.new
 
 venv:
-	env PATH="$(shell dirname "$(shell asdf which python)"):$$PATH" pants export ::
+	cd 3rdparty/python && poetry install
+	
