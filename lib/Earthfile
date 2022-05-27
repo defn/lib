@@ -5,15 +5,22 @@ INIT:
     ARG stack
     COPY cdktf.json .
     RUN ~/bin/e cdktf synth
-    RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit sudo chown -v ubuntu:ubuntu /home/ubuntu/.terraform.d/plugin-cache-buildkit
-    RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io cd cdktf.out/stacks/${stack} && ~/bin/e env TF_PLUGIN_CACHE_DIR=/home/ubuntu/.terraform.d/plugin-cache-buildkit terraform init
-    RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit mkdir -p /home/ubuntu/.terraform.d/plugin-cache && rsync -ia /home/ubuntu/.terraform.d/plugin-cache-buildkit/. /home/ubuntu/.terraform.d/plugin-cache/.
-    RUN --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io cd cdktf.out/stacks/${stack} && ~/bin/e terraform init
+    RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit \
+        sudo chown -v ubuntu:ubuntu /home/ubuntu/.terraform.d/plugin-cache-buildkit
+    RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit \
+        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
+        cd cdktf.out/stacks/${stack} && ~/bin/e env TF_PLUGIN_CACHE_DIR=/home/ubuntu/.terraform.d/plugin-cache-buildkit terraform init
+    RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit \
+        mkdir -p /home/ubuntu/.terraform.d/plugin-cache && rsync -ia /home/ubuntu/.terraform.d/plugin-cache-buildkit/. /home/ubuntu/.terraform.d/plugin-cache/.
+    RUN \
+        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
+        cd cdktf.out/stacks/${stack} && ~/bin/e terraform init
 
 PLAN:
     COMMAND
     ARG stack
-    RUN --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
+    RUN --no-cache \
+        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY --secret AWS_ACCESS_KEY_ID --secret AWS_SECRET_ACCESS_KEY \
         cd cdktf.out/stacks/${stack} && ~/bin/e terraform plan -out=.plan
     SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
 
@@ -22,7 +29,8 @@ SHOW:
     ARG stack
     COPY cdktf.out/stacks/${stack}/.plan cdktf.out/stacks/${stack}/.plan
     COPY cdktf.out/stacks/${stack}/.terraform.lock.hcl cdktf.out/stacks/${stack}/.terraform.lock.hcl
-    RUN --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
+    RUN --no-cache \
+        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY --secret AWS_ACCESS_KEY_ID --secret AWS_SECRET_ACCESS_KEY \
         cd cdktf.out/stacks/${stack} && ~/bin/e terraform show .plan
 
 APPLY:
@@ -30,5 +38,6 @@ APPLY:
     ARG stack
     COPY cdktf.out/stacks/${stack}/.plan cdktf.out/stacks/${stack}/.plan
     COPY cdktf.out/stacks/${stack}/.terraform.lock.hcl cdktf.out/stacks/${stack}/.terraform.lock.hcl
-    RUN --push --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
+    RUN --push --no-cache \
+        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY --secret AWS_ACCESS_KEY_ID --secret AWS_SECRET_ACCESS_KEY \
         cd cdktf.out/stacks/${stack} && ~/bin/e terraform apply .plan
