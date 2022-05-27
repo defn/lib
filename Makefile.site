@@ -6,3 +6,8 @@ get:
 venv:
 	cd 3rdparty/python && poetry install
 	
+plan:
+	earthly +plan --stack=demo
+
+show:
+	earthly +show--stack=demo

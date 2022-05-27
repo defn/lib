@@ -20,8 +20,8 @@ class DemoStack(TerraformStack):
         TfeProvider(self, "tfe")
         GithubProvider(self, "github", organization="defn")
         CloudflareProvider(self, "cloudflare")
-        VaultProvider(self, "vault", address="")
-        BoundaryProvider(self, "boundary", addr="")
+        #VaultProvider(self, "vault", address="")
+        #BoundaryProvider(self, "boundary", addr="")
 
         Resource(self, "ex1")
         Resource(self, "ex2")
