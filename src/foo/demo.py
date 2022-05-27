@@ -1,6 +1,6 @@
 from cdktf import NamedRemoteWorkspace, RemoteBackend, TerraformStack
 from cdktf_cdktf_provider_github import GithubProvider
-from cdktf_cdktf_provider_null import NullProvider
+from cdktf_cdktf_provider_null import NullProvider, Resource
 from cdktf_cdktf_provider_tfe import TfeProvider
 from constructs import Construct
 from defn_cdktf_provider_boundary import BoundaryProvider
@@ -22,6 +22,9 @@ class DemoStack(TerraformStack):
         CloudflareProvider(self, "cloudflare")
         VaultProvider(self, "vault", address="")
         BoundaryProvider(self, "boundary", addr="")
+
+        Resource(self, "ex1")
+        Resource(self, "ex2")
 
         w = NamedRemoteWorkspace(name="bootstrap")
         RemoteBackend(self, organization="defn", workspaces=w)
