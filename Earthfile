@@ -7,15 +7,11 @@ ARG stack
 
 warm:
     FROM registry.fly.io/defn:dev-tower
-    RUN --no-cache echo '{ "language": "python", "app": "dist/src.defn/main.pex synth" }' > cdktf.json
     COPY --dir provider src 3rdparty .
-    COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
+    COPY BUILDROOT pants pants.toml .
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
-    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package ::
-    RUN ~/bin/e dist/src.defn/main.pex synth
-    SAVE ARTIFACT dist/* AS LOCAL dist/
-    SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
-    SAVE IMAGE --push registry.fly.io/defn:cloud
+    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package src/defn:main
+    RUN --no-cache echo '{ "language": "python", "app": "dist/src.defn/main.pex synth" }' > cdktf.json
 
 get:
     FROM +warm
@@ -29,7 +25,6 @@ get:
 
 plan:
     FROM lib+plan --target=${target} --stack=${stack}
-    SAVE ARTIFACT dist/* AS LOCAL dist/
     SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
 
 apply:
