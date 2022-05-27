@@ -3,6 +3,7 @@ VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-ar
 IMPORT github.com/defn/cloud/lib:master AS lib
 
 ARG target=github.com/defn/cloud:master+warm
+ARG stack
 
 warm:
     FROM registry.fly.io/defn:dev-tower
