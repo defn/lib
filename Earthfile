@@ -7,7 +7,7 @@ ARG stack
 
 get:
     FROM registry.fly.io/defn:dev-tower
-    COPY cdktf.json .
+    COPY cdktf.json.get cdktf.json
     RUN ~/bin/e cdktf get
     SAVE ARTIFACT .gen/boundary/* AS LOCAL provider.new/defn_cdktf_provider_boundary/
     SAVE ARTIFACT .gen/vault/* AS LOCAL provider.new/defn_cdktf_provider_vault/
