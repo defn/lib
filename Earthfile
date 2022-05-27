@@ -24,7 +24,6 @@ warm:
 plan:
     FROM lib+init --target=${target} --stack=${stack}
     DO lib+PLAN --stack=${stack}
-    #SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
 
 show:
     FROM lib+init --target=${target} --stack=${stack}
