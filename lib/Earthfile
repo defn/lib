@@ -2,12 +2,8 @@ VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-ar
 
 IMPORT github.com/defn/cloud/lib:master AS lib
 
-FROM registry.fly.io/defn:dev-tower
-
 ARG stack
 ARG target
-
-platform:
 
 synth:
     FROM ${target}

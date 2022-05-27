@@ -2,11 +2,10 @@ VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-ar
 
 IMPORT github.com/defn/cloud/lib:master AS lib
 
-FROM lib+platform
-
 ARG target=github.com/defn/cloud:master+warm
 
 warm:
+    FROM registry.fly.io/defn:dev-tower
     RUN --no-cache echo '{ "language": "python", "app": "dist/src.defn/main.pex synth" }' > cdktf.json
     COPY --dir provider src 3rdparty .
     COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
