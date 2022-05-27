@@ -10,4 +10,7 @@ plan:
 	earthly +plan --stack=demo
 
 show:
-	earthly +show--stack=demo
+	earthly +show --stack=demo
+
+apply:
+	earthly --push +apply --stack=demo

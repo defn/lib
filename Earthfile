@@ -13,11 +13,12 @@ get:
 
 init:
     FROM registry.fly.io/defn:dev-tower
+    ARG stack
     COPY --dir provider src 3rdparty .
     COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package src/defn:main
-    DO lib+INIT
+    DO lib+INIT --stack=${stack}
 
 plan:
     FROM +init
