@@ -9,6 +9,10 @@ backend_packages = [
 pantsd = false
 pants_version = '2.11.0'
 
+[cli.alias]
+green = "fmt lint check"
+dev = "--changed-since=HEAD --changed-dependees=transitive"
+
 [source]
 root_patterns = [
   '/3rdparty/python',
