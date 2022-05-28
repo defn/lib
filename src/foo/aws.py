@@ -21,7 +21,7 @@ from constructs import Construct
 
 
 def administrator(self, ssoadmin_instances):
-    """Administrator SSO permission set with AdministratorAccess policy"""
+    """Administrator SSO permission set with AdministratorAccess policy."""
     resource = SsoadminPermissionSet(
         self,
         "admin_sso_permission_set",

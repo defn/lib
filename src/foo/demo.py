@@ -5,7 +5,7 @@ from foo.aws import AwsOrganizationStack
 
 
 class DemoStack(AwsOrganizationStack):
-    """cdktf Stack for demonstration"""
+    """cdktf Stack for demonstration."""
 
     def __init__(
         self,

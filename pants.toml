@@ -4,6 +4,7 @@ backend_packages = [
   'pants.backend.python.lint.black',
   'pants.backend.python.lint.isort',
   'pants.backend.python.lint.flake8',
+  'pants.backend.python.lint.docformatter',
 ]
 
 pantsd = false
@@ -12,7 +13,7 @@ pants_version = '2.11.0'
 [cli.alias]
 green = "fmt lint check"
 dev = "--changed-since=HEAD --changed-dependees=transitive"
-format = "green update-build-files ::"
+format = "update-build-files green ::"
 
 [source]
 root_patterns = [
