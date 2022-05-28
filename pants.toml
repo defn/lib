@@ -12,6 +12,7 @@ pants_version = '2.11.0'
 [cli.alias]
 green = "fmt lint check"
 dev = "--changed-since=HEAD --changed-dependees=transitive"
+format = "green update-build-files ::"
 
 [source]
 root_patterns = [
