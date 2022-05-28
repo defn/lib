@@ -1,5 +1,6 @@
 python_distribution(
     name="defn_cdktf_provider_boundary",
+    repositories=["@pypi"],
     dependencies=[
         "provider/defn_cdktf_provider_boundary",
         "provider/defn_cdktf_provider_boundary/_jsii",
@@ -13,6 +14,7 @@ python_distribution(
 
 python_distribution(
     name="defn_cdktf_provider_vault",
+    repositories=["@pypi"],
     dependencies=[
         "provider/defn_cdktf_provider_vault",
         "provider/defn_cdktf_provider_vault/_jsii",
@@ -25,6 +27,7 @@ python_distribution(
 )
 python_distribution(
     name="defn_cdktf_provider_buildkite",
+    repositories=["@pypi"],
     dependencies=[
         "provider/defn_cdktf_provider_buildkite",
         "provider/defn_cdktf_provider_buildkite/_jsii",
@@ -38,6 +41,7 @@ python_distribution(
 
 python_distribution(
     name="defn_cdktf_provider_cloudflare",
+    repositories=["@pypi"],
     dependencies=[
         "provider/defn_cdktf_provider_cloudflare",
         "provider/defn_cdktf_provider_cloudflare/_jsii",
