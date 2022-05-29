@@ -8,6 +8,7 @@ backend_packages = [
   'pants.backend.shell',
   'pants.backend.shell.lint.shfmt',
   'pants.backend.shell.lint.shellcheck',
+  'pants.backend.docker'
 ]
 
 pantsd = false
@@ -45,3 +46,8 @@ config = ".flake8"
 
 [shfmt]
 args = ["-i 2", "-ci", "-sr"]
+
+[docker]
+env_vars = [
+  "DOCKER_HOST"
+]

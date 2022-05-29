@@ -17,9 +17,3 @@ apply:
 
 fmt:
 	pants format ::
-
-docs:
-	find html -name '*.css' | xargs rm
-	find html -name '*.html' | xargs rm
-	pants run src/defn:build_docs
-	pants run src/foo:build_docs

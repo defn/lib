@@ -1,12 +1,23 @@
 python_sources(name="py")
 
-pex_binary(
-    name="textual",
-    entry_point="textual.py",
-)
-
-experimental_run_shell_command(
-    name="build_docs",
-    command="find {chroot} -ls; pycco -d html/foo {chroot}/src/foo/*.py",
+experimental_shell_command(
+    name="pycco_docs",
+    command="pycco -d html *.py",
+    tools=["pycco"],
+    log_output=True,
+    outputs=["html/"],
     dependencies=[":py"],
 )
+
+archive(
+    name="archive_docs",
+    files=[":pycco_docs"],
+    format="tar.gz",
+    tags=["docs"]
+)
+
+pex_binary(
+    name="textual",
+    entry_point="textual.py"
+)
+
