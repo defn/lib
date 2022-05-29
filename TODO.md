@@ -16,10 +16,10 @@ Create Administrator IAM user:
     - Generate access keys
         - AWS_ACCESS_KEY_ID
         - AWS_SECRET_ACCESS_KEY
+        - store with _${stack} suffix
 
 Configure organization:
-    - Enable SSO in the right region, which creates the organization
+    - Select the correct region
+    - Enable SSO, which creates the organization
     - Create the Administrators group
         - https://us-west-2.console.aws.amazon.com/singlesignon/identity/home?region=us-west-2#!/groups
-    - terraform import aws_organizations_organization.organization o-something
-    - terraform import aws_organizations_account.spiral 11111111111111
