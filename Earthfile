@@ -20,13 +20,10 @@ init:
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package src/defn:cli
     DO lib+INIT --stack=${stack}
 
-edit:
+import:
     FROM +init
     ARG stack
-    RUN --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral --secret AWS_ACCESS_KEY_ID_helix --secret AWS_SECRET_ACCESS_KEY_helix \
-        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && i="`aws sts get-caller-identity --query Account --output text`" && echo ~/bin/e terraform import aws_organizations_account.${stack} ${i}'
-    RUN --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral --secret AWS_ACCESS_KEY_ID_helix --secret AWS_SECRET_ACCESS_KEY_helix \
-        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && i="`aws sts get-caller-identity --query Account --output text`" && o="`aws organizations describe-account --account-id "${i}" | jq -r .Account.Arn | cut -d/ -f2`" && echo ~/bin/e terraform import aws_organizations_organization.organization o-6v3xa2ckst'
+    DO lib+IMPORT --stack=${stack}
 
 plan:
     FROM +init
@@ -42,3 +39,9 @@ apply:
     FROM +init
     ARG stack
     DO lib+APPLY --stack=${stack}
+
+edit:
+    FROM +init
+    ARG stack
+    ARG cmd
+    DO lib+EDIT --stack=${stack} --cmd=${cmd}
