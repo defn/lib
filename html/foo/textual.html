@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>textual.py</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>textual.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">textual.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">textual.widgets</span> <span class="kn">import</span> <span class="n">Placeholder</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p>Make a simple grid arrangement.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">GridTest</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">on_mount</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="n">grid</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">dock_grid</span><span class="p">(</span><span class="n">edge</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+
+        <span class="n">grid</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">grid</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+        <span class="n">grid</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+
+        <span class="n">grid</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">grid</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;middle&quot;</span><span class="p">)</span>
+        <span class="n">grid</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
+
+        <span class="n">grid</span><span class="o">.</span><span class="n">add_areas</span><span class="p">(</span>
+            <span class="n">area1</span><span class="o">=</span><span class="s2">&quot;left,top&quot;</span><span class="p">,</span>
+            <span class="n">area2</span><span class="o">=</span><span class="s2">&quot;left,middle&quot;</span><span class="p">,</span>
+            <span class="n">area3</span><span class="o">=</span><span class="s2">&quot;left-start|right-end,bottom&quot;</span><span class="p">,</span>
+            <span class="n">area4</span><span class="o">=</span><span class="s2">&quot;right,top-start|middle-end&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">grid</span><span class="o">.</span><span class="n">place</span><span class="p">(</span>
+            <span class="n">area1</span><span class="o">=</span><span class="n">Placeholder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;area1&quot;</span><span class="p">),</span>
+            <span class="n">area2</span><span class="o">=</span><span class="n">Placeholder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;area2&quot;</span><span class="p">),</span>
+            <span class="n">area3</span><span class="o">=</span><span class="n">Placeholder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;area3&quot;</span><span class="p">),</span>
+            <span class="n">area4</span><span class="o">=</span><span class="n">Placeholder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;area4&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">GridTest</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Grid Test&quot;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s2">&quot;textual.log&quot;</span><span class="p">)</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>

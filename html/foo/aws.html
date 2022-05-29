@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>aws.py</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>aws.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      <p>Creates Organizations, Accounts, and Administrator permission set</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cdktf</span> <span class="kn">import</span> <span class="n">Fn</span><span class="p">,</span> <span class="n">TerraformStack</span>
+<span class="kn">from</span> <span class="nn">cdktf_cdktf_provider_aws</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AwsProvider</span><span class="p">,</span>
+    <span class="n">DataAwsIdentitystoreGroup</span><span class="p">,</span>
+    <span class="n">DataAwsIdentitystoreGroupFilter</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">cdktf_cdktf_provider_aws.organizations</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">OrganizationsAccount</span><span class="p">,</span>
+    <span class="n">OrganizationsOrganization</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">cdktf_cdktf_provider_aws.ssoadmin</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DataAwsSsoadminInstances</span><span class="p">,</span>
+    <span class="n">SsoadminAccountAssignment</span><span class="p">,</span>
+    <span class="n">SsoadminManagedPolicyAttachment</span><span class="p">,</span>
+    <span class="n">SsoadminPermissionSet</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">constructs</span> <span class="kn">import</span> <span class="n">Construct</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <p>Administrator SSO permission set with AdministratorAccess policy.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">administrator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ssoadmin_instances</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">resource</span> <span class="o">=</span> <span class="n">SsoadminPermissionSet</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="s2">&quot;admin_sso_permission_set&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Administrator&quot;</span><span class="p">,</span>
+        <span class="n">instance_arn</span><span class="o">=</span><span class="n">Fn</span><span class="o">.</span><span class="n">element</span><span class="p">(</span><span class="n">Fn</span><span class="o">.</span><span class="n">tolist</span><span class="p">(</span><span class="n">ssoadmin_instances</span><span class="o">.</span><span class="n">arns</span><span class="p">),</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">session_duration</span><span class="o">=</span><span class="s2">&quot;PT2H&quot;</span><span class="p">,</span>
+        <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ManagedBy&quot;</span><span class="p">:</span> <span class="s2">&quot;Terraform&quot;</span><span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="n">SsoadminManagedPolicyAttachment</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="s2">&quot;admin_sso_managed_policy_attachment&quot;</span><span class="p">,</span>
+        <span class="n">instance_arn</span><span class="o">=</span><span class="n">resource</span><span class="o">.</span><span class="n">instance_arn</span><span class="p">,</span>
+        <span class="n">permission_set_arn</span><span class="o">=</span><span class="n">resource</span><span class="o">.</span><span class="n">arn</span><span class="p">,</span>
+        <span class="n">managed_policy_arn</span><span class="o">=</span><span class="s2">&quot;arn:aws:iam::aws:policy/AdministratorAccess&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">resource</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>Create the organization account.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">account</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">org</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">acct</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">identitystore_group</span><span class="p">,</span>
+    <span class="n">sso_permission_set_admin</span><span class="p">,</span>
+<span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="n">acct</span> <span class="o">==</span> <span class="n">org</span><span class="p">:</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>The master organization account can&rsquo;t set
+iam_user_access_to_billing, role_name</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="n">organizations_account</span> <span class="o">=</span> <span class="n">OrganizationsAccount</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">acct</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">acct</span><span class="p">,</span>
+            <span class="n">email</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}{</span><span class="n">org</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">domain</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ManagedBy&quot;</span><span class="p">:</span> <span class="s2">&quot;Terraform&quot;</span><span class="p">},</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>Organization account</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="n">organizations_account</span> <span class="o">=</span> <span class="n">OrganizationsAccount</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">acct</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">acct</span><span class="p">,</span>
+            <span class="n">email</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}{</span><span class="n">org</span><span class="si">}</span><span class="s2">+</span><span class="si">{</span><span class="n">acct</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">domain</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">iam_user_access_to_billing</span><span class="o">=</span><span class="s2">&quot;ALLOW&quot;</span><span class="p">,</span>
+            <span class="n">role_name</span><span class="o">=</span><span class="s2">&quot;OrganizationAccountAccessRole&quot;</span><span class="p">,</span>
+            <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ManagedBy&quot;</span><span class="p">:</span> <span class="s2">&quot;Terraform&quot;</span><span class="p">},</span>
+        <span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>Organization accounts grant Administrator permission set to the Administrator group</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">SsoadminAccountAssignment</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">acct</span><span class="si">}</span><span class="s2">_admin_sso_account_assignment&quot;</span><span class="p">,</span>
+        <span class="n">instance_arn</span><span class="o">=</span><span class="n">sso_permission_set_admin</span><span class="o">.</span><span class="n">instance_arn</span><span class="p">,</span>
+        <span class="n">permission_set_arn</span><span class="o">=</span><span class="n">sso_permission_set_admin</span><span class="o">.</span><span class="n">arn</span><span class="p">,</span>
+        <span class="n">principal_id</span><span class="o">=</span><span class="n">identitystore_group</span><span class="o">.</span><span class="n">group_id</span><span class="p">,</span>
+        <span class="n">principal_type</span><span class="o">=</span><span class="s2">&quot;GROUP&quot;</span><span class="p">,</span>
+        <span class="n">target_id</span><span class="o">=</span><span class="n">organizations_account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+        <span class="n">target_type</span><span class="o">=</span><span class="s2">&quot;AWS_ACCOUNT&quot;</span><span class="p">,</span>
+    <span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <p>The organization must be imported.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">organization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">org</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">accounts</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">OrganizationsOrganization</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="s2">&quot;organization&quot;</span><span class="p">,</span>
+        <span class="n">feature_set</span><span class="o">=</span><span class="s2">&quot;ALL&quot;</span><span class="p">,</span>
+        <span class="n">enabled_policy_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;SERVICE_CONTROL_POLICY&quot;</span><span class="p">,</span> <span class="s2">&quot;TAG_POLICY&quot;</span><span class="p">],</span>
+        <span class="n">aws_service_access_principals</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;cloudtrail.amazonaws.com&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;config.amazonaws.com&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ram.amazonaws.com&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ssm.amazonaws.com&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sso.amazonaws.com&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tagpolicies.tag.amazonaws.com&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <p>Lookup pre-enabled AWS SSO instance</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">ssoadmin_instances</span> <span class="o">=</span> <span class="n">DataAwsSsoadminInstances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;sso_instance&quot;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      <p>Administrator SSO permission set with AdministratorAccess policy</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">sso_permission_set_admin</span> <span class="o">=</span> <span class="n">administrator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ssoadmin_instances</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-13'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-13'>#</a>
+      </div>
+      <p>Lookup pre-created Administrators group</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">f</span> <span class="o">=</span> <span class="n">DataAwsIdentitystoreGroupFilter</span><span class="p">(</span>
+        <span class="n">attribute_path</span><span class="o">=</span><span class="s2">&quot;DisplayName&quot;</span><span class="p">,</span> <span class="n">attribute_value</span><span class="o">=</span><span class="s2">&quot;Administrators&quot;</span>
+    <span class="p">)</span>
+    <span class="n">identitystore_group</span> <span class="o">=</span> <span class="n">DataAwsIdentitystoreGroup</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="s2">&quot;administrators_sso_group&quot;</span><span class="p">,</span>
+        <span class="n">identity_store_id</span><span class="o">=</span><span class="n">Fn</span><span class="o">.</span><span class="n">element</span><span class="p">(</span>
+            <span class="n">Fn</span><span class="o">.</span><span class="n">tolist</span><span class="p">(</span><span class="n">ssoadmin_instances</span><span class="o">.</span><span class="n">identity_store_ids</span><span class="p">),</span> <span class="mi">0</span>
+        <span class="p">),</span>
+        <span class="nb">filter</span><span class="o">=</span><span class="p">[</span><span class="n">f</span><span class="p">],</span>
+    <span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-14'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-14'>#</a>
+      </div>
+      <p>The master account (named &ldquo;org&rdquo;) must be imported.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">for</span> <span class="n">acct</span> <span class="ow">in</span> <span class="n">accounts</span><span class="p">:</span>
+        <span class="n">account</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="p">,</span>
+            <span class="n">org</span><span class="p">,</span>
+            <span class="n">domain</span><span class="p">,</span>
+            <span class="n">acct</span><span class="p">,</span>
+            <span class="n">identitystore_group</span><span class="p">,</span>
+            <span class="n">sso_permission_set_admin</span><span class="p">,</span>
+        <span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-15'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-15'>#</a>
+      </div>
+      <p>cdktf Stack for an organization with accounts, sso.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">AwsOrganizationStack</span><span class="p">(</span><span class="n">TerraformStack</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-16'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-16'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-17'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-17'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">scope</span><span class="p">:</span> <span class="n">Construct</span><span class="p">,</span>
+        <span class="n">namespace</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">org</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="n">namespace</span><span class="p">)</span>
+
+        <span class="n">AwsProvider</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;aws_sso&quot;</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">)</span>
+
+        <span class="n">accounts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">org</span><span class="p">,</span>
+            <span class="s2">&quot;net&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;log&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;lib&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ops&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sec&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;hub&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pub&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;dev&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;dmz&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="n">organization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">org</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">accounts</span><span class="p">)</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
