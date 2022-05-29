@@ -9,15 +9,6 @@ experimental_shell_command(
     dependencies=[":py"],
 )
 
-archive(
-    name="archive_docs",
-    files=[":pycco_docs"],
-    format="tar.gz",
-    tags=["docs"]
-)
+archive(name="archive_docs", files=[":pycco_docs"], format="tar.gz", tags=["docs"])
 
-pex_binary(
-    name="textual",
-    entry_point="textual.py"
-)
-
+pex_binary(name="cli", entry_point="cli.py")
