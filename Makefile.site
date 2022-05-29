@@ -14,6 +14,3 @@ show:
 
 apply:
 	earthly --push +apply --stack=spiral
-
-fmt:
-	pants format ::
