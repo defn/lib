@@ -1,3 +1,6 @@
+dev:
+	tilt up --port=0 --stream
+
 get:
 	earthly +get
 	rsync -ia provider.new/. provider/.

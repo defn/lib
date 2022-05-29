@@ -4,4 +4,5 @@ build:
     FROM ubuntu
     WORKDIR /work
     COPY html/* .
+    RUN --no-cache date
     SAVE ARTIFACT ./* AS LOCAL dist/
