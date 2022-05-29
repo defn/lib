@@ -23,10 +23,12 @@ init:
 edit:
     FROM +init
     ARG stack
-    RUN --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret AWS_ACCESS_KEY_ID --secret AWS_SECRET_ACCESS_KEY \
-        cd cdktf.out/stacks/${stack} && ~/bin/e terraform import aws_organizations_organization.organization o-something
-    RUN --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret AWS_ACCESS_KEY_ID --secret AWS_SECRET_ACCESS_KEY \
-        cd cdktf.out/stacks/${stack} && ~/bin/e terraform import aws_organizations_account.spiral 11111111111
+    RUN --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
+        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && ~/bin/e terraform plan'
+    RUN --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
+        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && echo ~/bin/e terraform import aws_organizations_organization.organization o-something'
+    RUN --no-cache --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
+        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && echo ~/bin/e terraform import aws_organizations_account.spiral 11111111111'
 
 plan:
     FROM +init
