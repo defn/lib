@@ -9,11 +9,17 @@ get:
 venv:
 	cd 3rdparty/python && poetry install
 
+synth:
+	earthly +synth --stack=$(stack)
+
 plan:
 	earthly +plan --stack=$(stack)
 
 show:
 	earthly +show --stack=$(stack)
+
+import:
+	earthly --push +import --stack=$(stack)
 
 apply:
 	earthly --push +apply --stack=$(stack)

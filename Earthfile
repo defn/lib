@@ -11,19 +11,19 @@ get:
     SAVE ARTIFACT .gen/cloudflare/* AS LOCAL provider.new/defn_cdktf_provider_cloudflare/
     SAVE ARTIFACT .gen/buildkite/* AS LOCAL provider.new/defn_cdktf_provider_buildkite/
 
-init:
+synth:
     FROM registry.fly.io/defn:dev-tower
     ARG stack
     COPY --dir provider src 3rdparty .
     COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package src/defn:cli
-    DO lib+INIT --stack=${stack}
+    DO lib+SYNTH --stack=${stack}
 
-import:
-    FROM +init
+init:
+    FROM registry.fly.io/defn:dev-tower
     ARG stack
-    DO lib+IMPORT --stack=${stack}
+    DO lib+INIT --stack=${stack}
 
 plan:
     FROM +init
@@ -34,6 +34,11 @@ show:
     FROM +init
     ARG stack
     DO lib+SHOW --stack=${stack}
+
+import:
+    FROM +init
+    ARG stack
+    DO lib+IMPORT --stack=${stack}
 
 apply:
     FROM +init

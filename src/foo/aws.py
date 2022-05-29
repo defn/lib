@@ -146,11 +146,11 @@ class AwsOrganizationStack(TerraformStack):
         prefix: str,
         org: str,
         domain: str,
-        region: str,
+        sso_region: str,
         accounts,
     ):
         super().__init__(scope, namespace)
 
-        AwsProvider(self, "aws_sso", region=region)
+        AwsProvider(self, "aws_sso", region=sso_region)
 
         organization(self, prefix, org, domain, [org] + accounts)

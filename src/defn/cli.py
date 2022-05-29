@@ -18,39 +18,39 @@ cli = typer.Typer()
 def synth():
     app = App()
 
-    full_accounts = (["net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"],)
-    env_accounts = (["net", "lib", "hub"],)
+    full_accounts = ["net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"]
+    env_accounts = ["net", "lib", "hub"]
 
     DemoStack(
         app,
         org="spiral",
         domain="defn.us",
-        region="us-west-2",
-        account=full_accounts,
+        sso_region="us-west-2",
+        accounts=full_accounts,
     )
 
     DemoStack(
         app,
         org="helix",
         domain="defn.sh",
-        region="us-east-2",
-        account=full_accounts,
+        sso_region="us-east-2",
+        accounts=full_accounts,
     )
 
     DemoStack(
         app,
         org="coil",
         domain="defn.us",
-        region="us-east-1",
-        account=env_accounts,
+        sso_region="us-east-1",
+        accounts=env_accounts,
     )
 
     DemoStack(
         app,
         org="curl",
         domain="defn.us",
-        region="us-west-1",
-        account=env_accounts,
+        sso_region="us-west-2",
+        accounts=env_accounts,
     )
 
     app.synth()
