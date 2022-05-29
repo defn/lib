@@ -19,7 +19,11 @@ experimental_shell_command(
     dependencies=[":earthfile", ":pycco_docs"],
 )
 
-archive(name="archive_pycco_docs", files=[":pycco_docs"], format="tar.gz", tags=["docs"])
-archive(name="archive_earthly_docs", files=[":earthly_docs"], format="tar.gz", tags=["docs"])
+archive(
+    name="archive_pycco_docs", files=[":pycco_docs"], format="tar.gz", tags=["docs"]
+)
+archive(
+    name="archive_earthly_docs", files=[":earthly_docs"], format="tar.gz", tags=["docs"]
+)
 
 pex_binary(name="cli", entry_point="cli.py")
