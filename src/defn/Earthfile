@@ -1,0 +1,7 @@
+VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-arg --use-copy-link 0.6
+
+build:
+    FROM ubuntu
+    WORKDIR /work
+    COPY html/* .
+    SAVE ARTIFACT ./* AS LOCAL dist/
