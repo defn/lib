@@ -8,7 +8,7 @@ get:
 
 venv:
 	cd 3rdparty/python && poetry install
-	
+
 plan:
 	earthly +plan --stack=$(stack)
 
@@ -17,4 +17,3 @@ show:
 
 apply:
 	earthly --push +apply --stack=$(stack)
-

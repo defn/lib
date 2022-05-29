@@ -3,9 +3,13 @@ repos:
     rev: v4.1.0
     hooks:
       - id: trailing-whitespace
+        exclude: ^(provider|cdktf.out)/
       - id: end-of-file-fixer
+        exclude: ^(provider|cdktf.out)/
       - id: check-json
+        exclude: ^(provider|cdktf.out)/
       - id: check-yaml
+        exclude: ^(provider|cdktf.out)/
 
   - repo: local
     hooks:
@@ -18,17 +22,8 @@ repos:
 
   - repo: local
     hooks:
-      - id: sh-fmt
-        name: sh-fmt
-        entry: shfmt -w
-        language: system
-        files: "^(bin|etc)/"
-        pass_filenames: true
-
-  - repo: local
-    hooks:
       - id: pants-fmt
         name: pants-fmt
-        entry: pants --owners-not-found-behavior=ignore fmt lint
+        entry: pants --owners-not-found-behavior=ignore fmt lint check
         language: system
         pass_filenames: true
