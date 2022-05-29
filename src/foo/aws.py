@@ -147,22 +147,10 @@ class AwsOrganizationStack(TerraformStack):
         org: str,
         domain: str,
         region: str,
+        accounts,
     ):
         super().__init__(scope, namespace)
 
         AwsProvider(self, "aws_sso", region=region)
 
-        accounts = [
-            org,
-            "net",
-            "log",
-            "lib",
-            "ops",
-            "sec",
-            "hub",
-            "pub",
-            "dev",
-            "dmz",
-        ]
-
-        organization(self, prefix, org, domain, accounts)
+        organization(self, prefix, org, domain, [org] + accounts)
