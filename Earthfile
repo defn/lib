@@ -17,7 +17,7 @@ init:
     COPY --dir provider src 3rdparty .
     COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
-    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package src/defn:main
+    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e pants package src/defn:cli
     DO lib+INIT --stack=${stack}
 
 edit:

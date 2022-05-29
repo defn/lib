@@ -1,4 +1,4 @@
 {
   "language": "python",
-  "app": "dist/src.defn/main.pex synth"
+  "app": "dist/src.defn/cli.pex synth"
 }

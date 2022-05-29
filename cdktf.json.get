@@ -1,6 +1,6 @@
 {
   "language": "python",
-  "app": "dist/src.defn/main.pex synth",
+  "app": "dist/src.defn/cli.pex synth",
   "terraformProviders": [
     "hashicorp/boundary@~> 1.0.7",
     "hashicorp/vault@~> 3.6.0",

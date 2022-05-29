@@ -8,6 +8,14 @@
       "synthesizedStackPath": "stacks/spiral/cdk.tf.json",
       "annotations": [],
       "dependencies": []
+    },
+    "helix": {
+      "name": "helix",
+      "constructPath": "helix",
+      "workingDirectory": "stacks/helix",
+      "synthesizedStackPath": "stacks/helix/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
     }
   }
 }

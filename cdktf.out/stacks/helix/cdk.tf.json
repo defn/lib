@@ -2,7 +2,7 @@
   "//": {
     "metadata": {
       "backend": "remote",
-      "stackName": "spiral",
+      "stackName": "helix",
       "version": "0.10.4"
     },
     "outputs": {
@@ -13,7 +13,7 @@
       "administrators_sso_group": {
         "//": {
           "metadata": {
-            "path": "spiral/administrators_sso_group",
+            "path": "helix/administrators_sso_group",
             "uniqueId": "administrators_sso_group"
           }
         },
@@ -30,7 +30,7 @@
       "sso_instance": {
         "//": {
           "metadata": {
-            "path": "spiral/sso_instance",
+            "path": "helix/sso_instance",
             "uniqueId": "sso_instance"
           }
         }
@@ -40,7 +40,7 @@
   "provider": {
     "aws": [
       {
-        "region": "us-west-2"
+        "region": "us-east-2"
       }
     ]
   },
@@ -49,11 +49,11 @@
       "dev": {
         "//": {
           "metadata": {
-            "path": "spiral/dev",
+            "path": "helix/dev",
             "uniqueId": "dev"
           }
         },
-        "email": "aws-spiral+dev@defn.us",
+        "email": "aws-helix+dev@defn.sh",
         "iam_user_access_to_billing": "ALLOW",
         "name": "dev",
         "role_name": "OrganizationAccountAccessRole",
@@ -64,11 +64,11 @@
       "dmz": {
         "//": {
           "metadata": {
-            "path": "spiral/dmz",
+            "path": "helix/dmz",
             "uniqueId": "dmz"
           }
         },
-        "email": "aws-spiral+dmz@defn.us",
+        "email": "aws-helix+dmz@defn.sh",
         "iam_user_access_to_billing": "ALLOW",
         "name": "dmz",
         "role_name": "OrganizationAccountAccessRole",
@@ -76,14 +76,27 @@
           "ManagedBy": "Terraform"
         }
       },
+      "helix": {
+        "//": {
+          "metadata": {
+            "path": "helix/helix",
+            "uniqueId": "helix"
+          }
+        },
+        "email": "aws-helix@defn.sh",
+        "name": "helix",
+        "tags": {
+          "ManagedBy": "Terraform"
+        }
+      },
       "hub": {
         "//": {
           "metadata": {
-            "path": "spiral/hub",
+            "path": "helix/hub",
             "uniqueId": "hub"
           }
         },
-        "email": "aws-spiral+hub@defn.us",
+        "email": "aws-helix+hub@defn.sh",
         "iam_user_access_to_billing": "ALLOW",
         "name": "hub",
         "role_name": "OrganizationAccountAccessRole",
@@ -94,11 +107,11 @@
       "lib": {
         "//": {
           "metadata": {
-            "path": "spiral/lib",
+            "path": "helix/lib",
             "uniqueId": "lib"
           }
         },
-        "email": "aws-spiral+lib@defn.us",
+        "email": "aws-helix+lib@defn.sh",
         "iam_user_access_to_billing": "ALLOW",
         "name": "lib",
         "role_name": "OrganizationAccountAccessRole",
@@ -109,11 +122,11 @@
       "log": {
         "//": {
           "metadata": {
-            "path": "spiral/log",
+            "path": "helix/log",
             "uniqueId": "log"
           }
         },
-        "email": "aws-spiral+log@defn.us",
+        "email": "aws-helix+log@defn.sh",
         "iam_user_access_to_billing": "ALLOW",
         "name": "log",
         "role_name": "OrganizationAccountAccessRole",
@@ -124,11 +137,11 @@
       "net": {
         "//": {
           "metadata": {
-            "path": "spiral/net",
+            "path": "helix/net",
             "uniqueId": "net"
           }
         },
-        "email": "aws-spiral+net@defn.us",
+        "email": "aws-helix+net@defn.sh",
         "iam_user_access_to_billing": "ALLOW",
         "name": "net",
         "role_name": "OrganizationAccountAccessRole",
@@ -139,11 +152,11 @@
       "ops": {
         "//": {
           "metadata": {
-            "path": "spiral/ops",
+            "path": "helix/ops",
             "uniqueId": "ops"
           }
         },
-        "email": "aws-spiral+ops@defn.us",
+        "email": "aws-helix+ops@defn.sh",
         "iam_user_access_to_billing": "ALLOW",
         "name": "ops",
         "role_name": "OrganizationAccountAccessRole",
@@ -154,11 +167,11 @@
       "pub": {
         "//": {
           "metadata": {
-            "path": "spiral/pub",
+            "path": "helix/pub",
             "uniqueId": "pub"
           }
         },
-        "email": "aws-spiral+pub@defn.us",
+        "email": "aws-helix+pub@defn.sh",
         "iam_user_access_to_billing": "ALLOW",
         "name": "pub",
         "role_name": "OrganizationAccountAccessRole",
@@ -169,27 +182,14 @@
       "sec": {
         "//": {
           "metadata": {
-            "path": "spiral/sec",
+            "path": "helix/sec",
             "uniqueId": "sec"
           }
         },
-        "email": "aws-spiral+sec@defn.us",
+        "email": "aws-helix+sec@defn.sh",
         "iam_user_access_to_billing": "ALLOW",
         "name": "sec",
         "role_name": "OrganizationAccountAccessRole",
-        "tags": {
-          "ManagedBy": "Terraform"
-        }
-      },
-      "spiral": {
-        "//": {
-          "metadata": {
-            "path": "spiral/spiral",
-            "uniqueId": "spiral"
-          }
-        },
-        "email": "aws-spiral@defn.us",
-        "name": "spiral",
         "tags": {
           "ManagedBy": "Terraform"
         }
@@ -199,7 +199,7 @@
       "organization": {
         "//": {
           "metadata": {
-            "path": "spiral/organization",
+            "path": "helix/organization",
             "uniqueId": "organization"
           }
         },
@@ -222,7 +222,7 @@
       "dev_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "spiral/dev_admin_sso_account_assignment",
+            "path": "helix/dev_admin_sso_account_assignment",
             "uniqueId": "dev_admin_sso_account_assignment"
           }
         },
@@ -236,7 +236,7 @@
       "dmz_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "spiral/dmz_admin_sso_account_assignment",
+            "path": "helix/dmz_admin_sso_account_assignment",
             "uniqueId": "dmz_admin_sso_account_assignment"
           }
         },
@@ -247,10 +247,24 @@
         "target_id": "${aws_organizations_account.dmz.id}",
         "target_type": "AWS_ACCOUNT"
       },
+      "helix_admin_sso_account_assignment": {
+        "//": {
+          "metadata": {
+            "path": "helix/helix_admin_sso_account_assignment",
+            "uniqueId": "helix_admin_sso_account_assignment"
+          }
+        },
+        "instance_arn": "${aws_ssoadmin_permission_set.admin_sso_permission_set.instance_arn}",
+        "permission_set_arn": "${aws_ssoadmin_permission_set.admin_sso_permission_set.arn}",
+        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_type": "GROUP",
+        "target_id": "${aws_organizations_account.helix.id}",
+        "target_type": "AWS_ACCOUNT"
+      },
       "hub_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "spiral/hub_admin_sso_account_assignment",
+            "path": "helix/hub_admin_sso_account_assignment",
             "uniqueId": "hub_admin_sso_account_assignment"
           }
         },
@@ -264,7 +278,7 @@
       "lib_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "spiral/lib_admin_sso_account_assignment",
+            "path": "helix/lib_admin_sso_account_assignment",
             "uniqueId": "lib_admin_sso_account_assignment"
           }
         },
@@ -278,7 +292,7 @@
       "log_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "spiral/log_admin_sso_account_assignment",
+            "path": "helix/log_admin_sso_account_assignment",
             "uniqueId": "log_admin_sso_account_assignment"
           }
         },
@@ -292,7 +306,7 @@
       "net_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "spiral/net_admin_sso_account_assignment",
+            "path": "helix/net_admin_sso_account_assignment",
             "uniqueId": "net_admin_sso_account_assignment"
           }
         },
@@ -306,7 +320,7 @@
       "ops_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "spiral/ops_admin_sso_account_assignment",
+            "path": "helix/ops_admin_sso_account_assignment",
             "uniqueId": "ops_admin_sso_account_assignment"
           }
         },
@@ -320,7 +334,7 @@
       "pub_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "spiral/pub_admin_sso_account_assignment",
+            "path": "helix/pub_admin_sso_account_assignment",
             "uniqueId": "pub_admin_sso_account_assignment"
           }
         },
@@ -334,7 +348,7 @@
       "sec_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "spiral/sec_admin_sso_account_assignment",
+            "path": "helix/sec_admin_sso_account_assignment",
             "uniqueId": "sec_admin_sso_account_assignment"
           }
         },
@@ -344,27 +358,13 @@
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.sec.id}",
         "target_type": "AWS_ACCOUNT"
-      },
-      "spiral_admin_sso_account_assignment": {
-        "//": {
-          "metadata": {
-            "path": "spiral/spiral_admin_sso_account_assignment",
-            "uniqueId": "spiral_admin_sso_account_assignment"
-          }
-        },
-        "instance_arn": "${aws_ssoadmin_permission_set.admin_sso_permission_set.instance_arn}",
-        "permission_set_arn": "${aws_ssoadmin_permission_set.admin_sso_permission_set.arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
-        "principal_type": "GROUP",
-        "target_id": "${aws_organizations_account.spiral.id}",
-        "target_type": "AWS_ACCOUNT"
       }
     },
     "aws_ssoadmin_managed_policy_attachment": {
       "admin_sso_managed_policy_attachment": {
         "//": {
           "metadata": {
-            "path": "spiral/admin_sso_managed_policy_attachment",
+            "path": "helix/admin_sso_managed_policy_attachment",
             "uniqueId": "admin_sso_managed_policy_attachment"
           }
         },
@@ -377,7 +377,7 @@
       "admin_sso_permission_set": {
         "//": {
           "metadata": {
-            "path": "spiral/admin_sso_permission_set",
+            "path": "helix/admin_sso_permission_set",
             "uniqueId": "admin_sso_permission_set"
           }
         },
@@ -395,7 +395,7 @@
       "remote": {
         "organization": "defn",
         "workspaces": {
-          "name": "spiral"
+          "name": "helix"
         }
       }
     },

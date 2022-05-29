@@ -11,9 +11,14 @@ venv:
 	
 plan:
 	earthly +plan --stack=spiral
+	earthly +plan --stack=helix
 
 show:
 	earthly +show --stack=spiral
+	earthly +show --stack=helix
 
-apply:
+apply-spiral:
 	earthly --push +apply --stack=spiral
+
+apply-helix:
+	earthly --push +apply --stack=helix

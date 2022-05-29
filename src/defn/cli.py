@@ -6,8 +6,8 @@ from foo.init import once
 import typer
 from cdktf import App
 
+from foo.cli import GridTest
 from foo.demo import DemoStack
-from foo.textual import GridTest
 
 
 once()
@@ -15,16 +15,23 @@ cli = typer.Typer()
 
 
 @cli.command()
-def synth(name: str = "spiral"):
+def synth(name: str = "spiral", backup: str = "helix"):
     app = App()
 
     DemoStack(
         app,
-        namespace=name,
         prefix="aws-",
         org=name,
         domain="defn.us",
         region="us-west-2",
+    )
+
+    DemoStack(
+        app,
+        prefix="aws-",
+        org=backup,
+        domain="defn.sh",
+        region="us-east-2",
     )
 
     app.synth()
