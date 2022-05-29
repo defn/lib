@@ -10,15 +10,11 @@ venv:
 	cd 3rdparty/python && poetry install
 	
 plan:
-	earthly +plan --stack=spiral
-	earthly +plan --stack=helix
+	earthly +plan --stack=$(stack)
 
 show:
-	earthly +show --stack=spiral
-	earthly +show --stack=helix
+	earthly +show --stack=$(stack)
 
-apply-spiral:
-	earthly --push +apply --stack=spiral
+apply:
+	earthly --push +apply --stack=$(stack)
 
-apply-helix:
-	earthly --push +apply --stack=helix

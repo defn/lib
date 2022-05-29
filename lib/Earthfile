@@ -24,7 +24,8 @@ PLAN:
         --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
         --secret AWS_ACCESS_KEY_ID_helix --secret AWS_SECRET_ACCESS_KEY_helix \
         bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && ~/bin/e terraform plan -out=.plan'
-    SAVE ARTIFACT cdktf.out/* AS LOCAL cdktf.out/
+    SAVE ARTIFACT cdktf.out/stacks/${stack}/.plan AS LOCAL cdktf.out/stacks/${stack}/
+    SAVE ARTIFACT cdktf.out/stacks/${stack}/.terraform.lock.hcl AS LOCAL cdktf.out/stacks/${stack}/
 
 SHOW:
     COMMAND
