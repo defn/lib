@@ -1,4 +1,7 @@
 dev:
+	flock -n .dev.lock -c '~/bin/e $(MAKE) dev_inner'
+
+dev_inner:
 	$(MAKE) venv
 	-code --install-extension ms-python.python
 	tilt up --port=0 --stream
@@ -10,6 +13,13 @@ get:
 
 venv:
 	cd 3rdparty/python && poetry install
+
+build:
+	earthly +synth --stack=gyre
+	earthly +synth --stack=curl
+	earthly +synth --stack=coil
+	earthly +synth --stack=helix
+	earthly +synth --stack=spiral
 
 synth:
 	earthly +synth --stack=$(stack)
