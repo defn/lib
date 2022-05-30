@@ -53,6 +53,10 @@ def synth():
         accounts=env_accounts,
     )
 
+    DemoStack(
+        app, org="gyre", domain="defn.us", sso_region="us-east-2", accounts=["ops"]
+    )
+
     app.synth()
 
 

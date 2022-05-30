@@ -16,14 +16,33 @@ Create Administrator IAM user:
     - Generate access keys
         - AWS_ACCESS_KEY_ID
         - AWS_SECRET_ACCESS_KEY
-        - store with _${stack} suffix
-    - Enable MFA
+        - Add to pass
+            - _${stack} suffix
+        - Add to aws-vault
+            - aws-vault add ORG
+        - Enable MFA
 
 Configure organization:
     - Visit https://us-east-1.console.aws.amazon.com/singlesignon/identity/home
         - Select the correct region
         - Enable SSO, which creates the organization
     - Create the Administrators group
+    - Add a user to the group
+    - Record the SSO url
 
 Create Terraform cloud workspace, named after the org
     - Configure workspace for local execution mode
+
+Generate .aws/config
+    - export region=us-west-1 sso_region=us-west-2 url=https://.../start name=curl
+    - bin/awsconfig >> ~/.aws/config
+
+Add AWS_ACCESS_KEY_ID_${org},AWS_SECRET_ACCESS_KEY_${org} to lib/Earthfile
+
+Add stack to src/defn/cli.py
+
+Then cdktf initial accounts
+    - make synth stack=${org}
+    - make import stack=${org}
+    - make plan stack=${org}
+    - make apply stack=${org}
