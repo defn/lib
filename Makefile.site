@@ -1,5 +1,5 @@
 dev:
-	flock -n .dev.lock -c '~/bin/e $(MAKE) dev_inner'
+	@flock -n .dev.lock -c '~/bin/e $(MAKE) dev_inner' || true
 
 dev_inner:
 	$(MAKE) venv
