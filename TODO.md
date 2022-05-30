@@ -33,10 +33,6 @@ Configure organization:
 Create Terraform cloud workspace, named after the org
     - Configure workspace for local execution mode
 
-Generate .aws/config
-    - export region=us-west-1 sso_region=us-west-2 url=https://.../start name=curl
-    - bin/awsconfig >> ~/.aws/config
-
 Add AWS_ACCESS_KEY_ID_${org},AWS_SECRET_ACCESS_KEY_${org} to lib/Earthfile
 
 Add stack to src/defn/cli.py
@@ -46,3 +42,7 @@ Then cdktf initial accounts
     - make import stack=${org}
     - make plan stack=${org}
     - make apply stack=${org}
+
+Generate .aws/config
+    - export region=us-west-1 sso_region=us-west-2 url=https://.../start name=curl
+    - bin/awsconfig >> ~/.aws/config
