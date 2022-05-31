@@ -1,4 +1,4 @@
-from foo.init import once
+from defn.init import once
 
 
 """ init must run before cdktf """
@@ -6,8 +6,7 @@ from foo.init import once
 import typer
 from cdktf import App
 
-from foo.cli import GridTest
-from foo.demo import DemoStack
+from defn.stack.demo import DemoStack
 
 
 once()
@@ -62,7 +61,7 @@ def synth():
 
 @cli.command()
 def meh():
-    GridTest.run(title="Grid Test", log="textual.log")
+    return True
 
 
 if __name__ == "__main__":
