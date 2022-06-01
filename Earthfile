@@ -40,6 +40,14 @@ import:
     ARG stack
     DO lib+IMPORT --stack=${stack}
 
+config:
+    FROM registry.fly.io/defn:dev-tower
+    ARG stack
+    ARG region
+    ARG sso_region
+    ARG sso_url
+    DO lib+CONFIG --stack=${stack} --region=${region} --sso_region=${sso_region} --sso_url=${sso_url}
+
 apply:
     FROM +init
     ARG stack

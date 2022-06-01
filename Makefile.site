@@ -21,6 +21,13 @@ build:
 	earthly +synth --stack=helix
 	earthly +synth --stack=spiral
 
+config:
+	earthly --push +config --stack=gyre   --region=us-east-2 --sso_region=us-east-2 --sso_url=https://d-9a6716e54a.awsapps.com/start
+	earthly --push +config --stack=curl   --region=us-west-1 --sso_region=us-west-2 --sso_url=https://d-926760a859.awsapps.com/start
+	earthly --push +config --stack=coil   --region=us-east-1 --sso_region=us-east-1 --sso_url=https://d-90674c3cfd.awsapps.com/start
+	earthly --push +config --stack=helix  --region=us-east-2 --sso_region=us-east-2 --sso_url=https://d-9a6716ffd1.awsapps.com/start
+	earthly --push +config --stack=spiral --region=us-west-2 --sso_region=us-west-2 --sso_url=https://d-926760b322.awsapps.com/start
+
 synth:
 	earthly +synth --stack=$(stack)
 

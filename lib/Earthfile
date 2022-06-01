@@ -39,7 +39,8 @@ PLAN:
     COMMAND
     ARG stack
     RUN --no-cache \
-        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
+        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
+        --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
         --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
         --secret AWS_ACCESS_KEY_ID_helix  --secret AWS_SECRET_ACCESS_KEY_helix \
         --secret AWS_ACCESS_KEY_ID_coil   --secret AWS_SECRET_ACCESS_KEY_coil \
@@ -53,7 +54,8 @@ SHOW:
     ARG stack
     COPY cdktf.out/stacks/${stack}/.plan cdktf.out/stacks/${stack}/
     RUN --no-cache \
-        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
+        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
+        --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
         --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
         --secret AWS_ACCESS_KEY_ID_helix  --secret AWS_SECRET_ACCESS_KEY_helix \
         --secret AWS_ACCESS_KEY_ID_coil   --secret AWS_SECRET_ACCESS_KEY_coil \
@@ -81,12 +83,28 @@ IMPORT:
         --secret AWS_ACCESS_KEY_ID_gyre   --secret AWS_SECRET_ACCESS_KEY_gyre \
         bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && i="`aws sts get-caller-identity --query Account --output text`" && o="`aws organizations describe-account --account-id "${i}" | jq -r .Account.Arn | cut -d/ -f2`" && ~/bin/e terraform import aws_organizations_organization.organization ${o}'
 
+CONFIG:
+    COMMAND
+    ARG stack
+    ARG region
+    ARG sso_region
+    RUN --no-cache \
+        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
+        --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
+        --secret AWS_ACCESS_KEY_ID_helix  --secret AWS_SECRET_ACCESS_KEY_helix \
+        --secret AWS_ACCESS_KEY_ID_coil   --secret AWS_SECRET_ACCESS_KEY_coil \
+        --secret AWS_ACCESS_KEY_ID_curl   --secret AWS_SECRET_ACCESS_KEY_curl \
+        --secret AWS_ACCESS_KEY_ID_gyre   --secret AWS_SECRET_ACCESS_KEY_gyre \
+        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && i="`aws sts get-caller-identity --query Account --output text`" && ~/bin/e env region=${region} sso_region=${sso_region} sso_url=${sso_ul} name=${stack} awsconfig > config'
+    SAVE ARTIFACT config AS LOCAL cdktf.out/stacks/${stack}/.aws/config
+
 APPLY:
     COMMAND
     ARG stack
     COPY cdktf.out/stacks/${stack}/.plan cdktf.out/stacks/${stack}/
     RUN --push --no-cache \
-        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
+        --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
+        --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
         --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
         --secret AWS_ACCESS_KEY_ID_helix  --secret AWS_SECRET_ACCESS_KEY_helix \
         --secret AWS_ACCESS_KEY_ID_coil   --secret AWS_SECRET_ACCESS_KEY_coil \
