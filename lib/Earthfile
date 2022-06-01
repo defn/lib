@@ -88,6 +88,7 @@ CONFIG:
     ARG stack
     ARG region
     ARG sso_region
+    ARG sso_url
     RUN --no-cache \
         --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
         --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
