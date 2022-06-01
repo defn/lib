@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 update_settings(max_parallel_updates=6)
 
 local_resource(
