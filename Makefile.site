@@ -1,18 +1,13 @@
 dev:
-	@flock -n .dev.lock -c '~/bin/e $(MAKE) dev_inner' || true
+	@if flock -n .dev.lock -c '~/bin/e $(MAKE) dev_inner'; then rm -f .dev.lock; fi
 
 dev_inner:
-	$(MAKE) venv
-	-code --install-extension ms-python.python
 	tilt up --port=0 --stream
 
 get:
 	earthly +get
 	rsync -ia provider.new/. provider/.
 	rm -rf provider.new
-
-venv:
-	cd 3rdparty/python && poetry install
 
 build:
 	earthly +synth --stack=gyre
