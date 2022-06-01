@@ -40,7 +40,7 @@ config:
 	ls -d cdktf.*/stacks/*/.aws/config | sort | xargs cat > ~/.aws/config
 
 synth:
-	earthly +synth --stack=$(stack)
+	earthly +synth
 
 plan:
 	earthly +plan --stack=$(stack)

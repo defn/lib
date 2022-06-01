@@ -5,7 +5,6 @@ SYNTH:
     ARG stack
     COPY cdktf.json .
     RUN ~/bin/e cdktf synth
-    SAVE ARTIFACT cdktf.out/stacks/${stack}/cdk.tf.json AS LOCAL cdktf.out/stacks/${stack}/
 
 INIT:
     COMMAND
