@@ -21,6 +21,16 @@ build:
 	earthly +synth --stack=helix
 	earthly +synth --stack=spiral
 
+login:
+	aws --profile gyre-ops sts get-caller-identity
+	aws --profile curl-lib sts get-caller-identity
+	aws --profile coil-lib sts get-caller-identity
+	aws --profile helix-lib sts get-caller-identity
+	aws --profile spiral-lib sts get-caller-identity
+
+config-test:
+	grep ^.profile ~/.aws/config | perl -ne 's{.profile }{}; s{.$$}{}; print if m{^\w+-\w+$$|-adm$$}' | runmany 4 'echo profile "$$1 $$(aws --profile $$1 sts get-caller-identity | jq -r .Arn)"'
+
 config:
 	earthly --push +config --stack=gyre   --region=us-east-2 --sso_region=us-east-2 --sso_url=https://d-9a6716e54a.awsapps.com/start
 	earthly --push +config --stack=curl   --region=us-west-1 --sso_region=us-west-2 --sso_url=https://d-926760a859.awsapps.com/start
