@@ -95,7 +95,7 @@ CONFIG:
         --secret AWS_ACCESS_KEY_ID_coil   --secret AWS_SECRET_ACCESS_KEY_coil \
         --secret AWS_ACCESS_KEY_ID_curl   --secret AWS_SECRET_ACCESS_KEY_curl \
         --secret AWS_ACCESS_KEY_ID_gyre   --secret AWS_SECRET_ACCESS_KEY_gyre \
-        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && i="`aws sts get-caller-identity --query Account --output text`" && ~/bin/e env region=${region} sso_region=${sso_region} sso_url=${sso_url} name=${stack} awsconfig > config'
+        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && ~/bin/e env region=${region} sso_region=${sso_region} sso_url=${sso_url} name=${stack} awsconfig > config'
     SAVE ARTIFACT config AS LOCAL cdktf.out/stacks/${stack}/.aws/config
 
 APPLY:
