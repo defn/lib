@@ -12,7 +12,7 @@ backend_packages = [
 ]
 
 pantsd = false
-pants_version = '2.11.0'
+pants_version = '2.12.0rc2'
 
 [cli.alias]
 green = "update-build-files fmt lint check ::"
