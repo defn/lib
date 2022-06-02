@@ -1,4 +1,4 @@
-python_distribution( # type: ignore
+python_distribution(
     name="defn",
     dependencies=[
         "3rdparty/python:reqs#cdktf",
@@ -11,12 +11,12 @@ python_distribution( # type: ignore
         "provider:defn_cdktf_provider_vault",
         "provider:defn_cdktf_provider_buildkite",
         "provider:defn_cdktf_provider_cloudflare",
-        "src/defn:cli"
+        "src/defn:cli",
+        "src/defn:version",
     ],
     repositories=["@pypi"],
-    provides=python_artifact( # type: ignore
-        name="defn",
-        version="0.0.1a4"
+    provides=python_artifact(
+        name="defn", version=open("src/defn/VERSION", "r").readline().strip()
     ),
     sdist=True,
     wheel=False,

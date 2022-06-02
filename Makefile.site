@@ -12,6 +12,10 @@ get:
 publish:
 	passenv TWINE_USERNAME TWINE_PASSWORD -- p publish src:defn
 
+package:
+	echo >> src/BUILD
+	./pants update-build-files src/BUILD
+
 build:
 	earthly +synth --stack=gyre
 	earthly +synth --stack=curl
