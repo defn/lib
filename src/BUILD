@@ -14,7 +14,7 @@ python_distribution(
     ],
     provides=python_artifact(
         name="defn",
-        version="2.21.0",
+        version="0.0.1a1",
     ),
     sdist=False,
     entry_points={
