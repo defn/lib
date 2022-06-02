@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: v4.2.0
     hooks:
       - id: trailing-whitespace
         exclude: ^(provider|cdktf.out)/|\.lock
@@ -10,6 +10,10 @@ repos:
         exclude: ^(provider|cdktf.out)/
       - id: check-yaml
         exclude: ^(provider|cdktf.out)/
+      - id: check-toml
+        exclude: ^(provider|cdktf.out)/
+      - id: check-shebang-scripts-are-executable
+      - id: check-executables-have-shebangs
 
   - repo: local
     hooks:
