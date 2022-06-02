@@ -1,5 +1,8 @@
-python_sources(name="py")
+python_sources(name="py", dependencies=[":version"])
+
 file(name="earthfile", source="Earthfile")
+
+resources(name="version", sources=["VERSION"])
 
 experimental_shell_command(
     name="pycco_docs",

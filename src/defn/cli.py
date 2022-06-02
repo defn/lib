@@ -3,18 +3,21 @@ from defn.init import once
 
 """ init must run before cdktf """
 
+
 import typer
-from cdktf import App
-
-from defn.stack.demo import DemoStack
 
 
-once()
 cli = typer.Typer()
 
 
 @cli.command()
 def synth():
+    once()
+
+    from cdktf import App
+
+    from defn.stack.demo import DemoStack
+
     app = App()
 
     full_accounts = ["net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"]
@@ -60,8 +63,10 @@ def synth():
 
 
 @cli.command()
-def meh():
-    return True
+def version():
+    import pkgutil
+
+    print(pkgutil.get_data("defn", "VERSION").decode("utf-8").strip())  # type: ignore
 
 
 def main():

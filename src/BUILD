@@ -1,4 +1,4 @@
-python_distribution(
+python_distribution( # type: ignore
     name="defn",
     dependencies=[
         "3rdparty/python:reqs#cdktf",
@@ -14,11 +14,12 @@ python_distribution(
         "src/defn:cli"
     ],
     repositories=["@pypi"],
-    provides=python_artifact(
+    provides=python_artifact( # type: ignore
         name="defn",
-        version="0.0.1a2",
+        version="0.0.1a4"
     ),
     sdist=True,
+    wheel=False,
     entry_points={
         "console_scripts": {
             "defn": "defn.cli:main",

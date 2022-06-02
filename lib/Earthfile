@@ -16,6 +16,7 @@ SYNTH:
     COMMAND
     ARG stack
     COPY cdktf.json .
+    RUN ~/bin/e dist/src.defn/cli.pex version
     RUN ~/bin/e cdktf synth
 
 INIT:
