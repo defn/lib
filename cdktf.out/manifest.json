@@ -16,6 +16,30 @@
       "synthesizedStackPath": "stacks/helix/cdk.tf.json",
       "annotations": [],
       "dependencies": []
+    },
+    "coil": {
+      "name": "coil",
+      "constructPath": "coil",
+      "workingDirectory": "stacks/coil",
+      "synthesizedStackPath": "stacks/coil/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
+    },
+    "curl": {
+      "name": "curl",
+      "constructPath": "curl",
+      "workingDirectory": "stacks/curl",
+      "synthesizedStackPath": "stacks/curl/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
+    },
+    "gyre": {
+      "name": "gyre",
+      "constructPath": "gyre",
+      "workingDirectory": "stacks/gyre",
+      "synthesizedStackPath": "stacks/gyre/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
     }
   }
 }

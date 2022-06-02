@@ -11,16 +11,17 @@ python_distribution(
         "provider:defn_cdktf_provider_vault",
         "provider:defn_cdktf_provider_buildkite",
         "provider:defn_cdktf_provider_cloudflare",
+        "src/defn:cli"
     ],
     repositories=["@pypi"],
     provides=python_artifact(
         name="defn",
         version="0.0.1a2",
     ),
-    sdist=False,
+    sdist=True,
     entry_points={
         "console_scripts": {
-            "defn": "defn.main:cli",
+            "defn": "defn.cli:main",
         }
     },
 )
