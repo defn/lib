@@ -1824,6 +1824,7 @@ class AccessGroupConfig(cdktf.TerraformMetaArguments):
         "email": "email",
         "email_domain": "emailDomain",
         "everyone": "everyone",
+        "external_evaluation": "externalEvaluation",
         "geo": "geo",
         "github": "github",
         "group": "group",
@@ -1848,6 +1849,7 @@ class AccessGroupExclude:
         email: typing.Optional[typing.Sequence[builtins.str]] = None,
         email_domain: typing.Optional[typing.Sequence[builtins.str]] = None,
         everyone: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
+        external_evaluation: typing.Optional["AccessGroupExcludeExternalEvaluation"] = None,
         geo: typing.Optional[typing.Sequence[builtins.str]] = None,
         github: typing.Optional[typing.Union[cdktf.IResolvable, typing.Sequence["AccessGroupExcludeGithub"]]] = None,
         group: typing.Optional[typing.Sequence[builtins.str]] = None,
@@ -1868,6 +1870,7 @@ class AccessGroupExclude:
         :param email: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#email AccessGroup#email}.
         :param email_domain: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#email_domain AccessGroup#email_domain}.
         :param everyone: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#everyone AccessGroup#everyone}.
+        :param external_evaluation: external_evaluation block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#external_evaluation AccessGroup#external_evaluation}
         :param geo: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#geo AccessGroup#geo}.
         :param github: github block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#github AccessGroup#github}
         :param group: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#group AccessGroup#group}.
@@ -1878,6 +1881,8 @@ class AccessGroupExclude:
         :param saml: saml block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#saml AccessGroup#saml}
         :param service_token: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#service_token AccessGroup#service_token}.
         '''
+        if isinstance(external_evaluation, dict):
+            external_evaluation = AccessGroupExcludeExternalEvaluation(**external_evaluation)
         self._values: typing.Dict[str, typing.Any] = {}
         if any_valid_service_token is not None:
             self._values["any_valid_service_token"] = any_valid_service_token
@@ -1897,6 +1902,8 @@ class AccessGroupExclude:
             self._values["email_domain"] = email_domain
         if everyone is not None:
             self._values["everyone"] = everyone
+        if external_evaluation is not None:
+            self._values["external_evaluation"] = external_evaluation
         if geo is not None:
             self._values["geo"] = geo
         if github is not None:
@@ -1980,6 +1987,17 @@ class AccessGroupExclude:
         '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#everyone AccessGroup#everyone}.'''
         result = self._values.get("everyone")
         return typing.cast(typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]], result)
+
+    @builtins.property
+    def external_evaluation(
+        self,
+    ) -> typing.Optional["AccessGroupExcludeExternalEvaluation"]:
+        '''external_evaluation block.
+
+        Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#external_evaluation AccessGroup#external_evaluation}
+        '''
+        result = self._values.get("external_evaluation")
+        return typing.cast(typing.Optional["AccessGroupExcludeExternalEvaluation"], result)
 
     @builtins.property
     def geo(self) -> typing.Optional[typing.List[builtins.str]]:
@@ -2111,6 +2129,117 @@ class AccessGroupExcludeAzure:
         return "AccessGroupExcludeAzure(%s)" % ", ".join(
             k + "=" + repr(v) for k, v in self._values.items()
         )
+
+
+@jsii.data_type(
+    jsii_type="cloudflare_cloudflare.AccessGroupExcludeExternalEvaluation",
+    jsii_struct_bases=[],
+    name_mapping={"evaluate_url": "evaluateUrl", "keys_url": "keysUrl"},
+)
+class AccessGroupExcludeExternalEvaluation:
+    def __init__(
+        self,
+        *,
+        evaluate_url: typing.Optional[builtins.str] = None,
+        keys_url: typing.Optional[builtins.str] = None,
+    ) -> None:
+        '''
+        :param evaluate_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#evaluate_url AccessGroup#evaluate_url}.
+        :param keys_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#keys_url AccessGroup#keys_url}.
+        '''
+        self._values: typing.Dict[str, typing.Any] = {}
+        if evaluate_url is not None:
+            self._values["evaluate_url"] = evaluate_url
+        if keys_url is not None:
+            self._values["keys_url"] = keys_url
+
+    @builtins.property
+    def evaluate_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#evaluate_url AccessGroup#evaluate_url}.'''
+        result = self._values.get("evaluate_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    @builtins.property
+    def keys_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#keys_url AccessGroup#keys_url}.'''
+        result = self._values.get("keys_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    def __eq__(self, rhs: typing.Any) -> builtins.bool:
+        return isinstance(rhs, self.__class__) and rhs._values == self._values
+
+    def __ne__(self, rhs: typing.Any) -> builtins.bool:
+        return not (rhs == self)
+
+    def __repr__(self) -> str:
+        return "AccessGroupExcludeExternalEvaluation(%s)" % ", ".join(
+            k + "=" + repr(v) for k, v in self._values.items()
+        )
+
+
+class AccessGroupExcludeExternalEvaluationOutputReference(
+    cdktf.ComplexObject,
+    metaclass=jsii.JSIIMeta,
+    jsii_type="cloudflare_cloudflare.AccessGroupExcludeExternalEvaluationOutputReference",
+):
+    def __init__(
+        self,
+        terraform_resource: cdktf.IInterpolatingParent,
+        terraform_attribute: builtins.str,
+    ) -> None:
+        '''
+        :param terraform_resource: The parent resource.
+        :param terraform_attribute: The attribute on the parent resource this class is referencing.
+        '''
+        jsii.create(self.__class__, self, [terraform_resource, terraform_attribute])
+
+    @jsii.member(jsii_name="resetEvaluateUrl")
+    def reset_evaluate_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetEvaluateUrl", []))
+
+    @jsii.member(jsii_name="resetKeysUrl")
+    def reset_keys_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetKeysUrl", []))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrlInput")
+    def evaluate_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "evaluateUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrlInput")
+    def keys_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "keysUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrl")
+    def evaluate_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "evaluateUrl"))
+
+    @evaluate_url.setter
+    def evaluate_url(self, value: builtins.str) -> None:
+        jsii.set(self, "evaluateUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrl")
+    def keys_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "keysUrl"))
+
+    @keys_url.setter
+    def keys_url(self, value: builtins.str) -> None:
+        jsii.set(self, "keysUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="internalValue")
+    def internal_value(self) -> typing.Optional[AccessGroupExcludeExternalEvaluation]:
+        return typing.cast(typing.Optional[AccessGroupExcludeExternalEvaluation], jsii.get(self, "internalValue"))
+
+    @internal_value.setter
+    def internal_value(
+        self,
+        value: typing.Optional[AccessGroupExcludeExternalEvaluation],
+    ) -> None:
+        jsii.set(self, "internalValue", value)
 
 
 @jsii.data_type(
@@ -2338,6 +2467,7 @@ class AccessGroupExcludeSaml:
         "email": "email",
         "email_domain": "emailDomain",
         "everyone": "everyone",
+        "external_evaluation": "externalEvaluation",
         "geo": "geo",
         "github": "github",
         "group": "group",
@@ -2362,6 +2492,7 @@ class AccessGroupInclude:
         email: typing.Optional[typing.Sequence[builtins.str]] = None,
         email_domain: typing.Optional[typing.Sequence[builtins.str]] = None,
         everyone: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
+        external_evaluation: typing.Optional["AccessGroupIncludeExternalEvaluation"] = None,
         geo: typing.Optional[typing.Sequence[builtins.str]] = None,
         github: typing.Optional[typing.Union[cdktf.IResolvable, typing.Sequence["AccessGroupIncludeGithub"]]] = None,
         group: typing.Optional[typing.Sequence[builtins.str]] = None,
@@ -2382,6 +2513,7 @@ class AccessGroupInclude:
         :param email: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#email AccessGroup#email}.
         :param email_domain: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#email_domain AccessGroup#email_domain}.
         :param everyone: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#everyone AccessGroup#everyone}.
+        :param external_evaluation: external_evaluation block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#external_evaluation AccessGroup#external_evaluation}
         :param geo: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#geo AccessGroup#geo}.
         :param github: github block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#github AccessGroup#github}
         :param group: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#group AccessGroup#group}.
@@ -2392,6 +2524,8 @@ class AccessGroupInclude:
         :param saml: saml block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#saml AccessGroup#saml}
         :param service_token: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#service_token AccessGroup#service_token}.
         '''
+        if isinstance(external_evaluation, dict):
+            external_evaluation = AccessGroupIncludeExternalEvaluation(**external_evaluation)
         self._values: typing.Dict[str, typing.Any] = {}
         if any_valid_service_token is not None:
             self._values["any_valid_service_token"] = any_valid_service_token
@@ -2411,6 +2545,8 @@ class AccessGroupInclude:
             self._values["email_domain"] = email_domain
         if everyone is not None:
             self._values["everyone"] = everyone
+        if external_evaluation is not None:
+            self._values["external_evaluation"] = external_evaluation
         if geo is not None:
             self._values["geo"] = geo
         if github is not None:
@@ -2494,6 +2630,17 @@ class AccessGroupInclude:
         '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#everyone AccessGroup#everyone}.'''
         result = self._values.get("everyone")
         return typing.cast(typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]], result)
+
+    @builtins.property
+    def external_evaluation(
+        self,
+    ) -> typing.Optional["AccessGroupIncludeExternalEvaluation"]:
+        '''external_evaluation block.
+
+        Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#external_evaluation AccessGroup#external_evaluation}
+        '''
+        result = self._values.get("external_evaluation")
+        return typing.cast(typing.Optional["AccessGroupIncludeExternalEvaluation"], result)
 
     @builtins.property
     def geo(self) -> typing.Optional[typing.List[builtins.str]]:
@@ -2625,6 +2772,117 @@ class AccessGroupIncludeAzure:
         return "AccessGroupIncludeAzure(%s)" % ", ".join(
             k + "=" + repr(v) for k, v in self._values.items()
         )
+
+
+@jsii.data_type(
+    jsii_type="cloudflare_cloudflare.AccessGroupIncludeExternalEvaluation",
+    jsii_struct_bases=[],
+    name_mapping={"evaluate_url": "evaluateUrl", "keys_url": "keysUrl"},
+)
+class AccessGroupIncludeExternalEvaluation:
+    def __init__(
+        self,
+        *,
+        evaluate_url: typing.Optional[builtins.str] = None,
+        keys_url: typing.Optional[builtins.str] = None,
+    ) -> None:
+        '''
+        :param evaluate_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#evaluate_url AccessGroup#evaluate_url}.
+        :param keys_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#keys_url AccessGroup#keys_url}.
+        '''
+        self._values: typing.Dict[str, typing.Any] = {}
+        if evaluate_url is not None:
+            self._values["evaluate_url"] = evaluate_url
+        if keys_url is not None:
+            self._values["keys_url"] = keys_url
+
+    @builtins.property
+    def evaluate_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#evaluate_url AccessGroup#evaluate_url}.'''
+        result = self._values.get("evaluate_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    @builtins.property
+    def keys_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#keys_url AccessGroup#keys_url}.'''
+        result = self._values.get("keys_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    def __eq__(self, rhs: typing.Any) -> builtins.bool:
+        return isinstance(rhs, self.__class__) and rhs._values == self._values
+
+    def __ne__(self, rhs: typing.Any) -> builtins.bool:
+        return not (rhs == self)
+
+    def __repr__(self) -> str:
+        return "AccessGroupIncludeExternalEvaluation(%s)" % ", ".join(
+            k + "=" + repr(v) for k, v in self._values.items()
+        )
+
+
+class AccessGroupIncludeExternalEvaluationOutputReference(
+    cdktf.ComplexObject,
+    metaclass=jsii.JSIIMeta,
+    jsii_type="cloudflare_cloudflare.AccessGroupIncludeExternalEvaluationOutputReference",
+):
+    def __init__(
+        self,
+        terraform_resource: cdktf.IInterpolatingParent,
+        terraform_attribute: builtins.str,
+    ) -> None:
+        '''
+        :param terraform_resource: The parent resource.
+        :param terraform_attribute: The attribute on the parent resource this class is referencing.
+        '''
+        jsii.create(self.__class__, self, [terraform_resource, terraform_attribute])
+
+    @jsii.member(jsii_name="resetEvaluateUrl")
+    def reset_evaluate_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetEvaluateUrl", []))
+
+    @jsii.member(jsii_name="resetKeysUrl")
+    def reset_keys_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetKeysUrl", []))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrlInput")
+    def evaluate_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "evaluateUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrlInput")
+    def keys_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "keysUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrl")
+    def evaluate_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "evaluateUrl"))
+
+    @evaluate_url.setter
+    def evaluate_url(self, value: builtins.str) -> None:
+        jsii.set(self, "evaluateUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrl")
+    def keys_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "keysUrl"))
+
+    @keys_url.setter
+    def keys_url(self, value: builtins.str) -> None:
+        jsii.set(self, "keysUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="internalValue")
+    def internal_value(self) -> typing.Optional[AccessGroupIncludeExternalEvaluation]:
+        return typing.cast(typing.Optional[AccessGroupIncludeExternalEvaluation], jsii.get(self, "internalValue"))
+
+    @internal_value.setter
+    def internal_value(
+        self,
+        value: typing.Optional[AccessGroupIncludeExternalEvaluation],
+    ) -> None:
+        jsii.set(self, "internalValue", value)
 
 
 @jsii.data_type(
@@ -2852,6 +3110,7 @@ class AccessGroupIncludeSaml:
         "email": "email",
         "email_domain": "emailDomain",
         "everyone": "everyone",
+        "external_evaluation": "externalEvaluation",
         "geo": "geo",
         "github": "github",
         "group": "group",
@@ -2876,6 +3135,7 @@ class AccessGroupRequire:
         email: typing.Optional[typing.Sequence[builtins.str]] = None,
         email_domain: typing.Optional[typing.Sequence[builtins.str]] = None,
         everyone: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
+        external_evaluation: typing.Optional["AccessGroupRequireExternalEvaluation"] = None,
         geo: typing.Optional[typing.Sequence[builtins.str]] = None,
         github: typing.Optional[typing.Union[cdktf.IResolvable, typing.Sequence["AccessGroupRequireGithub"]]] = None,
         group: typing.Optional[typing.Sequence[builtins.str]] = None,
@@ -2896,6 +3156,7 @@ class AccessGroupRequire:
         :param email: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#email AccessGroup#email}.
         :param email_domain: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#email_domain AccessGroup#email_domain}.
         :param everyone: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#everyone AccessGroup#everyone}.
+        :param external_evaluation: external_evaluation block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#external_evaluation AccessGroup#external_evaluation}
         :param geo: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#geo AccessGroup#geo}.
         :param github: github block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#github AccessGroup#github}
         :param group: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#group AccessGroup#group}.
@@ -2906,6 +3167,8 @@ class AccessGroupRequire:
         :param saml: saml block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#saml AccessGroup#saml}
         :param service_token: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#service_token AccessGroup#service_token}.
         '''
+        if isinstance(external_evaluation, dict):
+            external_evaluation = AccessGroupRequireExternalEvaluation(**external_evaluation)
         self._values: typing.Dict[str, typing.Any] = {}
         if any_valid_service_token is not None:
             self._values["any_valid_service_token"] = any_valid_service_token
@@ -2925,6 +3188,8 @@ class AccessGroupRequire:
             self._values["email_domain"] = email_domain
         if everyone is not None:
             self._values["everyone"] = everyone
+        if external_evaluation is not None:
+            self._values["external_evaluation"] = external_evaluation
         if geo is not None:
             self._values["geo"] = geo
         if github is not None:
@@ -3008,6 +3273,17 @@ class AccessGroupRequire:
         '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#everyone AccessGroup#everyone}.'''
         result = self._values.get("everyone")
         return typing.cast(typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]], result)
+
+    @builtins.property
+    def external_evaluation(
+        self,
+    ) -> typing.Optional["AccessGroupRequireExternalEvaluation"]:
+        '''external_evaluation block.
+
+        Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#external_evaluation AccessGroup#external_evaluation}
+        '''
+        result = self._values.get("external_evaluation")
+        return typing.cast(typing.Optional["AccessGroupRequireExternalEvaluation"], result)
 
     @builtins.property
     def geo(self) -> typing.Optional[typing.List[builtins.str]]:
@@ -3139,6 +3415,117 @@ class AccessGroupRequireAzure:
         return "AccessGroupRequireAzure(%s)" % ", ".join(
             k + "=" + repr(v) for k, v in self._values.items()
         )
+
+
+@jsii.data_type(
+    jsii_type="cloudflare_cloudflare.AccessGroupRequireExternalEvaluation",
+    jsii_struct_bases=[],
+    name_mapping={"evaluate_url": "evaluateUrl", "keys_url": "keysUrl"},
+)
+class AccessGroupRequireExternalEvaluation:
+    def __init__(
+        self,
+        *,
+        evaluate_url: typing.Optional[builtins.str] = None,
+        keys_url: typing.Optional[builtins.str] = None,
+    ) -> None:
+        '''
+        :param evaluate_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#evaluate_url AccessGroup#evaluate_url}.
+        :param keys_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#keys_url AccessGroup#keys_url}.
+        '''
+        self._values: typing.Dict[str, typing.Any] = {}
+        if evaluate_url is not None:
+            self._values["evaluate_url"] = evaluate_url
+        if keys_url is not None:
+            self._values["keys_url"] = keys_url
+
+    @builtins.property
+    def evaluate_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#evaluate_url AccessGroup#evaluate_url}.'''
+        result = self._values.get("evaluate_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    @builtins.property
+    def keys_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_group#keys_url AccessGroup#keys_url}.'''
+        result = self._values.get("keys_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    def __eq__(self, rhs: typing.Any) -> builtins.bool:
+        return isinstance(rhs, self.__class__) and rhs._values == self._values
+
+    def __ne__(self, rhs: typing.Any) -> builtins.bool:
+        return not (rhs == self)
+
+    def __repr__(self) -> str:
+        return "AccessGroupRequireExternalEvaluation(%s)" % ", ".join(
+            k + "=" + repr(v) for k, v in self._values.items()
+        )
+
+
+class AccessGroupRequireExternalEvaluationOutputReference(
+    cdktf.ComplexObject,
+    metaclass=jsii.JSIIMeta,
+    jsii_type="cloudflare_cloudflare.AccessGroupRequireExternalEvaluationOutputReference",
+):
+    def __init__(
+        self,
+        terraform_resource: cdktf.IInterpolatingParent,
+        terraform_attribute: builtins.str,
+    ) -> None:
+        '''
+        :param terraform_resource: The parent resource.
+        :param terraform_attribute: The attribute on the parent resource this class is referencing.
+        '''
+        jsii.create(self.__class__, self, [terraform_resource, terraform_attribute])
+
+    @jsii.member(jsii_name="resetEvaluateUrl")
+    def reset_evaluate_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetEvaluateUrl", []))
+
+    @jsii.member(jsii_name="resetKeysUrl")
+    def reset_keys_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetKeysUrl", []))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrlInput")
+    def evaluate_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "evaluateUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrlInput")
+    def keys_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "keysUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrl")
+    def evaluate_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "evaluateUrl"))
+
+    @evaluate_url.setter
+    def evaluate_url(self, value: builtins.str) -> None:
+        jsii.set(self, "evaluateUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrl")
+    def keys_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "keysUrl"))
+
+    @keys_url.setter
+    def keys_url(self, value: builtins.str) -> None:
+        jsii.set(self, "keysUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="internalValue")
+    def internal_value(self) -> typing.Optional[AccessGroupRequireExternalEvaluation]:
+        return typing.cast(typing.Optional[AccessGroupRequireExternalEvaluation], jsii.get(self, "internalValue"))
+
+    @internal_value.setter
+    def internal_value(
+        self,
+        value: typing.Optional[AccessGroupRequireExternalEvaluation],
+    ) -> None:
+        jsii.set(self, "internalValue", value)
 
 
 @jsii.data_type(
@@ -5051,6 +5438,7 @@ class AccessPolicyConfig(cdktf.TerraformMetaArguments):
         "email": "email",
         "email_domain": "emailDomain",
         "everyone": "everyone",
+        "external_evaluation": "externalEvaluation",
         "geo": "geo",
         "github": "github",
         "group": "group",
@@ -5075,6 +5463,7 @@ class AccessPolicyExclude:
         email: typing.Optional[typing.Sequence[builtins.str]] = None,
         email_domain: typing.Optional[typing.Sequence[builtins.str]] = None,
         everyone: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
+        external_evaluation: typing.Optional["AccessPolicyExcludeExternalEvaluation"] = None,
         geo: typing.Optional[typing.Sequence[builtins.str]] = None,
         github: typing.Optional[typing.Union[cdktf.IResolvable, typing.Sequence["AccessPolicyExcludeGithub"]]] = None,
         group: typing.Optional[typing.Sequence[builtins.str]] = None,
@@ -5095,6 +5484,7 @@ class AccessPolicyExclude:
         :param email: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#email AccessPolicy#email}.
         :param email_domain: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#email_domain AccessPolicy#email_domain}.
         :param everyone: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#everyone AccessPolicy#everyone}.
+        :param external_evaluation: external_evaluation block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#external_evaluation AccessPolicy#external_evaluation}
         :param geo: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#geo AccessPolicy#geo}.
         :param github: github block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#github AccessPolicy#github}
         :param group: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#group AccessPolicy#group}.
@@ -5105,6 +5495,8 @@ class AccessPolicyExclude:
         :param saml: saml block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#saml AccessPolicy#saml}
         :param service_token: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#service_token AccessPolicy#service_token}.
         '''
+        if isinstance(external_evaluation, dict):
+            external_evaluation = AccessPolicyExcludeExternalEvaluation(**external_evaluation)
         self._values: typing.Dict[str, typing.Any] = {}
         if any_valid_service_token is not None:
             self._values["any_valid_service_token"] = any_valid_service_token
@@ -5124,6 +5516,8 @@ class AccessPolicyExclude:
             self._values["email_domain"] = email_domain
         if everyone is not None:
             self._values["everyone"] = everyone
+        if external_evaluation is not None:
+            self._values["external_evaluation"] = external_evaluation
         if geo is not None:
             self._values["geo"] = geo
         if github is not None:
@@ -5207,6 +5601,17 @@ class AccessPolicyExclude:
         '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#everyone AccessPolicy#everyone}.'''
         result = self._values.get("everyone")
         return typing.cast(typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]], result)
+
+    @builtins.property
+    def external_evaluation(
+        self,
+    ) -> typing.Optional["AccessPolicyExcludeExternalEvaluation"]:
+        '''external_evaluation block.
+
+        Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#external_evaluation AccessPolicy#external_evaluation}
+        '''
+        result = self._values.get("external_evaluation")
+        return typing.cast(typing.Optional["AccessPolicyExcludeExternalEvaluation"], result)
 
     @builtins.property
     def geo(self) -> typing.Optional[typing.List[builtins.str]]:
@@ -5338,6 +5743,117 @@ class AccessPolicyExcludeAzure:
         return "AccessPolicyExcludeAzure(%s)" % ", ".join(
             k + "=" + repr(v) for k, v in self._values.items()
         )
+
+
+@jsii.data_type(
+    jsii_type="cloudflare_cloudflare.AccessPolicyExcludeExternalEvaluation",
+    jsii_struct_bases=[],
+    name_mapping={"evaluate_url": "evaluateUrl", "keys_url": "keysUrl"},
+)
+class AccessPolicyExcludeExternalEvaluation:
+    def __init__(
+        self,
+        *,
+        evaluate_url: typing.Optional[builtins.str] = None,
+        keys_url: typing.Optional[builtins.str] = None,
+    ) -> None:
+        '''
+        :param evaluate_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#evaluate_url AccessPolicy#evaluate_url}.
+        :param keys_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#keys_url AccessPolicy#keys_url}.
+        '''
+        self._values: typing.Dict[str, typing.Any] = {}
+        if evaluate_url is not None:
+            self._values["evaluate_url"] = evaluate_url
+        if keys_url is not None:
+            self._values["keys_url"] = keys_url
+
+    @builtins.property
+    def evaluate_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#evaluate_url AccessPolicy#evaluate_url}.'''
+        result = self._values.get("evaluate_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    @builtins.property
+    def keys_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#keys_url AccessPolicy#keys_url}.'''
+        result = self._values.get("keys_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    def __eq__(self, rhs: typing.Any) -> builtins.bool:
+        return isinstance(rhs, self.__class__) and rhs._values == self._values
+
+    def __ne__(self, rhs: typing.Any) -> builtins.bool:
+        return not (rhs == self)
+
+    def __repr__(self) -> str:
+        return "AccessPolicyExcludeExternalEvaluation(%s)" % ", ".join(
+            k + "=" + repr(v) for k, v in self._values.items()
+        )
+
+
+class AccessPolicyExcludeExternalEvaluationOutputReference(
+    cdktf.ComplexObject,
+    metaclass=jsii.JSIIMeta,
+    jsii_type="cloudflare_cloudflare.AccessPolicyExcludeExternalEvaluationOutputReference",
+):
+    def __init__(
+        self,
+        terraform_resource: cdktf.IInterpolatingParent,
+        terraform_attribute: builtins.str,
+    ) -> None:
+        '''
+        :param terraform_resource: The parent resource.
+        :param terraform_attribute: The attribute on the parent resource this class is referencing.
+        '''
+        jsii.create(self.__class__, self, [terraform_resource, terraform_attribute])
+
+    @jsii.member(jsii_name="resetEvaluateUrl")
+    def reset_evaluate_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetEvaluateUrl", []))
+
+    @jsii.member(jsii_name="resetKeysUrl")
+    def reset_keys_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetKeysUrl", []))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrlInput")
+    def evaluate_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "evaluateUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrlInput")
+    def keys_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "keysUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrl")
+    def evaluate_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "evaluateUrl"))
+
+    @evaluate_url.setter
+    def evaluate_url(self, value: builtins.str) -> None:
+        jsii.set(self, "evaluateUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrl")
+    def keys_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "keysUrl"))
+
+    @keys_url.setter
+    def keys_url(self, value: builtins.str) -> None:
+        jsii.set(self, "keysUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="internalValue")
+    def internal_value(self) -> typing.Optional[AccessPolicyExcludeExternalEvaluation]:
+        return typing.cast(typing.Optional[AccessPolicyExcludeExternalEvaluation], jsii.get(self, "internalValue"))
+
+    @internal_value.setter
+    def internal_value(
+        self,
+        value: typing.Optional[AccessPolicyExcludeExternalEvaluation],
+    ) -> None:
+        jsii.set(self, "internalValue", value)
 
 
 @jsii.data_type(
@@ -5565,6 +6081,7 @@ class AccessPolicyExcludeSaml:
         "email": "email",
         "email_domain": "emailDomain",
         "everyone": "everyone",
+        "external_evaluation": "externalEvaluation",
         "geo": "geo",
         "github": "github",
         "group": "group",
@@ -5589,6 +6106,7 @@ class AccessPolicyInclude:
         email: typing.Optional[typing.Sequence[builtins.str]] = None,
         email_domain: typing.Optional[typing.Sequence[builtins.str]] = None,
         everyone: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
+        external_evaluation: typing.Optional["AccessPolicyIncludeExternalEvaluation"] = None,
         geo: typing.Optional[typing.Sequence[builtins.str]] = None,
         github: typing.Optional[typing.Union[cdktf.IResolvable, typing.Sequence["AccessPolicyIncludeGithub"]]] = None,
         group: typing.Optional[typing.Sequence[builtins.str]] = None,
@@ -5609,6 +6127,7 @@ class AccessPolicyInclude:
         :param email: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#email AccessPolicy#email}.
         :param email_domain: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#email_domain AccessPolicy#email_domain}.
         :param everyone: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#everyone AccessPolicy#everyone}.
+        :param external_evaluation: external_evaluation block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#external_evaluation AccessPolicy#external_evaluation}
         :param geo: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#geo AccessPolicy#geo}.
         :param github: github block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#github AccessPolicy#github}
         :param group: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#group AccessPolicy#group}.
@@ -5619,6 +6138,8 @@ class AccessPolicyInclude:
         :param saml: saml block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#saml AccessPolicy#saml}
         :param service_token: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#service_token AccessPolicy#service_token}.
         '''
+        if isinstance(external_evaluation, dict):
+            external_evaluation = AccessPolicyIncludeExternalEvaluation(**external_evaluation)
         self._values: typing.Dict[str, typing.Any] = {}
         if any_valid_service_token is not None:
             self._values["any_valid_service_token"] = any_valid_service_token
@@ -5638,6 +6159,8 @@ class AccessPolicyInclude:
             self._values["email_domain"] = email_domain
         if everyone is not None:
             self._values["everyone"] = everyone
+        if external_evaluation is not None:
+            self._values["external_evaluation"] = external_evaluation
         if geo is not None:
             self._values["geo"] = geo
         if github is not None:
@@ -5721,6 +6244,17 @@ class AccessPolicyInclude:
         '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#everyone AccessPolicy#everyone}.'''
         result = self._values.get("everyone")
         return typing.cast(typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]], result)
+
+    @builtins.property
+    def external_evaluation(
+        self,
+    ) -> typing.Optional["AccessPolicyIncludeExternalEvaluation"]:
+        '''external_evaluation block.
+
+        Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#external_evaluation AccessPolicy#external_evaluation}
+        '''
+        result = self._values.get("external_evaluation")
+        return typing.cast(typing.Optional["AccessPolicyIncludeExternalEvaluation"], result)
 
     @builtins.property
     def geo(self) -> typing.Optional[typing.List[builtins.str]]:
@@ -5852,6 +6386,117 @@ class AccessPolicyIncludeAzure:
         return "AccessPolicyIncludeAzure(%s)" % ", ".join(
             k + "=" + repr(v) for k, v in self._values.items()
         )
+
+
+@jsii.data_type(
+    jsii_type="cloudflare_cloudflare.AccessPolicyIncludeExternalEvaluation",
+    jsii_struct_bases=[],
+    name_mapping={"evaluate_url": "evaluateUrl", "keys_url": "keysUrl"},
+)
+class AccessPolicyIncludeExternalEvaluation:
+    def __init__(
+        self,
+        *,
+        evaluate_url: typing.Optional[builtins.str] = None,
+        keys_url: typing.Optional[builtins.str] = None,
+    ) -> None:
+        '''
+        :param evaluate_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#evaluate_url AccessPolicy#evaluate_url}.
+        :param keys_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#keys_url AccessPolicy#keys_url}.
+        '''
+        self._values: typing.Dict[str, typing.Any] = {}
+        if evaluate_url is not None:
+            self._values["evaluate_url"] = evaluate_url
+        if keys_url is not None:
+            self._values["keys_url"] = keys_url
+
+    @builtins.property
+    def evaluate_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#evaluate_url AccessPolicy#evaluate_url}.'''
+        result = self._values.get("evaluate_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    @builtins.property
+    def keys_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#keys_url AccessPolicy#keys_url}.'''
+        result = self._values.get("keys_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    def __eq__(self, rhs: typing.Any) -> builtins.bool:
+        return isinstance(rhs, self.__class__) and rhs._values == self._values
+
+    def __ne__(self, rhs: typing.Any) -> builtins.bool:
+        return not (rhs == self)
+
+    def __repr__(self) -> str:
+        return "AccessPolicyIncludeExternalEvaluation(%s)" % ", ".join(
+            k + "=" + repr(v) for k, v in self._values.items()
+        )
+
+
+class AccessPolicyIncludeExternalEvaluationOutputReference(
+    cdktf.ComplexObject,
+    metaclass=jsii.JSIIMeta,
+    jsii_type="cloudflare_cloudflare.AccessPolicyIncludeExternalEvaluationOutputReference",
+):
+    def __init__(
+        self,
+        terraform_resource: cdktf.IInterpolatingParent,
+        terraform_attribute: builtins.str,
+    ) -> None:
+        '''
+        :param terraform_resource: The parent resource.
+        :param terraform_attribute: The attribute on the parent resource this class is referencing.
+        '''
+        jsii.create(self.__class__, self, [terraform_resource, terraform_attribute])
+
+    @jsii.member(jsii_name="resetEvaluateUrl")
+    def reset_evaluate_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetEvaluateUrl", []))
+
+    @jsii.member(jsii_name="resetKeysUrl")
+    def reset_keys_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetKeysUrl", []))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrlInput")
+    def evaluate_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "evaluateUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrlInput")
+    def keys_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "keysUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrl")
+    def evaluate_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "evaluateUrl"))
+
+    @evaluate_url.setter
+    def evaluate_url(self, value: builtins.str) -> None:
+        jsii.set(self, "evaluateUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrl")
+    def keys_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "keysUrl"))
+
+    @keys_url.setter
+    def keys_url(self, value: builtins.str) -> None:
+        jsii.set(self, "keysUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="internalValue")
+    def internal_value(self) -> typing.Optional[AccessPolicyIncludeExternalEvaluation]:
+        return typing.cast(typing.Optional[AccessPolicyIncludeExternalEvaluation], jsii.get(self, "internalValue"))
+
+    @internal_value.setter
+    def internal_value(
+        self,
+        value: typing.Optional[AccessPolicyIncludeExternalEvaluation],
+    ) -> None:
+        jsii.set(self, "internalValue", value)
 
 
 @jsii.data_type(
@@ -6079,6 +6724,7 @@ class AccessPolicyIncludeSaml:
         "email": "email",
         "email_domain": "emailDomain",
         "everyone": "everyone",
+        "external_evaluation": "externalEvaluation",
         "geo": "geo",
         "github": "github",
         "group": "group",
@@ -6103,6 +6749,7 @@ class AccessPolicyRequire:
         email: typing.Optional[typing.Sequence[builtins.str]] = None,
         email_domain: typing.Optional[typing.Sequence[builtins.str]] = None,
         everyone: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
+        external_evaluation: typing.Optional["AccessPolicyRequireExternalEvaluation"] = None,
         geo: typing.Optional[typing.Sequence[builtins.str]] = None,
         github: typing.Optional[typing.Union[cdktf.IResolvable, typing.Sequence["AccessPolicyRequireGithub"]]] = None,
         group: typing.Optional[typing.Sequence[builtins.str]] = None,
@@ -6123,6 +6770,7 @@ class AccessPolicyRequire:
         :param email: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#email AccessPolicy#email}.
         :param email_domain: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#email_domain AccessPolicy#email_domain}.
         :param everyone: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#everyone AccessPolicy#everyone}.
+        :param external_evaluation: external_evaluation block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#external_evaluation AccessPolicy#external_evaluation}
         :param geo: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#geo AccessPolicy#geo}.
         :param github: github block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#github AccessPolicy#github}
         :param group: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#group AccessPolicy#group}.
@@ -6133,6 +6781,8 @@ class AccessPolicyRequire:
         :param saml: saml block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#saml AccessPolicy#saml}
         :param service_token: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#service_token AccessPolicy#service_token}.
         '''
+        if isinstance(external_evaluation, dict):
+            external_evaluation = AccessPolicyRequireExternalEvaluation(**external_evaluation)
         self._values: typing.Dict[str, typing.Any] = {}
         if any_valid_service_token is not None:
             self._values["any_valid_service_token"] = any_valid_service_token
@@ -6152,6 +6802,8 @@ class AccessPolicyRequire:
             self._values["email_domain"] = email_domain
         if everyone is not None:
             self._values["everyone"] = everyone
+        if external_evaluation is not None:
+            self._values["external_evaluation"] = external_evaluation
         if geo is not None:
             self._values["geo"] = geo
         if github is not None:
@@ -6235,6 +6887,17 @@ class AccessPolicyRequire:
         '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#everyone AccessPolicy#everyone}.'''
         result = self._values.get("everyone")
         return typing.cast(typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]], result)
+
+    @builtins.property
+    def external_evaluation(
+        self,
+    ) -> typing.Optional["AccessPolicyRequireExternalEvaluation"]:
+        '''external_evaluation block.
+
+        Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#external_evaluation AccessPolicy#external_evaluation}
+        '''
+        result = self._values.get("external_evaluation")
+        return typing.cast(typing.Optional["AccessPolicyRequireExternalEvaluation"], result)
 
     @builtins.property
     def geo(self) -> typing.Optional[typing.List[builtins.str]]:
@@ -6366,6 +7029,117 @@ class AccessPolicyRequireAzure:
         return "AccessPolicyRequireAzure(%s)" % ", ".join(
             k + "=" + repr(v) for k, v in self._values.items()
         )
+
+
+@jsii.data_type(
+    jsii_type="cloudflare_cloudflare.AccessPolicyRequireExternalEvaluation",
+    jsii_struct_bases=[],
+    name_mapping={"evaluate_url": "evaluateUrl", "keys_url": "keysUrl"},
+)
+class AccessPolicyRequireExternalEvaluation:
+    def __init__(
+        self,
+        *,
+        evaluate_url: typing.Optional[builtins.str] = None,
+        keys_url: typing.Optional[builtins.str] = None,
+    ) -> None:
+        '''
+        :param evaluate_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#evaluate_url AccessPolicy#evaluate_url}.
+        :param keys_url: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#keys_url AccessPolicy#keys_url}.
+        '''
+        self._values: typing.Dict[str, typing.Any] = {}
+        if evaluate_url is not None:
+            self._values["evaluate_url"] = evaluate_url
+        if keys_url is not None:
+            self._values["keys_url"] = keys_url
+
+    @builtins.property
+    def evaluate_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#evaluate_url AccessPolicy#evaluate_url}.'''
+        result = self._values.get("evaluate_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    @builtins.property
+    def keys_url(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/access_policy#keys_url AccessPolicy#keys_url}.'''
+        result = self._values.get("keys_url")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    def __eq__(self, rhs: typing.Any) -> builtins.bool:
+        return isinstance(rhs, self.__class__) and rhs._values == self._values
+
+    def __ne__(self, rhs: typing.Any) -> builtins.bool:
+        return not (rhs == self)
+
+    def __repr__(self) -> str:
+        return "AccessPolicyRequireExternalEvaluation(%s)" % ", ".join(
+            k + "=" + repr(v) for k, v in self._values.items()
+        )
+
+
+class AccessPolicyRequireExternalEvaluationOutputReference(
+    cdktf.ComplexObject,
+    metaclass=jsii.JSIIMeta,
+    jsii_type="cloudflare_cloudflare.AccessPolicyRequireExternalEvaluationOutputReference",
+):
+    def __init__(
+        self,
+        terraform_resource: cdktf.IInterpolatingParent,
+        terraform_attribute: builtins.str,
+    ) -> None:
+        '''
+        :param terraform_resource: The parent resource.
+        :param terraform_attribute: The attribute on the parent resource this class is referencing.
+        '''
+        jsii.create(self.__class__, self, [terraform_resource, terraform_attribute])
+
+    @jsii.member(jsii_name="resetEvaluateUrl")
+    def reset_evaluate_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetEvaluateUrl", []))
+
+    @jsii.member(jsii_name="resetKeysUrl")
+    def reset_keys_url(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetKeysUrl", []))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrlInput")
+    def evaluate_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "evaluateUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrlInput")
+    def keys_url_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "keysUrlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="evaluateUrl")
+    def evaluate_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "evaluateUrl"))
+
+    @evaluate_url.setter
+    def evaluate_url(self, value: builtins.str) -> None:
+        jsii.set(self, "evaluateUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="keysUrl")
+    def keys_url(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "keysUrl"))
+
+    @keys_url.setter
+    def keys_url(self, value: builtins.str) -> None:
+        jsii.set(self, "keysUrl", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="internalValue")
+    def internal_value(self) -> typing.Optional[AccessPolicyRequireExternalEvaluation]:
+        return typing.cast(typing.Optional[AccessPolicyRequireExternalEvaluation], jsii.get(self, "internalValue"))
+
+    @internal_value.setter
+    def internal_value(
+        self,
+        value: typing.Optional[AccessPolicyRequireExternalEvaluation],
+    ) -> None:
+        jsii.set(self, "internalValue", value)
 
 
 @jsii.data_type(
@@ -8214,6 +8988,11 @@ class ArgoTunnel(
     @jsii.member(jsii_name="id")
     def id(self) -> builtins.str:
         return typing.cast(builtins.str, jsii.get(self, "id"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="tunnelToken")
+    def tunnel_token(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "tunnelToken"))
 
     @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="accountIdInput")
@@ -23353,6 +24132,7 @@ class LogpushJob(
         destination_conf: builtins.str,
         account_id: typing.Optional[builtins.str] = None,
         enabled: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
+        frequency: typing.Optional[builtins.str] = None,
         logpull_options: typing.Optional[builtins.str] = None,
         name: typing.Optional[builtins.str] = None,
         ownership_challenge: typing.Optional[builtins.str] = None,
@@ -23370,6 +24150,7 @@ class LogpushJob(
         :param destination_conf: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#destination_conf LogpushJob#destination_conf}.
         :param account_id: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#account_id LogpushJob#account_id}.
         :param enabled: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#enabled LogpushJob#enabled}.
+        :param frequency: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#frequency LogpushJob#frequency}.
         :param logpull_options: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#logpull_options LogpushJob#logpull_options}.
         :param name: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#name LogpushJob#name}.
         :param ownership_challenge: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#ownership_challenge LogpushJob#ownership_challenge}.
@@ -23384,6 +24165,7 @@ class LogpushJob(
             destination_conf=destination_conf,
             account_id=account_id,
             enabled=enabled,
+            frequency=frequency,
             logpull_options=logpull_options,
             name=name,
             ownership_challenge=ownership_challenge,
@@ -23403,6 +24185,10 @@ class LogpushJob(
     @jsii.member(jsii_name="resetEnabled")
     def reset_enabled(self) -> None:
         return typing.cast(None, jsii.invoke(self, "resetEnabled", []))
+
+    @jsii.member(jsii_name="resetFrequency")
+    def reset_frequency(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetFrequency", []))
 
     @jsii.member(jsii_name="resetLogpullOptions")
     def reset_logpull_options(self) -> None:
@@ -23455,6 +24241,11 @@ class LogpushJob(
         self,
     ) -> typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]]:
         return typing.cast(typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]], jsii.get(self, "enabledInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="frequencyInput")
+    def frequency_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "frequencyInput"))
 
     @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="logpullOptionsInput")
@@ -23513,6 +24304,15 @@ class LogpushJob(
         jsii.set(self, "enabled", value)
 
     @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="frequency")
+    def frequency(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "frequency"))
+
+    @frequency.setter
+    def frequency(self, value: builtins.str) -> None:
+        jsii.set(self, "frequency", value)
+
+    @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="logpullOptions")
     def logpull_options(self) -> builtins.str:
         return typing.cast(builtins.str, jsii.get(self, "logpullOptions"))
@@ -23561,6 +24361,7 @@ class LogpushJob(
         "destination_conf": "destinationConf",
         "account_id": "accountId",
         "enabled": "enabled",
+        "frequency": "frequency",
         "logpull_options": "logpullOptions",
         "name": "name",
         "ownership_challenge": "ownershipChallenge",
@@ -23579,6 +24380,7 @@ class LogpushJobConfig(cdktf.TerraformMetaArguments):
         destination_conf: builtins.str,
         account_id: typing.Optional[builtins.str] = None,
         enabled: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
+        frequency: typing.Optional[builtins.str] = None,
         logpull_options: typing.Optional[builtins.str] = None,
         name: typing.Optional[builtins.str] = None,
         ownership_challenge: typing.Optional[builtins.str] = None,
@@ -23593,6 +24395,7 @@ class LogpushJobConfig(cdktf.TerraformMetaArguments):
         :param destination_conf: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#destination_conf LogpushJob#destination_conf}.
         :param account_id: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#account_id LogpushJob#account_id}.
         :param enabled: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#enabled LogpushJob#enabled}.
+        :param frequency: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#frequency LogpushJob#frequency}.
         :param logpull_options: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#logpull_options LogpushJob#logpull_options}.
         :param name: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#name LogpushJob#name}.
         :param ownership_challenge: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#ownership_challenge LogpushJob#ownership_challenge}.
@@ -23616,6 +24419,8 @@ class LogpushJobConfig(cdktf.TerraformMetaArguments):
             self._values["account_id"] = account_id
         if enabled is not None:
             self._values["enabled"] = enabled
+        if frequency is not None:
+            self._values["frequency"] = frequency
         if logpull_options is not None:
             self._values["logpull_options"] = logpull_options
         if name is not None:
@@ -23684,6 +24489,12 @@ class LogpushJobConfig(cdktf.TerraformMetaArguments):
         '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#enabled LogpushJob#enabled}.'''
         result = self._values.get("enabled")
         return typing.cast(typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]], result)
+
+    @builtins.property
+    def frequency(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/logpush_job#frequency LogpushJob#frequency}.'''
+        result = self._values.get("frequency")
+        return typing.cast(typing.Optional[builtins.str], result)
 
     @builtins.property
     def logpull_options(self) -> typing.Optional[builtins.str]:
@@ -32133,6 +32944,7 @@ class RulesetRules:
     jsii_type="cloudflare_cloudflare.RulesetRulesActionParameters",
     jsii_struct_bases=[],
     name_mapping={
+        "cookie_fields": "cookieFields",
         "headers": "headers",
         "host_header": "hostHeader",
         "id": "id",
@@ -32142,7 +32954,9 @@ class RulesetRules:
         "overrides": "overrides",
         "phases": "phases",
         "products": "products",
+        "request_fields": "requestFields",
         "response": "response",
+        "response_fields": "responseFields",
         "rules": "rules",
         "ruleset": "ruleset",
         "rulesets": "rulesets",
@@ -32154,6 +32968,7 @@ class RulesetRulesActionParameters:
     def __init__(
         self,
         *,
+        cookie_fields: typing.Optional[typing.Sequence[builtins.str]] = None,
         headers: typing.Optional[typing.Union[cdktf.IResolvable, typing.Sequence["RulesetRulesActionParametersHeaders"]]] = None,
         host_header: typing.Optional[builtins.str] = None,
         id: typing.Optional[builtins.str] = None,
@@ -32163,7 +32978,9 @@ class RulesetRulesActionParameters:
         overrides: typing.Optional["RulesetRulesActionParametersOverrides"] = None,
         phases: typing.Optional[typing.Sequence[builtins.str]] = None,
         products: typing.Optional[typing.Sequence[builtins.str]] = None,
+        request_fields: typing.Optional[typing.Sequence[builtins.str]] = None,
         response: typing.Optional[typing.Union[cdktf.IResolvable, typing.Sequence["RulesetRulesActionParametersResponse"]]] = None,
+        response_fields: typing.Optional[typing.Sequence[builtins.str]] = None,
         rules: typing.Optional[typing.Mapping[builtins.str, builtins.str]] = None,
         ruleset: typing.Optional[builtins.str] = None,
         rulesets: typing.Optional[typing.Sequence[builtins.str]] = None,
@@ -32171,6 +32988,7 @@ class RulesetRulesActionParameters:
         version: typing.Optional[builtins.str] = None,
     ) -> None:
         '''
+        :param cookie_fields: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#cookie_fields Ruleset#cookie_fields}.
         :param headers: headers block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#headers Ruleset#headers}
         :param host_header: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#host_header Ruleset#host_header}.
         :param id: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#id Ruleset#id}.
@@ -32180,7 +32998,9 @@ class RulesetRulesActionParameters:
         :param overrides: overrides block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#overrides Ruleset#overrides}
         :param phases: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#phases Ruleset#phases}.
         :param products: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#products Ruleset#products}.
+        :param request_fields: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#request_fields Ruleset#request_fields}.
         :param response: response block. Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#response Ruleset#response}
+        :param response_fields: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#response_fields Ruleset#response_fields}.
         :param rules: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#rules Ruleset#rules}.
         :param ruleset: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#ruleset Ruleset#ruleset}.
         :param rulesets: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#rulesets Ruleset#rulesets}.
@@ -32196,6 +33016,8 @@ class RulesetRulesActionParameters:
         if isinstance(uri, dict):
             uri = RulesetRulesActionParametersUri(**uri)
         self._values: typing.Dict[str, typing.Any] = {}
+        if cookie_fields is not None:
+            self._values["cookie_fields"] = cookie_fields
         if headers is not None:
             self._values["headers"] = headers
         if host_header is not None:
@@ -32214,8 +33036,12 @@ class RulesetRulesActionParameters:
             self._values["phases"] = phases
         if products is not None:
             self._values["products"] = products
+        if request_fields is not None:
+            self._values["request_fields"] = request_fields
         if response is not None:
             self._values["response"] = response
+        if response_fields is not None:
+            self._values["response_fields"] = response_fields
         if rules is not None:
             self._values["rules"] = rules
         if ruleset is not None:
@@ -32226,6 +33052,12 @@ class RulesetRulesActionParameters:
             self._values["uri"] = uri
         if version is not None:
             self._values["version"] = version
+
+    @builtins.property
+    def cookie_fields(self) -> typing.Optional[typing.List[builtins.str]]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#cookie_fields Ruleset#cookie_fields}.'''
+        result = self._values.get("cookie_fields")
+        return typing.cast(typing.Optional[typing.List[builtins.str]], result)
 
     @builtins.property
     def headers(
@@ -32298,6 +33130,12 @@ class RulesetRulesActionParameters:
         return typing.cast(typing.Optional[typing.List[builtins.str]], result)
 
     @builtins.property
+    def request_fields(self) -> typing.Optional[typing.List[builtins.str]]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#request_fields Ruleset#request_fields}.'''
+        result = self._values.get("request_fields")
+        return typing.cast(typing.Optional[typing.List[builtins.str]], result)
+
+    @builtins.property
     def response(
         self,
     ) -> typing.Optional[typing.Union[cdktf.IResolvable, typing.List["RulesetRulesActionParametersResponse"]]]:
@@ -32307,6 +33145,12 @@ class RulesetRulesActionParameters:
         '''
         result = self._values.get("response")
         return typing.cast(typing.Optional[typing.Union[cdktf.IResolvable, typing.List["RulesetRulesActionParametersResponse"]]], result)
+
+    @builtins.property
+    def response_fields(self) -> typing.Optional[typing.List[builtins.str]]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/ruleset#response_fields Ruleset#response_fields}.'''
+        result = self._values.get("response_fields")
+        return typing.cast(typing.Optional[typing.List[builtins.str]], result)
 
     @builtins.property
     def rules(self) -> typing.Optional[typing.Mapping[builtins.str, builtins.str]]:
@@ -32698,6 +33542,10 @@ class RulesetRulesActionParametersOutputReference(
 
         return typing.cast(None, jsii.invoke(self, "putUri", [value]))
 
+    @jsii.member(jsii_name="resetCookieFields")
+    def reset_cookie_fields(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetCookieFields", []))
+
     @jsii.member(jsii_name="resetHeaders")
     def reset_headers(self) -> None:
         return typing.cast(None, jsii.invoke(self, "resetHeaders", []))
@@ -32734,9 +33582,17 @@ class RulesetRulesActionParametersOutputReference(
     def reset_products(self) -> None:
         return typing.cast(None, jsii.invoke(self, "resetProducts", []))
 
+    @jsii.member(jsii_name="resetRequestFields")
+    def reset_request_fields(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetRequestFields", []))
+
     @jsii.member(jsii_name="resetResponse")
     def reset_response(self) -> None:
         return typing.cast(None, jsii.invoke(self, "resetResponse", []))
+
+    @jsii.member(jsii_name="resetResponseFields")
+    def reset_response_fields(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetResponseFields", []))
 
     @jsii.member(jsii_name="resetRules")
     def reset_rules(self) -> None:
@@ -32777,6 +33633,11 @@ class RulesetRulesActionParametersOutputReference(
     @jsii.member(jsii_name="uri")
     def uri(self) -> "RulesetRulesActionParametersUriOutputReference":
         return typing.cast("RulesetRulesActionParametersUriOutputReference", jsii.get(self, "uri"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="cookieFieldsInput")
+    def cookie_fields_input(self) -> typing.Optional[typing.List[builtins.str]]:
+        return typing.cast(typing.Optional[typing.List[builtins.str]], jsii.get(self, "cookieFieldsInput"))
 
     @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="headersInput")
@@ -32830,6 +33691,16 @@ class RulesetRulesActionParametersOutputReference(
         return typing.cast(typing.Optional[typing.List[builtins.str]], jsii.get(self, "productsInput"))
 
     @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="requestFieldsInput")
+    def request_fields_input(self) -> typing.Optional[typing.List[builtins.str]]:
+        return typing.cast(typing.Optional[typing.List[builtins.str]], jsii.get(self, "requestFieldsInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="responseFieldsInput")
+    def response_fields_input(self) -> typing.Optional[typing.List[builtins.str]]:
+        return typing.cast(typing.Optional[typing.List[builtins.str]], jsii.get(self, "responseFieldsInput"))
+
+    @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="responseInput")
     def response_input(
         self,
@@ -32862,6 +33733,15 @@ class RulesetRulesActionParametersOutputReference(
     @jsii.member(jsii_name="versionInput")
     def version_input(self) -> typing.Optional[builtins.str]:
         return typing.cast(typing.Optional[builtins.str], jsii.get(self, "versionInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="cookieFields")
+    def cookie_fields(self) -> typing.List[builtins.str]:
+        return typing.cast(typing.List[builtins.str], jsii.get(self, "cookieFields"))
+
+    @cookie_fields.setter
+    def cookie_fields(self, value: typing.List[builtins.str]) -> None:
+        jsii.set(self, "cookieFields", value)
 
     @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="headers")
@@ -32923,6 +33803,15 @@ class RulesetRulesActionParametersOutputReference(
         jsii.set(self, "products", value)
 
     @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="requestFields")
+    def request_fields(self) -> typing.List[builtins.str]:
+        return typing.cast(typing.List[builtins.str], jsii.get(self, "requestFields"))
+
+    @request_fields.setter
+    def request_fields(self, value: typing.List[builtins.str]) -> None:
+        jsii.set(self, "requestFields", value)
+
+    @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="response")
     def response(
         self,
@@ -32935,6 +33824,15 @@ class RulesetRulesActionParametersOutputReference(
         value: typing.Union[cdktf.IResolvable, typing.List["RulesetRulesActionParametersResponse"]],
     ) -> None:
         jsii.set(self, "response", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="responseFields")
+    def response_fields(self) -> typing.List[builtins.str]:
+        return typing.cast(typing.List[builtins.str], jsii.get(self, "responseFields"))
+
+    @response_fields.setter
+    def response_fields(self, value: typing.List[builtins.str]) -> None:
+        jsii.set(self, "responseFields", value)
 
     @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="rules")
@@ -41118,6 +42016,7 @@ class WaitingRoom(
         total_active_users: jsii.Number,
         zone_id: builtins.str,
         custom_page_html: typing.Optional[builtins.str] = None,
+        default_template_language: typing.Optional[builtins.str] = None,
         description: typing.Optional[builtins.str] = None,
         disable_session_renewal: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
         json_response_enabled: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
@@ -41141,6 +42040,7 @@ class WaitingRoom(
         :param total_active_users: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#total_active_users WaitingRoom#total_active_users}.
         :param zone_id: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#zone_id WaitingRoom#zone_id}.
         :param custom_page_html: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#custom_page_html WaitingRoom#custom_page_html}.
+        :param default_template_language: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#default_template_language WaitingRoom#default_template_language}.
         :param description: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#description WaitingRoom#description}.
         :param disable_session_renewal: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#disable_session_renewal WaitingRoom#disable_session_renewal}.
         :param json_response_enabled: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#json_response_enabled WaitingRoom#json_response_enabled}.
@@ -41161,6 +42061,7 @@ class WaitingRoom(
             total_active_users=total_active_users,
             zone_id=zone_id,
             custom_page_html=custom_page_html,
+            default_template_language=default_template_language,
             description=description,
             disable_session_renewal=disable_session_renewal,
             json_response_enabled=json_response_enabled,
@@ -41195,6 +42096,10 @@ class WaitingRoom(
     @jsii.member(jsii_name="resetCustomPageHtml")
     def reset_custom_page_html(self) -> None:
         return typing.cast(None, jsii.invoke(self, "resetCustomPageHtml", []))
+
+    @jsii.member(jsii_name="resetDefaultTemplateLanguage")
+    def reset_default_template_language(self) -> None:
+        return typing.cast(None, jsii.invoke(self, "resetDefaultTemplateLanguage", []))
 
     @jsii.member(jsii_name="resetDescription")
     def reset_description(self) -> None:
@@ -41251,6 +42156,11 @@ class WaitingRoom(
     @jsii.member(jsii_name="customPageHtmlInput")
     def custom_page_html_input(self) -> typing.Optional[builtins.str]:
         return typing.cast(typing.Optional[builtins.str], jsii.get(self, "customPageHtmlInput"))
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="defaultTemplateLanguageInput")
+    def default_template_language_input(self) -> typing.Optional[builtins.str]:
+        return typing.cast(typing.Optional[builtins.str], jsii.get(self, "defaultTemplateLanguageInput"))
 
     @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="descriptionInput")
@@ -41333,6 +42243,15 @@ class WaitingRoom(
     @custom_page_html.setter
     def custom_page_html(self, value: builtins.str) -> None:
         jsii.set(self, "customPageHtml", value)
+
+    @builtins.property # type: ignore[misc]
+    @jsii.member(jsii_name="defaultTemplateLanguage")
+    def default_template_language(self) -> builtins.str:
+        return typing.cast(builtins.str, jsii.get(self, "defaultTemplateLanguage"))
+
+    @default_template_language.setter
+    def default_template_language(self, value: builtins.str) -> None:
+        jsii.set(self, "defaultTemplateLanguage", value)
 
     @builtins.property # type: ignore[misc]
     @jsii.member(jsii_name="description")
@@ -41463,6 +42382,7 @@ class WaitingRoom(
         "total_active_users": "totalActiveUsers",
         "zone_id": "zoneId",
         "custom_page_html": "customPageHtml",
+        "default_template_language": "defaultTemplateLanguage",
         "description": "description",
         "disable_session_renewal": "disableSessionRenewal",
         "json_response_enabled": "jsonResponseEnabled",
@@ -41487,6 +42407,7 @@ class WaitingRoomConfig(cdktf.TerraformMetaArguments):
         total_active_users: jsii.Number,
         zone_id: builtins.str,
         custom_page_html: typing.Optional[builtins.str] = None,
+        default_template_language: typing.Optional[builtins.str] = None,
         description: typing.Optional[builtins.str] = None,
         disable_session_renewal: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
         json_response_enabled: typing.Optional[typing.Union[builtins.bool, cdktf.IResolvable]] = None,
@@ -41507,6 +42428,7 @@ class WaitingRoomConfig(cdktf.TerraformMetaArguments):
         :param total_active_users: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#total_active_users WaitingRoom#total_active_users}.
         :param zone_id: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#zone_id WaitingRoom#zone_id}.
         :param custom_page_html: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#custom_page_html WaitingRoom#custom_page_html}.
+        :param default_template_language: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#default_template_language WaitingRoom#default_template_language}.
         :param description: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#description WaitingRoom#description}.
         :param disable_session_renewal: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#disable_session_renewal WaitingRoom#disable_session_renewal}.
         :param json_response_enabled: Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#json_response_enabled WaitingRoom#json_response_enabled}.
@@ -41537,6 +42459,8 @@ class WaitingRoomConfig(cdktf.TerraformMetaArguments):
             self._values["provider"] = provider
         if custom_page_html is not None:
             self._values["custom_page_html"] = custom_page_html
+        if default_template_language is not None:
+            self._values["default_template_language"] = default_template_language
         if description is not None:
             self._values["description"] = description
         if disable_session_renewal is not None:
@@ -41625,6 +42549,12 @@ class WaitingRoomConfig(cdktf.TerraformMetaArguments):
     def custom_page_html(self) -> typing.Optional[builtins.str]:
         '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#custom_page_html WaitingRoom#custom_page_html}.'''
         result = self._values.get("custom_page_html")
+        return typing.cast(typing.Optional[builtins.str], result)
+
+    @builtins.property
+    def default_template_language(self) -> typing.Optional[builtins.str]:
+        '''Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/cloudflare/r/waiting_room#default_template_language WaitingRoom#default_template_language}.'''
+        result = self._values.get("default_template_language")
         return typing.cast(typing.Optional[builtins.str], result)
 
     @builtins.property
@@ -48588,18 +49518,24 @@ __all__ = [
     "AccessGroupConfig",
     "AccessGroupExclude",
     "AccessGroupExcludeAzure",
+    "AccessGroupExcludeExternalEvaluation",
+    "AccessGroupExcludeExternalEvaluationOutputReference",
     "AccessGroupExcludeGithub",
     "AccessGroupExcludeGsuite",
     "AccessGroupExcludeOkta",
     "AccessGroupExcludeSaml",
     "AccessGroupInclude",
     "AccessGroupIncludeAzure",
+    "AccessGroupIncludeExternalEvaluation",
+    "AccessGroupIncludeExternalEvaluationOutputReference",
     "AccessGroupIncludeGithub",
     "AccessGroupIncludeGsuite",
     "AccessGroupIncludeOkta",
     "AccessGroupIncludeSaml",
     "AccessGroupRequire",
     "AccessGroupRequireAzure",
+    "AccessGroupRequireExternalEvaluation",
+    "AccessGroupRequireExternalEvaluationOutputReference",
     "AccessGroupRequireGithub",
     "AccessGroupRequireGsuite",
     "AccessGroupRequireOkta",
@@ -48616,18 +49552,24 @@ __all__ = [
     "AccessPolicyConfig",
     "AccessPolicyExclude",
     "AccessPolicyExcludeAzure",
+    "AccessPolicyExcludeExternalEvaluation",
+    "AccessPolicyExcludeExternalEvaluationOutputReference",
     "AccessPolicyExcludeGithub",
     "AccessPolicyExcludeGsuite",
     "AccessPolicyExcludeOkta",
     "AccessPolicyExcludeSaml",
     "AccessPolicyInclude",
     "AccessPolicyIncludeAzure",
+    "AccessPolicyIncludeExternalEvaluation",
+    "AccessPolicyIncludeExternalEvaluationOutputReference",
     "AccessPolicyIncludeGithub",
     "AccessPolicyIncludeGsuite",
     "AccessPolicyIncludeOkta",
     "AccessPolicyIncludeSaml",
     "AccessPolicyRequire",
     "AccessPolicyRequireAzure",
+    "AccessPolicyRequireExternalEvaluation",
+    "AccessPolicyRequireExternalEvaluationOutputReference",
     "AccessPolicyRequireGithub",
     "AccessPolicyRequireGsuite",
     "AccessPolicyRequireOkta",

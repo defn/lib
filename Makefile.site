@@ -12,7 +12,10 @@ get:
 publish:
 	passenv TWINE_USERNAME TWINE_PASSWORD -- p publish src:defn
 
-package:
+package: dist/defn-$(shell cat src/defn/VERSION).tar.gz
+	pip install --force $<
+
+dist/defn-$(shell cat src/defn/VERSION).tar.gz:
 	echo >> src/BUILD
 	./pants update-build-files src/BUILD
 

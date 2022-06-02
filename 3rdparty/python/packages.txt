@@ -1,0 +1,8 @@
+typer
+textual
+cdktf
+cdktf-cdktf-provider-null
+cdktf-cdktf-provider-aws
+cdktf-cdktf-provider-digitalocean
+cdktf-cdktf-provider-tfe
+cdktf-cdktf-provider-github

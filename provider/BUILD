@@ -6,7 +6,7 @@ python_distribution(
     ],
     provides=python_artifact(
         name="defn_cdktf_provider_boundary",
-        version="0.4.0",
+        version="0.4.1",
     ),
     sdist=False,
 )
@@ -19,7 +19,7 @@ python_distribution(
     ],
     provides=python_artifact(
         name="defn_cdktf_provider_vault",
-        version="0.4.0",
+        version="0.4.1",
     ),
     sdist=False,
 )
@@ -31,7 +31,7 @@ python_distribution(
     ],
     provides=python_artifact(
         name="defn_cdktf_provider_buildkite",
-        version="0.4.0",
+        version="0.4.1",
     ),
     sdist=False,
 )
@@ -44,7 +44,7 @@ python_distribution(
     ],
     provides=python_artifact(
         name="defn_cdktf_provider_cloudflare",
-        version="0.4.0",
+        version="0.4.1",
     ),
     sdist=False,
 )

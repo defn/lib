@@ -2,9 +2,9 @@
   "language": "python",
   "app": "dist/src.defn/cli.pex synth",
   "terraformProviders": [
-    "hashicorp/boundary@~> 1.0.7",
+    "hashicorp/boundary@~> 1.0.8",
     "hashicorp/vault@~> 3.6.0",
-    "cloudflare/cloudflare@~> 3.15.0",
+    "cloudflare/cloudflare@~> 3.16.0",
     "buildkite/buildkite@~> 0.11.0"
   ]
 }
