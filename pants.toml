@@ -5,6 +5,7 @@ backend_packages = [
   'pants.backend.python.lint.isort',
   'pants.backend.python.lint.flake8',
   'pants.backend.python.lint.docformatter',
+  'pants.backend.experimental.python',
   'pants.backend.shell',
   'pants.backend.shell.lint.shfmt',
   'pants.backend.shell.lint.shellcheck',
@@ -17,6 +18,9 @@ pants_version = '2.12.0rc2'
 [cli.alias]
 green = "update-build-files fmt lint check ::"
 dev = "--changed-since=HEAD --changed-dependees=transitive"
+
+[subprocess-environment]
+env_vars.add = ["TWINE_USERNAME", "TWINE_PASSWORD"]
 
 [source]
 root_patterns = [

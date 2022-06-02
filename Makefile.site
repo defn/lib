@@ -9,6 +9,9 @@ get:
 	rsync -ia provider.new/. provider/.
 	rm -rf provider.new
 
+publish:
+	passenv TWINE_USERNAME TWINE_PASSWORD -- p publish src:defn
+
 build:
 	earthly +synth --stack=gyre
 	earthly +synth --stack=curl

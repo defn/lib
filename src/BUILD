@@ -12,9 +12,10 @@ python_distribution(
         "provider:defn_cdktf_provider_buildkite",
         "provider:defn_cdktf_provider_cloudflare",
     ],
+    repositories=["@pypi"],
     provides=python_artifact(
         name="defn",
-        version="0.0.1a1",
+        version="0.0.1a2",
     ),
     sdist=False,
     entry_points={
