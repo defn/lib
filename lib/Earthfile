@@ -1,5 +1,17 @@
 VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-arg --use-copy-link 0.6
 
+PRECOMMIT:
+    COMMAND
+    ARG workdir
+    WORKDIR ${workdir}
+    RUN git init
+    COPY .pre-commit-config.yaml .
+    RUN --mount=type=cache,target=${workdir}/.cache sudo chown ubuntu:ubuntu ${workdir}/.cache
+    RUN --mount=type=cache,target=${workdir}/.cache ~/bin/e env PRE_COMMIT_HOME=${workdir}/.cache/pre-commit pre-commit install
+    RUN --mount=type=cache,target=${workdir}/.cache ~/bin/e env PRE_COMMIT_HOME=${workdir}/.cache/pre-commit pre-commit run --all
+    RUN --mount=type=cache,target=${workdir}/.cache tar cfz pre-commit.tgz .cache
+    SAVE ARTIFACT pre-commit.tgz AS LOCAL .cache/pre-commit.tgz
+
 SYNTH:
     COMMAND
     ARG stack
