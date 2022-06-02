@@ -1,13 +1,13 @@
+pc:
+	earthly +pre-commit --workdir=$(shell pwd)
+	tar xfz .cache/pre-commit.tgz
+	pre-commit run
+
 dev:
 	@if flock -n ~/.dev.lock -c '~/bin/e $(MAKE) dev_inner'; then rm -f ~/.dev.lock; fi
 
 dev_inner:
 	tilt up --port=0 --stream
-
-pc:
-	earthly +pre-commit --workdir=$(shell pwd)
-	tar xfz .cache/pre-commit.tgz
-	pre-commit run
 
 get:
 	earthly +get
