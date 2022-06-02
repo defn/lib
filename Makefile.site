@@ -10,6 +10,7 @@ get:
 	rm -rf provider.new
 
 publish:
+	passenv TWINE_USERNAME TWINE_PASSWORD -- p publish provider::
 	passenv TWINE_USERNAME TWINE_PASSWORD -- p publish src:defn
 
 package: dist/defn-$(shell cat src/defn/VERSION).tar.gz
