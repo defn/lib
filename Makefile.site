@@ -1,5 +1,5 @@
 dev:
-	@if flock -n .dev.lock -c '~/bin/e $(MAKE) dev_inner'; then rm -f .dev.lock; fi
+	@if flock -n ~/.dev.lock -c '~/bin/e $(MAKE) dev_inner'; then rm -f ~/.dev.lock; fi
 
 dev_inner:
 	tilt up --port=0 --stream
