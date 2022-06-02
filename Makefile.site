@@ -5,7 +5,7 @@ dev_inner:
 	tilt up --port=0 --stream
 
 pc:
-	earthly +pre-commit
+	earthly +pre-commit --workdir=$(shell pwd)
 	tar xfz .cache/pre-commit.tgz
 	pre-commit run
 
