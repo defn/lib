@@ -8,4 +8,4 @@ local_resource("dev", cmd="cd && make dev", allow_parallel=True)
 
 local_resource("pre-commit", cmd="while true; do if docker info; then make pc; break; fi; sleep 1; done", allow_parallel=True)
 
-local_resource("python", cmd="(cd 3rdparty/python && poetry install); code --install-extension ms-python.python || true", allow_parallel=True)
+local_resource("python", cmd="(cd 3rdparty/python && make venv); code --install-extension ms-python.python || true", allow_parallel=True)
