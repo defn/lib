@@ -9,22 +9,24 @@ SYNTH:
 INIT:
     COMMAND
     ARG stack
-    COPY cdktf.out/stacks/${stack}/cdk.tf.json cdktf.out/stacks/${stack}/
+    WORKDIR /home/ubuntu/cdktf.out/${stack}
+    COPY cdktf.out/stacks/${stack}/cdk.tf.json .
     RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit \
         sudo chown -v ubuntu:ubuntu /home/ubuntu/.terraform.d/plugin-cache-buildkit
     RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit \
         --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
-        cd cdktf.out/stacks/${stack} && ~/bin/e env TF_PLUGIN_CACHE_DIR=/home/ubuntu/.terraform.d/plugin-cache-buildkit terraform init
+        ~/bin/e env TF_PLUGIN_CACHE_DIR=/home/ubuntu/.terraform.d/plugin-cache-buildkit terraform init
     RUN --mount=type=cache,target=/home/ubuntu/.terraform.d/plugin-cache-buildkit \
         mkdir -p /home/ubuntu/.terraform.d/plugin-cache && rsync -ia /home/ubuntu/.terraform.d/plugin-cache-buildkit/. /home/ubuntu/.terraform.d/plugin-cache/.
     RUN \
         --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
-        cd cdktf.out/stacks/${stack} && ~/bin/e terraform init
+        ~/bin/e terraform init
 
 EDIT:
     COMMAND
     ARG stack
     ARG cmd
+    WORKDIR /home/ubuntu/cdktf.out/${stack}
     RUN --push --no-cache \
         --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
         --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
@@ -32,11 +34,12 @@ EDIT:
         --secret AWS_ACCESS_KEY_ID_coil   --secret AWS_SECRET_ACCESS_KEY_coil \
         --secret AWS_ACCESS_KEY_ID_curl   --secret AWS_SECRET_ACCESS_KEY_curl \
         --secret AWS_ACCESS_KEY_ID_gyre   --secret AWS_SECRET_ACCESS_KEY_gyre \
-        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && ~/bin/e ${cmd}'
+        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd ~/bin/e ${cmd}'
 
 PLAN:
     COMMAND
     ARG stack
+    WORKDIR /home/ubuntu/cdktf.out/${stack}
     RUN --no-cache \
         --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
         --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
@@ -45,13 +48,14 @@ PLAN:
         --secret AWS_ACCESS_KEY_ID_coil   --secret AWS_SECRET_ACCESS_KEY_coil \
         --secret AWS_ACCESS_KEY_ID_curl   --secret AWS_SECRET_ACCESS_KEY_curl \
         --secret AWS_ACCESS_KEY_ID_gyre   --secret AWS_SECRET_ACCESS_KEY_gyre \
-        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && ~/bin/e terraform plan -out=.plan'
-    SAVE ARTIFACT cdktf.out/stacks/${stack}/.plan AS LOCAL cdktf.out/stacks/${stack}/
+        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && ~/bin/e terraform plan -out=.plan'
+    SAVE ARTIFACT .plan AS LOCAL cdktf.out/stacks/${stack}/
 
 SHOW:
     COMMAND
     ARG stack
-    COPY cdktf.out/stacks/${stack}/.plan cdktf.out/stacks/${stack}/
+    WORKDIR /home/ubuntu/cdktf.out/${stack}
+    COPY cdktf.out/stacks/${stack}/.plan .
     RUN --no-cache \
         --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
         --secret DIGITALOCEAN_TOKEN --secret BUILDKITE_API_TOKEN --secret GITHUB_TOKEN --secret CLOUDFLARE_API_KEY \
@@ -60,11 +64,12 @@ SHOW:
         --secret AWS_ACCESS_KEY_ID_coil   --secret AWS_SECRET_ACCESS_KEY_coil \
         --secret AWS_ACCESS_KEY_ID_curl   --secret AWS_SECRET_ACCESS_KEY_curl \
         --secret AWS_ACCESS_KEY_ID_gyre   --secret AWS_SECRET_ACCESS_KEY_gyre \
-        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && ~/bin/e terraform show .plan'
+        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && ~/bin/e terraform show .plan'
 
 IMPORT:
     COMMAND
     ARG stack
+    WORKDIR /home/ubuntu/cdktf.out/${stack}
     RUN --push --no-cache \
         --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
         --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
@@ -72,7 +77,7 @@ IMPORT:
         --secret AWS_ACCESS_KEY_ID_coil   --secret AWS_SECRET_ACCESS_KEY_coil \
         --secret AWS_ACCESS_KEY_ID_curl   --secret AWS_SECRET_ACCESS_KEY_curl \
         --secret AWS_ACCESS_KEY_ID_gyre   --secret AWS_SECRET_ACCESS_KEY_gyre \
-        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && i="`aws sts get-caller-identity --query Account --output text`" && ~/bin/e terraform import aws_organizations_account.${stack} ${i}'
+        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && i="`aws sts get-caller-identity --query Account --output text`" && ~/bin/e terraform import aws_organizations_account.${stack} ${i}'
     RUN --push --no-cache \
         --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
         --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
@@ -80,7 +85,7 @@ IMPORT:
         --secret AWS_ACCESS_KEY_ID_coil   --secret AWS_SECRET_ACCESS_KEY_coil \
         --secret AWS_ACCESS_KEY_ID_curl   --secret AWS_SECRET_ACCESS_KEY_curl \
         --secret AWS_ACCESS_KEY_ID_gyre   --secret AWS_SECRET_ACCESS_KEY_gyre \
-        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && i="`aws sts get-caller-identity --query Account --output text`" && o="`aws organizations describe-account --account-id "${i}" | jq -r .Account.Arn | cut -d/ -f2`" && ~/bin/e terraform import aws_organizations_organization.organization ${o}'
+        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && i="`aws sts get-caller-identity --query Account --output text`" && o="`aws organizations describe-account --account-id "${i}" | jq -r .Account.Arn | cut -d/ -f2`" && ~/bin/e terraform import aws_organizations_organization.organization ${o}'
 
 CONFIG:
     COMMAND
@@ -88,6 +93,7 @@ CONFIG:
     ARG region
     ARG sso_region
     ARG sso_url
+    WORKDIR /home/ubuntu/cdktf.out/${stack}
     RUN --no-cache \
         --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
         --secret AWS_ACCESS_KEY_ID_spiral --secret AWS_SECRET_ACCESS_KEY_spiral \
@@ -101,6 +107,7 @@ CONFIG:
 APPLY:
     COMMAND
     ARG stack
+    WORKDIR /home/ubuntu/cdktf.out/${stack}
     COPY cdktf.out/stacks/${stack}/.plan cdktf.out/stacks/${stack}/
     RUN --push --no-cache \
         --secret TFE_TOKEN --secret TF_TOKEN_app_terraform_io \
@@ -110,4 +117,4 @@ APPLY:
         --secret AWS_ACCESS_KEY_ID_coil   --secret AWS_SECRET_ACCESS_KEY_coil \
         --secret AWS_ACCESS_KEY_ID_curl   --secret AWS_SECRET_ACCESS_KEY_curl \
         --secret AWS_ACCESS_KEY_ID_gyre   --secret AWS_SECRET_ACCESS_KEY_gyre \
-        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && cd cdktf.out/stacks/${stack} && ~/bin/e terraform apply .plan'
+        bash -c 'a=AWS_ACCESS_KEY_ID_${stack} b=AWS_SECRET_ACCESS_KEY_${stack} && export AWS_ACCESS_KEY_ID="${!a}" AWS_SECRET_ACCESS_KEY="${!b}" && ~/bin/e terraform apply .plan'
