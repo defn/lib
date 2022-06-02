@@ -3,9 +3,9 @@ repos:
     rev: v4.1.0
     hooks:
       - id: trailing-whitespace
-        exclude: ^(provider|cdktf.out)/
+        exclude: ^(provider|cdktf.out)/|\.lock
       - id: end-of-file-fixer
-        exclude: ^(provider|cdktf.out)/
+        exclude: ^(provider|cdktf.out)/|\.lock
       - id: check-json
         exclude: ^(provider|cdktf.out)/
       - id: check-yaml
@@ -24,6 +24,6 @@ repos:
     hooks:
       - id: pants-fmt
         name: pants-fmt
-        entry: pants --owners-not-found-behavior=ignore fmt lint check
+        entry: p --owners-not-found-behavior=ignore fmt lint check
         language: system
         pass_filenames: true
