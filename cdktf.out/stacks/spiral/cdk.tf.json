@@ -3,7 +3,7 @@
     "metadata": {
       "backend": "remote",
       "stackName": "spiral",
-      "version": "0.10.4"
+      "version": "0.11.1"
     },
     "outputs": {
     }
@@ -402,7 +402,7 @@
     "required_providers": {
       "aws": {
         "source": "aws",
-        "version": "4.15.1"
+        "version": "4.16.0"
       }
     }
   }
