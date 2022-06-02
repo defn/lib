@@ -7,3 +7,4 @@ __pycache__
 .plan
 .terraform
 .*lock
+.cache

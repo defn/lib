@@ -4,6 +4,11 @@ dev:
 dev_inner:
 	tilt up --port=0 --stream
 
+pc:
+	earthly +pre-commit
+	tar xfz .cache/pre-commit.tgz
+	pre-commit run
+
 get:
 	earthly +get
 	rsync -ia provider.new/. provider/.

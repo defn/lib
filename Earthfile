@@ -2,6 +2,17 @@ VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-ar
 
 IMPORT ./lib AS lib
 
+pre-commit:
+    FROM registry.fly.io/defn:dev-tower
+    WORKDIR /home/ubuntu/work/cloud
+    RUN git init
+    COPY .pre-commit-config.yaml .
+    RUN --mount=type=cache,target=/home/ubuntu/work/cloud/.cache sudo chown ubuntu:ubuntu /home/ubuntu/work/cloud/.cache
+    RUN --mount=type=cache,target=/home/ubuntu/work/cloud/.cache ~/bin/e env PRE_COMMIT_HOME=/home/ubuntu/work/cloud/.cache/pre-commit pre-commit install
+    RUN --mount=type=cache,target=/home/ubuntu/work/cloud/.cache ~/bin/e env PRE_COMMIT_HOME=/home/ubuntu/work/cloud/.cache/pre-commit pre-commit run --all
+    RUN --mount=type=cache,target=/home/ubuntu/work/cloud/.cache tar cfz pre-commit.tgz .cache
+    SAVE ARTIFACT pre-commit.tgz AS LOCAL .cache/pre-commit.tgz
+
 get:
     FROM registry.fly.io/defn:dev-tower
     COPY cdktf.json.get cdktf.json
