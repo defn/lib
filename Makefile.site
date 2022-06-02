@@ -20,13 +20,6 @@ dist/defn-$(shell cat src/defn/VERSION).tar.gz:
 	echo >> src/BUILD
 	./pants update-build-files src/BUILD
 
-build:
-	earthly +synth --stack=gyre
-	earthly +synth --stack=curl
-	earthly +synth --stack=coil
-	earthly +synth --stack=helix
-	earthly +synth --stack=spiral
-
 login:
 	aws --profile gyre-ops sts get-caller-identity
 	aws --profile curl-lib sts get-caller-identity
