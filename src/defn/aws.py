@@ -144,6 +144,7 @@ class AwsOrganizationStack(TerraformStack):
         prefix: str,
         org: str,
         domain: str,
+        region: str,
         sso_region: str,
         accounts,
     ):

@@ -27,6 +27,7 @@ def synth():
         app,
         org="spiral",
         domain="defn.us",
+        region="us-west-2",
         sso_region="us-west-2",
         accounts=full_accounts,
     )
@@ -35,6 +36,7 @@ def synth():
         app,
         org="helix",
         domain="defn.sh",
+        region="us-east-2",
         sso_region="us-east-2",
         accounts=full_accounts,
     )
@@ -43,6 +45,7 @@ def synth():
         app,
         org="coil",
         domain="defn.us",
+        region="us-east-1",
         sso_region="us-east-1",
         accounts=env_accounts,
     )
@@ -51,12 +54,18 @@ def synth():
         app,
         org="curl",
         domain="defn.us",
+        region="us-west-1",
         sso_region="us-west-2",
         accounts=env_accounts,
     )
 
     DemoStack(
-        app, org="gyre", domain="defn.us", sso_region="us-east-2", accounts=["ops"]
+        app,
+        org="gyre",
+        domain="defn.us",
+        region="us-east-2",
+        sso_region="us-east-2",
+        accounts=["ops"],
     )
 
     app.synth()

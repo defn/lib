@@ -12,11 +12,12 @@ class DemoStack(AwsOrganizationStack):
         scope: Construct,
         org: str,
         domain: str,
+        region: str,
         sso_region: str,
         accounts,
         prefix: str = "aws-",
     ):
-        super().__init__(scope, org, prefix, org, domain, sso_region, accounts)
+        super().__init__(scope, org, prefix, org, domain, region, sso_region, accounts)
 
         w = NamedRemoteWorkspace(name=org)
         RemoteBackend(self, organization="defn", workspaces=w)
