@@ -14,58 +14,83 @@ cli = typer.Typer()
 def synth():
     once()
 
-    from cdktf import App
+    from cdktf import App, NamedRemoteWorkspace, RemoteBackend
 
-    from defn.stack.demo import DemoStack
+    from defn.aws.stack import AwsOrganizationStack
 
     app = App()
 
     full_accounts = ["net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"]
     env_accounts = ["net", "lib", "hub"]
 
-    DemoStack(
+    stack = AwsOrganizationStack(
         app,
+        namespace="spiral",
         org="spiral",
+        prefix="aws-",
         domain="defn.us",
         region="us-west-2",
         sso_region="us-west-2",
         accounts=full_accounts,
     )
+    RemoteBackend(
+        stack, organization="defn", workspaces=NamedRemoteWorkspace(name="spiral")
+    )
 
-    DemoStack(
+    stack = AwsOrganizationStack(
         app,
+        namespace="helix",
         org="helix",
+        prefix="aws-",
         domain="defn.sh",
         region="us-east-2",
         sso_region="us-east-2",
         accounts=full_accounts,
     )
+    RemoteBackend(
+        stack, organization="defn", workspaces=NamedRemoteWorkspace(name="helix")
+    )
 
-    DemoStack(
+    stack = AwsOrganizationStack(
         app,
+        namespace="coil",
         org="coil",
+        prefix="aws-",
         domain="defn.us",
         region="us-east-1",
         sso_region="us-east-1",
         accounts=env_accounts,
     )
+    RemoteBackend(
+        stack, organization="defn", workspaces=NamedRemoteWorkspace(name="coil")
+    )
 
-    DemoStack(
+    stack = AwsOrganizationStack(
         app,
+        namespace="curl",
         org="curl",
+        prefix="aws-",
         domain="defn.us",
         region="us-west-1",
         sso_region="us-west-2",
         accounts=env_accounts,
     )
+    RemoteBackend(
+        stack, organization="defn", workspaces=NamedRemoteWorkspace(name="curl")
+    )
 
-    DemoStack(
+    stack = AwsOrganizationStack(
         app,
+        namespace="gyre",
         org="gyre",
+        prefix="aws-",
         domain="defn.us",
         region="us-east-2",
         sso_region="us-east-2",
         accounts=["ops"],
+    )
+    RemoteBackend(
+        stack, organization="defn", workspaces=NamedRemoteWorkspace(name="gyre")
     )
 
     app.synth()
