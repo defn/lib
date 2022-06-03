@@ -23,7 +23,7 @@
             "attribute_value": "Administrators"
           }
         ],
-        "identity_store_id": "${element(tolist(data.aws_ssoadmin_instances.sso_instance.identity_store_ids), 0)}"
+        "identity_store_id": "${element(data.aws_ssoadmin_instances.sso_instance.identity_store_ids, 0)}"
       }
     },
     "aws_ssoadmin_instances": {
@@ -207,7 +207,7 @@
             "uniqueId": "admin_sso_permission_set"
           }
         },
-        "instance_arn": "${element(tolist(data.aws_ssoadmin_instances.sso_instance.arns), 0)}",
+        "instance_arn": "${element(data.aws_ssoadmin_instances.sso_instance.arns, 0)}",
         "name": "Administrator",
         "session_duration": "PT2H",
         "tags": {

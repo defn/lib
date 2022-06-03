@@ -26,7 +26,7 @@ def administrator(self, ssoadmin_instances):
         self,
         "admin_sso_permission_set",
         name="Administrator",
-        instance_arn=Fn.element(Fn.tolist(ssoadmin_instances.arns), 0),
+        instance_arn=Fn.element(ssoadmin_instances.arns, 0),
         session_duration="PT2H",
         tags={"ManagedBy": "Terraform"},
     )
@@ -117,9 +117,7 @@ def organization(self, prefix: str, org: str, domain: str, accounts: list):
     identitystore_group = DataAwsIdentitystoreGroup(
         self,
         "administrators_sso_group",
-        identity_store_id=Fn.element(
-            Fn.tolist(ssoadmin_instances.identity_store_ids), 0
-        ),
+        identity_store_id=Fn.element(ssoadmin_instances.identity_store_ids, 0),
         filter=[f],
     )
 
