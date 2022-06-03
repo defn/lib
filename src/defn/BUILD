@@ -17,4 +17,4 @@ archive(
     name="archive_pycco_docs", files=[":pycco_docs"], format="tar.gz", tags=["docs"]
 )
 
-pex_binary(name="cli", entry_point="cli.py")
+pex_binary(name="cli", entry_point="defn.cli:main")
