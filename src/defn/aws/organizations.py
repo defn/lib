@@ -1,6 +1,5 @@
-from cdktf import Fn, TerraformStack
+from cdktf import Fn
 from cdktf_cdktf_provider_aws import (
-    AwsProvider,
     DataAwsIdentitystoreGroup,
     DataAwsIdentitystoreGroupFilter,
 )
@@ -11,35 +10,12 @@ from cdktf_cdktf_provider_aws.organizations import (
 from cdktf_cdktf_provider_aws.ssoadmin import (
     DataAwsSsoadminInstances,
     SsoadminAccountAssignment,
-    SsoadminManagedPolicyAttachment,
-    SsoadminPermissionSet,
 )
-from constructs import Construct
+
+import defn.aws.sso
 
 
 """ Creates Organizations, Accounts, and Administrator permission set """
-
-
-def administrator(self, ssoadmin_instances):
-    """Administrator SSO permission set with AdministratorAccess policy."""
-    resource = SsoadminPermissionSet(
-        self,
-        "admin_sso_permission_set",
-        name="Administrator",
-        instance_arn=Fn.element(ssoadmin_instances.arns, 0),
-        session_duration="PT2H",
-        tags={"ManagedBy": "Terraform"},
-    )
-
-    SsoadminManagedPolicyAttachment(
-        self,
-        "admin_sso_managed_policy_attachment",
-        instance_arn=resource.instance_arn,
-        permission_set_arn=resource.arn,
-        managed_policy_arn="arn:aws:iam::aws:policy/AdministratorAccess",
-    )
-
-    return resource
 
 
 def account(
@@ -108,7 +84,7 @@ def organization(self, prefix: str, org: str, domain: str, accounts: list):
     ssoadmin_instances = DataAwsSsoadminInstances(self, "sso_instance")
 
     # Administrator SSO permission set with AdministratorAccess policy
-    sso_permission_set_admin = administrator(self, ssoadmin_instances)
+    sso_permission_set_admin = defn.aws.sso.administrator(self, ssoadmin_instances)
 
     # Lookup pre-created Administrators group
     f = DataAwsIdentitystoreGroupFilter(
@@ -132,24 +108,3 @@ def organization(self, prefix: str, org: str, domain: str, accounts: list):
             identitystore_group,
             sso_permission_set_admin,
         )
-
-
-class AwsOrganizationStack(TerraformStack):
-    """cdktf Stack for an organization with accounts, sso."""
-
-    def __init__(
-        self,
-        scope: Construct,
-        namespace: str,
-        prefix: str,
-        org: str,
-        domain: str,
-        region: str,
-        sso_region: str,
-        accounts,
-    ):
-        super().__init__(scope, namespace)
-
-        AwsProvider(self, "aws_sso", region=sso_region)
-
-        organization(self, prefix, org, domain, [org] + accounts)

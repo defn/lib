@@ -1,7 +1,7 @@
 from cdktf import NamedRemoteWorkspace, RemoteBackend
 from constructs import Construct
 
-from defn.aws import AwsOrganizationStack
+from defn.aws.stack import AwsOrganizationStack
 
 
 class DemoStack(AwsOrganizationStack):
