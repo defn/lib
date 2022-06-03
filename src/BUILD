@@ -19,7 +19,7 @@ python_distribution(
         name="defn", version=open("src/defn/VERSION", "r").readline().strip()
     ),
     sdist=True,
-    wheel=False,
+    wheel=True,
     entry_points={
         "console_scripts": {
             "defn": "defn.cli:main",
