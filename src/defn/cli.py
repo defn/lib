@@ -100,7 +100,9 @@ def synth():
 def version():
     import pkgutil
 
-    print(pkgutil.get_data("defn", "VERSION").decode("utf-8").strip())  # type: ignore
+    data = pkgutil.get_data("defn", "VERSION")
+    if data is not None:
+        print(data.decode("utf-8").strip())
 
 
 def main():
