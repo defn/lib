@@ -18,10 +18,11 @@ get:
 
 synth:
     FROM registry.fly.io/defn:dev-tower
-    COPY --dir provider src 3rdparty .
+    RUN ~/bin/e python -mvenv .v
+    COPY --dir provider src 3rdparty pants-plugins .
     COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
     RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
-    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants ~/bin/e p package src/defn:cli
+    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants . .v/bin/activate && ~/bin/e p package src/defn:cli
     DO lib+SYNTH
     SAVE ARTIFACT cdktf.out/stacks/gyre/cdk.tf.json AS LOCAL cdktf.out/stacks/gyre/
     SAVE ARTIFACT cdktf.out/stacks/curl/cdk.tf.json AS LOCAL cdktf.out/stacks/curl/
