@@ -27,4 +27,4 @@ python_distribution(
     },
 )
 
-python_sources()
+meh_sources()

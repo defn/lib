@@ -4,6 +4,8 @@ pants_version = '2.12.0rc2'
 
 pythonpath = ["%(buildroot)s/pants-plugins"]
 
+build_file_prelude_globs = ["pants-plugins/macros.py"]
+
 backend_packages = [
   'pants.backend.python',
   'pants.backend.python.lint.black',
