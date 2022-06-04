@@ -16,4 +16,5 @@ def defn_binary(**kwargs):
 def pp_sources(**kwargs):
     kwargs["interpreter_constraints"] = [">=3.8,<4"]
     kwargs["resolve"] = "pants-plugins"
+    kwargs["skip_flake8"] = True
     python_sources(**kwargs)
