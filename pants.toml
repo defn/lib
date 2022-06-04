@@ -48,6 +48,9 @@ enabled = false
 enable_resolves = true
 lockfile_generator = 'pex'
 
+[python-bootstrap]
+search_path = ["<PATH>"]
+
 [python.resolves]
 python-default = "3rdparty/python/default.lock"
 pants-plugins = "pants-plugins/plugins.lock"

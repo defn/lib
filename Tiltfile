@@ -12,6 +12,6 @@ local_resource(
 
 local_resource(
     "python",
-    cmd="(cd 3rdparty/python && make venv); code --install-extension ms-python.python || true; code --install-extension bungcip.better-toml || true",
+    cmd="(cd && python -mvenv .venv); (. ~/.venv/bin/activate; p export src::); code --install-extension ms-python.python || true; code --install-extension bungcip.better-toml || true",
     allow_parallel=True,
 )
