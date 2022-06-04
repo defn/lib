@@ -1,4 +1,9 @@
 [GLOBAL]
+pantsd = false
+pants_version = '2.12.0rc2'
+
+pythonpath = ["%(buildroot)s/pants-plugins"]
+
 backend_packages = [
   'pants.backend.python',
   'pants.backend.python.lint.black',
@@ -9,11 +14,11 @@ backend_packages = [
   'pants.backend.shell',
   'pants.backend.shell.lint.shfmt',
   'pants.backend.shell.lint.shellcheck',
-  'pants.backend.docker'
+  'pants.backend.docker',
+  'pants.backend.plugin_development',
+  # This will activate `pants-plugins/meh/register.py`.
+  #"meh",
 ]
-
-pantsd = false
-pants_version = '2.12.0rc2'
 
 [cli.alias]
 green = "update-build-files fmt lint check ::"
@@ -24,10 +29,11 @@ env_vars.add = ["TWINE_USERNAME", "TWINE_PASSWORD"]
 
 [source]
 root_patterns = [
-  '/3rdparty/python',
-  '/src',
-  '/provider',
-  '/bin'
+  '3rdparty/python',
+  'src',
+  'provider',
+  'bin',
+  'pants-plugins',
 ]
 
 [stats]
