@@ -1,3 +1,5 @@
+# type: ignore
+
 python_distribution(
     name="defn",
     dependencies=[

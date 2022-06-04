@@ -1,3 +1,5 @@
+# type: ignore
+
 python_sources(name="py", dependencies=[":version"])
 
 file(name="earthfile", source="Earthfile")
