@@ -47,13 +47,13 @@ enabled = false
 [python]
 enable_resolves = true
 lockfile_generator = 'pex'
-interpreter_constraints = [">=3.10,<4"]
 
 [python.resolves]
 pants-plugins = "pants-plugins/plugins.lock"
 python-default = "3rdparty/python/default.lock"
 
 [python.resolves_to_interpreter_constraints]
+python-default = [">=3.10,<4"]
 pants-plugins = [">=3.8,<3.10"]
 
 [isort]
