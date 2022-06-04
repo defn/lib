@@ -29,4 +29,4 @@ python_distribution(
     },
 )
 
-meh_sources()
+defn_sources()

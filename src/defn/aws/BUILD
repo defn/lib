@@ -1,3 +1,3 @@
 # type: ignore
 
-python_sources(resolve="defn")
+defn_sources()
