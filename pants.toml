@@ -18,6 +18,7 @@ backend_packages = [
   'pants.backend.shell.lint.shellcheck',
   'pants.backend.docker',
   'pants.backend.plugin_development',
+  'pants.backend.python.mixed_interpreter_constraints',
   'meh',
 ]
 
