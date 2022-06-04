@@ -1,1 +1,1 @@
-python_sources()
+pp_sources()
