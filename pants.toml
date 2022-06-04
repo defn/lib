@@ -26,7 +26,7 @@ green = "update-build-files fmt lint check ::"
 dev = "--changed-since=HEAD --changed-dependees=transitive"
 
 [subprocess-environment]
-env_vars.add = ["TWINE_USERNAME", "TWINE_PASSWORD"]
+env_vars = ["TWINE_USERNAME", "TWINE_PASSWORD"]
 
 [source]
 root_patterns = [
