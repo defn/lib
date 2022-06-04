@@ -19,9 +19,4 @@ archive(
     name="archive_pycco_docs", files=[":pycco_docs"], format="tar.gz", tags=["docs"]
 )
 
-pex_binary(
-    name="cli",
-    entry_point="defn.cli:main",
-    interpreter_constraints=[">=3.10,<4"],
-    resolve="defn",
-)
+defn_binary(name="cli", entry_point="defn.cli:main")
