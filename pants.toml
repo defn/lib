@@ -51,10 +51,12 @@ lockfile_generator = 'pex'
 [python.resolves]
 python-default = "3rdparty/python/default.lock"
 pants-plugins = "pants-plugins/plugins.lock"
+defn = "3rdparty/python/defn.lock"
 
 [python.resolves_to_interpreter_constraints]
 python-default = [">=3.7,<4"]
 pants-plugins = [">=3.8,<3.10"]
+defn = [">=3.10,<4"]
 
 [isort]
 config = [".isort.cfg"]
