@@ -19,6 +19,7 @@ backend_packages = [
   'pants.backend.docker',
   'pants.backend.plugin_development',
   'pants.backend.python.mixed_interpreter_constraints',
+  'meh',
 ]
 
 [cli.alias]

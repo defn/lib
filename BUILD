@@ -1,5 +1,7 @@
 # type: ignore
 
+pants_requirements(name="pants", resolve="pants-plugins")
+
 files(name="files", sources=["BUILDROOT", "pants.toml", "pants"])
 
-pants_requirements(name="pants", resolve="pants-plugins")
+meh(name="meh", source='meh', bleh='Mondays', dependencies=[":files"])
