@@ -28,7 +28,9 @@ login:
 	aws --profile spiral-lib sts get-caller-identity
 
 config-test:
-	grep ^.profile ~/.aws/config | perl -ne 's{.profile }{}; s{.$$}{}; print if m{^\w+-\w+$$|-adm$$}' | runmany 3 'echo profile "$$1 $$(aws --profile $$1 sts get-caller-identity | jq -r .Arn)"'
+	grep ^.profile ~/.aws/config | perl -ne 's{.profile }{}; s{.$$}{}; print if m{^[a-z]+-org$$}' | runmany 1 'echo profile "$$1 $$(aws --profile $$1 sts get-caller-identity | jq -r .Arn)"'
+	@echo
+	grep ^.profile ~/.aws/config | perl -ne 's{.profile }{}; s{.$$}{}; print if m{^\w+-\w+$$|-adm$$}' | runmany 1 'echo profile "$$1 $$(aws --profile $$1 sts get-caller-identity | jq -r .Arn)"'
 
 config:
 	earthly --push +config --stack=gyre   --region=us-east-2 --sso_region=us-east-2 --sso_url=https://d-9a6716e54a.awsapps.com/start
