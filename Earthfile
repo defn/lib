@@ -1,6 +1,6 @@
 VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-arg --use-copy-link 0.6
 
-ARG arch=amd64
+ARG arch
 
 IMPORT ./lib AS lib
 
