@@ -1,4 +1,4 @@
-include('/home/ubuntu/Tiltfile.common')
+include('/home/ubuntu/Tiltfile')
 
 load("ext://uibutton", "cmd_button", "location")
 
