@@ -4,6 +4,28 @@ ARG arch
 
 IMPORT ./lib AS lib
 
+updates:
+    BUILD +amd64-update
+    BUILD +arm64-update
+
+amd64-update:
+    BUILD --platform=linux/amd64 +cloud-update --arch=amd64
+
+arm64-update:
+    BUILD --platform=linux/arm64 +cloud-update --arch=arm64
+
+cloud-update:
+    ARG arch
+    ARG repo=localhost:5000/
+
+    FROM ${repo}defn/dev:latest
+
+    WORKDIR /work/cloud
+    COPY --dir --chown=ubuntu:ubuntu . .
+    RUN git clean -ffd
+
+    SAVE IMAGE --push ${repo}defn/cloud
+
 pre-commit:
     FROM defn/dev:${arch}
     ARG workdir
