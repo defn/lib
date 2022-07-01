@@ -1,10 +1,18 @@
-include('/home/ubuntu/Tiltfile')
+include('/home/ubuntu/Tiltfile.common')
 
 load("ext://uibutton", "cmd_button", "location")
 
 local_resource(
     "python",
-    serve_cmd="(python -mvenv .v); . .v/bin/activate; p export src::; code --install-extension ms-python.python || true; code --install-extension bungcip.better-toml || true; p --loop fmt lint check package ::",
+    serve_cmd="""
+        cd; cd work/cloud;
+        (python -mvenv .v);
+        . .v/bin/activate;
+        p export src::;
+        code --install-extension ms-python.python || true;
+        code --install-extension bungcip.better-toml || true;
+        p --loop fmt lint check package ::;
+    """,
     allow_parallel=True,
     labels=["automation"],
 )
@@ -17,7 +25,8 @@ cmd_button(
         "bash",
         "-c",
         """
-            make login
+            cd; cd work/cloud;
+            make login;
         """
     ],
     location="nav",
