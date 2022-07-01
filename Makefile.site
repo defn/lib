@@ -1,8 +1,7 @@
-dev:
-	@if flock -n ~/.dev.lock -c '~/bin/e $(MAKE) dev_inner'; then rm -f ~/.dev.lock; fi
+include ~/Makefile.common
 
-dev_inner:
-	tilt up --port=0 --stream
+init-site:
+	true
 
 get:
 	earthly +get
