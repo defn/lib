@@ -1,4 +1,4 @@
-include('/home/ubuntu/Tiltfile')
+include("/home/ubuntu/Tiltfile")
 
 load("ext://uibutton", "cmd_button", "location")
 
@@ -27,22 +27,26 @@ cmd_button(
         """
             cd; cd work/cloud;
             make login;
-        """
+        """,
     ],
     location="nav",
 )
 
-cmd_button(
-    name="make config-test",
-    text="make config-test",
-    icon_name="login",
-    argv=[
-        "bash",
-        "-c",
-        """
-            cd; cd work/cloud;
-            make config-test;
-        """
-    ],
-    location="nav",
-)
+for aname in ["gyre", "curl", "coil", "spiral", "helix"]:
+    cmd_button(
+        name=aname,
+        text=aname,
+        icon_name="login",
+        argv=[
+            "bash",
+            "-c",
+            """
+                xdg-open "https://signin.aws.amazon.com/oauth?Action=logout";
+                sleep 1;
+                aws-vault login {aname};
+            """.format(
+                aname=aname
+            ),
+        ],
+        location="nav",
+    )
