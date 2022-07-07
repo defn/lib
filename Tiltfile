@@ -31,3 +31,18 @@ cmd_button(
     ],
     location="nav",
 )
+
+cmd_button(
+    name="make config-test",
+    text="make config-test",
+    icon_name="login",
+    argv=[
+        "bash",
+        "-c",
+        """
+            cd; cd work/cloud;
+            make config-test;
+        """
+    ],
+    location="nav",
+)
