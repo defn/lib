@@ -18,7 +18,7 @@ local_resource(
 )
 
 cmd_button(
-    name="make login",
+    name="zmake login",
     text="make login",
     icon_name="login",
     argv=[
