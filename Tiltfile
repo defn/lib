@@ -32,6 +32,14 @@ cmd_button(
     location="nav",
 )
 
+aws_sso = {
+    "coil": "https://d-90674c3cfd.awsapps.com/start#/",
+    "curl": "https://d-926760a859.awsapps.com/start#/",
+    "gyre": "https://d-9a6716e54a.awsapps.com/start#/",
+    "spiral": "https://d-926760b322.awsapps.com/start#/",
+    "helix": "https://d-9a6716ffd1.awsapps.com/start#/",
+}
+
 for aname in ["gyre", "curl", "coil", "spiral", "helix"]:
     cmd_button(
         name=aname,
@@ -45,6 +53,22 @@ for aname in ["gyre", "curl", "coil", "spiral", "helix"]:
                 aws-vault login {aname};
             """.format(
                 aname=aname
+            ),
+        ],
+        location="nav",
+    )
+    cmd_button(
+        name=aname + " sso",
+        text=aname + " sso",
+        icon_name="login",
+        argv=[
+            "bash",
+            "-c",
+            """
+                xdg-open "{sso_url}"
+            """.format(
+                aname=aname,
+                sso_url=aws_sso[aname],
             ),
         ],
         location="nav",
