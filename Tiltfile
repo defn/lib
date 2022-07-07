@@ -42,7 +42,6 @@ for aname in ["gyre", "curl", "coil", "spiral", "helix"]:
             "-c",
             """
                 xdg-open "https://signin.aws.amazon.com/oauth?Action=logout";
-                sleep 1;
                 aws-vault login {aname};
             """.format(
                 aname=aname
