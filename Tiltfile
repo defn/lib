@@ -40,11 +40,19 @@ aws_sso = {
     "helix": "https://d-9a6716ffd1.awsapps.com/start#/",
 }
 
+aws_icon = {
+    "coil": "water",
+    "curl": "roundabout_right",
+    "gyre": "cyclone",
+    "spiral": "route",
+    "helix": "all_inclusive",
+}
+
 for aname in ["gyre", "curl", "coil", "spiral", "helix"]:
     cmd_button(
         name=aname,
         text=aname,
-        icon_name="login",
+        icon_name=aws_icon[aname],
         argv=[
             "bash",
             "-c",
@@ -60,7 +68,7 @@ for aname in ["gyre", "curl", "coil", "spiral", "helix"]:
     cmd_button(
         name=aname + " sso",
         text=aname + " sso",
-        icon_name="login",
+        icon_name=aws_icon[aname],
         argv=[
             "bash",
             "-c",
