@@ -53,3 +53,6 @@ import:
 
 apply:
 	earthly --push +apply --stack=$(stack)
+
+buf:
+	buf generate

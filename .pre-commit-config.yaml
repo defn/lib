@@ -3,13 +3,13 @@ repos:
     rev: v4.2.0
     hooks:
       - id: trailing-whitespace
-        exclude: ^(provider|cdktf.out)/|\.lock
+        exclude: ^(gen|provider|cdktf.out)|\.lock
       - id: end-of-file-fixer
-        exclude: ^(provider|cdktf.out)/|\.lock
+        exclude: ^(gen|provider|cdktf.out)|\.lock
       - id: check-json
-        exclude: ^(provider|cdktf.out)/
+        exclude: ^(provider|cdktf.out)
       - id: check-yaml
-        exclude: ^(provider|cdktf.out)/
+        exclude: ^(proto/.*?/kubernetes|provider|cdktf.out)
       - id: check-toml
-        exclude: ^(provider|cdktf.out)/
+        exclude: ^(gen|provider|cdktf.out)
       - id: check-shebang-scripts-are-executable
