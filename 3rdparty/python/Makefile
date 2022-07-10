@@ -11,6 +11,7 @@ requirements.txt: packages.txt
 
 default.lock: requirements.txt .venv/bin/activate
 	 . .venv/bin/activate && ../../pants generate-lockfiles
+	 . .venv/bin/activate && ../../pants export ::
 
 clean:
 	rm -rf .venv
