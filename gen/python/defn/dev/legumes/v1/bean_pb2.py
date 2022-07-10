@@ -7,8 +7,6 @@ from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
-
-
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -16,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1e\x64\x65\x66n/dev/legumes/v1/bean.proto\x12\x13\x64\x65\x66n.dev.legumes.v1\"0\n\x04\x42\x65\x61n\x12\x10\n\x03url\x18\x01 \x01(\tR\x03url\x12\x16\n\x06sha256\x18\x02 \x01(\tR\x06sha256B\xa8\x01\n\x17\x63om.defn.dev.legumes.v1B\tBeanProtoP\x01Z\x13\x64\x65\x66n.dev/legumes/v1\xa2\x02\x03\x44\x44L\xaa\x02\x13\x44\x65\x66n.Dev.Legumes.V1\xca\x02\x13\x44\x65\x66n\\Dev\\Legumes\\V1\xe2\x02\x1f\x44\x65\x66n\\Dev\\Legumes\\V1\\GPBMetadata\xea\x02\x16\x44\x65\x66n::Dev::Legumes::V1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1e\x64\x65\x66n/dev/legumes/v1/bean.proto\x12\x13\x64\x65\x66n.dev.legumes.v1\"0\n\x04\x42\x65\x61n\x12\x10\n\x03url\x18\x01 \x01(\tR\x03url\x12\x16\n\x06sha256\x18\x02 \x01(\tR\x06sha2562\xde\x01\n\x10\x42\x65\x61nStoreService\x12\x41\n\x07GetBean\x12\x19.defn.dev.legumes.v1.Bean\x1a\x19.defn.dev.legumes.v1.Bean\"\x00\x12\x41\n\x07PutBean\x12\x19.defn.dev.legumes.v1.Bean\x1a\x19.defn.dev.legumes.v1.Bean\"\x00\x12\x44\n\nDeleteBean\x12\x19.defn.dev.legumes.v1.Bean\x1a\x19.defn.dev.legumes.v1.Bean\"\x00\x42\xa8\x01\n\x17\x63om.defn.dev.legumes.v1B\tBeanProtoP\x01Z\x13\x64\x65\x66n.dev/legumes/v1\xa2\x02\x03\x44\x44L\xaa\x02\x13\x44\x65\x66n.Dev.Legumes.V1\xca\x02\x13\x44\x65\x66n\\Dev\\Legumes\\V1\xe2\x02\x1f\x44\x65\x66n\\Dev\\Legumes\\V1\\GPBMetadata\xea\x02\x16\x44\x65\x66n::Dev::Legumes::V1b\x06proto3')
 
 
 
@@ -28,10 +26,13 @@ Bean = _reflection.GeneratedProtocolMessageType('Bean', (_message.Message,), {
   })
 _sym_db.RegisterMessage(Bean)
 
+_BEANSTORESERVICE = DESCRIPTOR.services_by_name['BeanStoreService']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\027com.defn.dev.legumes.v1B\tBeanProtoP\001Z\023defn.dev/legumes/v1\242\002\003DDL\252\002\023Defn.Dev.Legumes.V1\312\002\023Defn\\Dev\\Legumes\\V1\342\002\037Defn\\Dev\\Legumes\\V1\\GPBMetadata\352\002\026Defn::Dev::Legumes::V1'
   _BEAN._serialized_start=55
   _BEAN._serialized_end=103
+  _BEANSTORESERVICE._serialized_start=106
+  _BEANSTORESERVICE._serialized_end=328
 # @@protoc_insertion_point(module_scope)

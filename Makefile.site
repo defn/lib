@@ -63,6 +63,7 @@ apply:
 
 buf:
 	buf generate
+	cd proto/defn/dev && $(MAKE)
 
 pants-venv:
 	cd 3rdparty/python && make all
