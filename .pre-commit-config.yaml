@@ -9,7 +9,7 @@ repos:
       - id: check-json
         exclude: ^(provider|cdktf.out)
       - id: check-yaml
-        exclude: ^(proto/.*?/kubernetes|provider|cdktf.out)
+        exclude: ^(p/.*?/kubernetes|provider|cdktf.out)/
       - id: check-toml
         exclude: ^(gen|provider|cdktf.out)
       - id: check-shebang-scripts-are-executable
