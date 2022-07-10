@@ -8,5 +8,4 @@ __pycache__
 .terraform
 .*lock
 .cache
-.v
 .vscode

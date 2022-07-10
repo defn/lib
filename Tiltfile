@@ -6,8 +6,7 @@ local_resource(
     "python",
     serve_cmd="""
         cd; cd work/cloud;
-        (python -mvenv .v);
-        . .v/bin/activate;
+        . .venv/bin/activate;
         p export src::;
         code --install-extension ms-python.python || true;
         code --install-extension bungcip.better-toml || true;
