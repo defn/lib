@@ -6,7 +6,8 @@ from defn.dev.legumes.v1 import bean_pb2 as defn_dot_dev_dot_legumes_dot_v1_dot_
 
 
 class BeanStoreServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """cool bean service
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -32,22 +33,26 @@ class BeanStoreServiceStub(object):
 
 
 class BeanStoreServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """cool bean service
+    """
 
     def GetBean(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """get the beans
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def PutBean(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """put the beans
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def DeleteBean(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """del the beans
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -78,7 +83,8 @@ def add_BeanStoreServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class BeanStoreService(object):
-    """Missing associated documentation comment in .proto file."""
+    """cool bean service
+    """
 
     @staticmethod
     def GetBean(request,

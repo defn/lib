@@ -33,8 +33,14 @@ message Bean {
   string sha256 = 2;
 }
 
+// cool bean service
 service BeanStoreService {
-   rpc GetBean(Bean) returns (Bean) {}
-   rpc PutBean(Bean) returns (Bean) {}
-   rpc DeleteBean(Bean) returns (Bean) {}
+  // get the beans
+  rpc GetBean(Bean) returns (Bean) {}
+
+  // put the beans
+  rpc PutBean(Bean) returns (Bean) {}
+
+  // del the beans
+  rpc DeleteBean(Bean) returns (Bean) {}
  }
