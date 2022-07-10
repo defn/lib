@@ -8,4 +8,4 @@ requirements.txt: packages.txt
 	pip-compile $< -o $@
 
 default.lock: requirements.txt
-	../../pants generate-lock-files
+	../../pants generate-lockfiles
