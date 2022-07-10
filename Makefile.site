@@ -63,3 +63,9 @@ apply:
 
 buf:
 	buf generate
+
+pants-venv:
+	cd 3rdparty/python && make all
+
+pants-lock:
+	cd 3rdparty/python && make clean all
