@@ -1,7 +1,7 @@
-all: venv default.lock
+all: default.lock
 
 venv: requirements.txt
-	/usr/bin/python3.8 -mvenv .venv
+	python -mvenv .venv
 	.venv/bin/pip install -r requirements.txt
 
 requirements.txt: packages.txt
@@ -10,4 +10,7 @@ requirements.txt: packages.txt
 .venv/bin/activate: venv
 
 default.lock: requirements.txt .venv/bin/activate
-	source .venv/bin/activate && ../../pants generate-lockfiles
+	 . .venv/bin/activate && ../../pants generate-lockfiles
+
+clean:
+	rm -rf .venv
