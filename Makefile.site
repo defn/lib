@@ -39,6 +39,13 @@ config:
 	earthly --push +config --stack=spiral --region=us-west-2 --sso_region=us-west-2 --sso_url=https://d-926760b322.awsapps.com/start
 	ls -d cdktf.*/stacks/*/.aws/config | sort | xargs cat > ~/.aws/config
 
+plan-all:
+	$(MAKE) plan stack=gyre
+	$(MAKE) plan stack=curl
+	$(MAKE) plan stack=coil
+	$(MAKE) plan stack=helix
+	$(MAKE) plan stack=spiral
+
 synth:
 	earthly +synth
 
