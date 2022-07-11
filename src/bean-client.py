@@ -11,7 +11,9 @@ import defn.dev.legumes.v1.bean_pb2_grpc as bean_pb2_grpc
 def run():
     with grpc.insecure_channel("localhost:50051") as channel:
         stub = bean_pb2_grpc.BeanStoreServiceStub(channel)
-        response = stub.GetBean(bean_pb2.Bean(url="hello", sha256="world"))
+        response: bean_pb2.Bean = stub.GetBean(
+            bean_pb2.Bean(url="hello", sha256="world")
+        )
     print("Bean client received: " + response.url + " " + response.sha256)
 
 
