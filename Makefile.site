@@ -62,8 +62,8 @@ apply:
 	earthly --push +apply --stack=$(stack)
 
 buf:
-	buf generate
-	cd proto/defn/dev && $(MAKE)
+	buf generate --include-wkt --include-imports
+	cd p/defn/dev && $(MAKE)
 
 pants-venv:
 	cd 3rdparty/python && make all
