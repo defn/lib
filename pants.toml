@@ -10,7 +10,6 @@ backend_packages = [
   'pants.backend.python',
   'pants.backend.python.lint.black',
   'pants.backend.python.lint.isort',
-  'pants.backend.python.lint.flake8',
   'pants.backend.python.lint.docformatter',
   'pants.backend.experimental.python',
   'pants.backend.shell',
@@ -69,9 +68,6 @@ defn = [">=3.10,<4"]
 
 [isort]
 config = [".isort.cfg"]
-
-[flake8]
-config = ".flake8"
 
 [shfmt]
 args = ["-i 2", "-ci", "-sr"]
