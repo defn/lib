@@ -30,13 +30,3 @@ python_distribution(
 )
 
 defn_sources()
-
-defn_binary(
-    name="bean-client",
-    entry_point="bean-client.py",
-)
-
-defn_binary(
-    name="bean-server",
-    entry_point="bean-server.py",
-)

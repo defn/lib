@@ -2,8 +2,6 @@ from defn.init import once
 
 
 """ init must run before cdktf """
-
-
 import typer
 
 

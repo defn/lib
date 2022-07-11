@@ -5,7 +5,7 @@ venv: requirements.txt
 	.venv/bin/pip install -r requirements.txt
 
 requirements.txt: packages.txt
-	pip-compile $< -o $@
+	pip-compile --upgrade $< -o $@
 
 .venv/bin/activate: venv
 

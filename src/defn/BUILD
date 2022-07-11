@@ -19,4 +19,14 @@ archive(
     name="archive_pycco_docs", files=[":pycco_docs"], format="tar.gz", tags=["docs"]
 )
 
-defn_binary(name="cli", entry_point="defn.cli:main")
+pex_binary(name="cli", entry_point="defn.cli:main")
+
+pex_binary(
+    name="bean-client",
+    entry_point="bean-client.py",
+)
+
+pex_binary(
+    name="bean-server",
+    entry_point="bean-server.py",
+)

@@ -22,6 +22,12 @@ backend_packages = [
   'meh',
 ]
 
+pants_ignore = [
+  ".*/",
+  "/dist/",
+  "/gen/"
+]
+
 [cli.alias]
 green = "update-build-files fmt lint check ::"
 dev = "--changed-since=HEAD --changed-dependees=transitive"

@@ -1,3 +1,7 @@
 # type: ignore
 
-python_requirements(name="reqs", resolve="defn")
+python_requirements(
+    name="reqs",
+    resolve="defn",
+    module_mapping={"grpcio": ["grpc"]},
+)
