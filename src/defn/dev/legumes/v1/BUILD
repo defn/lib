@@ -1,1 +1,1 @@
-python_sources()
+defn_sources()
