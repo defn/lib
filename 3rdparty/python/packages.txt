@@ -9,3 +9,4 @@ cdktf-cdktf-provider-github
 protobuf
 grpcio
 grpcio-tools
+kopf
