@@ -15,6 +15,8 @@ attrs==21.4.0
     #   aiohttp
     #   cattrs
     #   jsii
+cachetools==5.2.0
+    # via google-auth
 cattrs==22.1.0
     # via jsii
 cdktf==0.11.1
@@ -35,8 +37,14 @@ cdktf-cdktf-provider-null==0.7.10
     # via -r packages.txt
 cdktf-cdktf-provider-tfe==0.3.10
     # via -r packages.txt
+certifi==2022.6.15
+    # via
+    #   kubernetes
+    #   requests
 charset-normalizer==2.1.0
-    # via aiohttp
+    # via
+    #   aiohttp
+    #   requests
 click==8.1.3
     # via
     #   kopf
@@ -57,6 +65,8 @@ frozenlist==1.3.0
     # via
     #   aiohttp
     #   aiosignal
+google-auth==2.9.0
+    # via kubernetes
 grpcio==1.47.0
     # via
     #   -r packages.txt
@@ -64,7 +74,9 @@ grpcio==1.47.0
 grpcio-tools==1.47.0
     # via -r packages.txt
 idna==3.3
-    # via yarl
+    # via
+    #   requests
+    #   yarl
 iso8601==1.0.2
     # via kopf
 jsii==1.59.0
@@ -78,10 +90,14 @@ jsii==1.59.0
     #   constructs
 kopf==1.35.5
     # via -r packages.txt
+kubernetes==24.2.0
+    # via -r packages.txt
 multidict==6.0.2
     # via
     #   aiohttp
     #   yarl
+oauthlib==3.2.0
+    # via requests-oauthlib
 protobuf==3.20.1
     # via
     #   -r packages.txt
@@ -95,19 +111,39 @@ publication==0.0.3
     #   cdktf-cdktf-provider-null
     #   cdktf-cdktf-provider-tfe
     #   constructs
+pyasn1==0.4.8
+    # via
+    #   pyasn1-modules
+    #   rsa
+pyasn1-modules==0.2.8
+    # via google-auth
 pygments==2.12.0
     # via rich
 python-dateutil==2.8.2
-    # via jsii
+    # via
+    #   jsii
+    #   kubernetes
 python-json-logger==2.0.3
     # via kopf
 pyyaml==6.0
-    # via kopf
+    # via
+    #   kopf
+    #   kubernetes
+requests==2.28.1
+    # via
+    #   kubernetes
+    #   requests-oauthlib
+requests-oauthlib==1.3.1
+    # via kubernetes
 rich==12.4.4
     # via textual
+rsa==4.8
+    # via google-auth
 six==1.16.0
     # via
+    #   google-auth
     #   grpcio
+    #   kubernetes
     #   python-dateutil
 textual==0.1.18
     # via -r packages.txt
@@ -117,6 +153,12 @@ typing-extensions==4.2.0
     # via
     #   jsii
     #   kopf
+urllib3==1.26.10
+    # via
+    #   kubernetes
+    #   requests
+websocket-client==1.3.3
+    # via kubernetes
 yarl==1.7.2
     # via aiohttp
 

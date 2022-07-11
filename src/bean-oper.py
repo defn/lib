@@ -1,6 +1,5 @@
 import logging
 
-import grpc
 import kopf
 from google.protobuf.json_format import Parse, ParseDict
 
