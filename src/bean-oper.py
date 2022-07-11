@@ -1,7 +1,7 @@
 import logging
 
 import kopf
-from google.protobuf.json_format import Parse, ParseDict
+from google.protobuf.json_format import ParseDict
 
 import defn.dev.legumes.v1.bean_pb2 as bean_pb2
 
