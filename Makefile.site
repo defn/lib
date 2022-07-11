@@ -69,4 +69,5 @@ pants-venv:
 	cd 3rdparty/python && make all
 
 pants-lock:
+	-python -mvenv dist/export/python/virtualenvs/defn/3.10.5
 	cd 3rdparty/python && make clean all

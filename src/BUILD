@@ -30,3 +30,13 @@ python_distribution(
 )
 
 defn_sources()
+
+pex_binary(
+    name="bean-client",
+    entry_point="bean-client.py",
+)
+
+pex_binary(
+    name="bean-server",
+    entry_point="bean-server.py",
+)
