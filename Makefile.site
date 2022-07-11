@@ -72,11 +72,5 @@ pants-lock:
 	-python -mvenv dist/export/python/virtualenvs/defn/3.10.5
 	cd 3rdparty/python && make clean all
 
-server:
-	env PYTHONPATH="$(PWD)/src" .venv/bin/python src/defn/bean-server.py
-
-client:
-	env PYTHONPATH="$(PWD)/src" .venv/bin/python src/defn/bean-client.py
-
-oper:
-	env PYTHONPATH="$(PWD)/src" .venv/bin/python src/defn/bean-oper.py
+server client oper:
+	./dist/src.defn/bean-$@.pex
