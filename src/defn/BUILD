@@ -30,3 +30,8 @@ defn_binary(
     name="bean-server",
     entry_point="bean-server.py",
 )
+
+defn_binary(
+    name="bean-oper",
+    entry_point="bean-oper.py",
+)

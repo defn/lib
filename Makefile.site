@@ -79,4 +79,4 @@ client:
 	env PYTHONPATH="$(PWD)/src" .venv/bin/python src/defn/bean-client.py
 
 oper:
-	. .venv/bin/activate && cd src && kopf run bean-oper.py --verbose
+	env PYTHONPATH="$(PWD)/src" .venv/bin/python src/defn/bean-oper.py
