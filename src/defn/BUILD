@@ -21,7 +21,7 @@ archive(
 
 defn_binary(name="cli", entry_point="defn.cli:main")
 
-defnbinary(
+defn_binary(
     name="bean-client",
     entry_point="bean-client.py",
 )
