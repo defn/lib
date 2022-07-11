@@ -15,25 +15,25 @@
 //     "attrs==21.4.0",
 //     "cachetools==5.2.0",
 //     "cattrs==22.1.0",
-//     "cdktf-cdktf-provider-aws==8.0.3",
-//     "cdktf-cdktf-provider-digitalocean==0.1.10",
-//     "cdktf-cdktf-provider-github==0.8.11",
-//     "cdktf-cdktf-provider-null==0.7.10",
-//     "cdktf-cdktf-provider-tfe==0.3.10",
-//     "cdktf==0.11.1",
+//     "cdktf-cdktf-provider-aws==8.0.14",
+//     "cdktf-cdktf-provider-digitalocean==0.1.49",
+//     "cdktf-cdktf-provider-github==0.8.28",
+//     "cdktf-cdktf-provider-null==0.7.27",
+//     "cdktf-cdktf-provider-tfe==0.4.16",
+//     "cdktf==0.11.2",
 //     "certifi==2022.6.15",
 //     "charset-normalizer==2.1.0",
 //     "click==8.1.3",
 //     "commonmark==0.9.1",
-//     "constructs==10.1.25",
-//     "exceptiongroup==1.0.0rc7",
+//     "constructs==10.1.43",
+//     "exceptiongroup==1.0.0rc8",
 //     "frozenlist==1.3.0",
 //     "google-auth==2.9.0",
 //     "grpcio-tools==1.47.0",
 //     "grpcio==1.47.0",
 //     "idna==3.3",
 //     "iso8601==1.0.2",
-//     "jsii==1.59.0",
+//     "jsii==1.61.0",
 //     "kopf==1.35.5",
 //     "kubernetes==24.2.0",
 //     "multidict==6.0.2",
@@ -52,8 +52,8 @@
 //     "rsa==4.8",
 //     "six==1.16.0",
 //     "textual==0.1.18",
-//     "typer==0.4.1",
-//     "typing-extensions==4.2.0",
+//     "typer==0.5.0",
+//     "typing-extensions==4.3.0",
 //     "urllib3==1.26.10",
 //     "websocket-client==1.3.3",
 //     "yarl==1.7.2"
@@ -309,13 +309,13 @@
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "cdfaad65db4e27dcb0dc64fff89e941108204d45bbd30c5a341ed5dfe877c48d",
-              "url": "https://files.pythonhosted.org/packages/a7/4b/cd32fcfe538dbfdb4c45ed4386ed3c7f8b403491d2d9cc16a410f3f53347/cdktf-0.11.1-py3-none-any.whl"
+              "hash": "bfaf25207c64fbdf8985ca4dc2b87f72518da7bfcff9903fa0e493b975618dd1",
+              "url": "https://files.pythonhosted.org/packages/b5/3a/322d958d5febd990a1facb5b5d3d7af3d4c347ab4b19e059ff4ad48c4fc1/cdktf-0.11.2-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "fa921d90a49b80c28240bd1c626e7ea95cc59183c6cd2931f76d8d60ca04431e",
-              "url": "https://files.pythonhosted.org/packages/38/0c/0ce19f12fd21d522bfadc69cf531f98b8fee8c1bdb4270e9e70063003712/cdktf-0.11.1.tar.gz"
+              "hash": "1a705020e3524184d04206241c4952648449f01e3e64a49ab999e08ef6feae65",
+              "url": "https://files.pythonhosted.org/packages/54/54/46beb29c7e52dc8837b9f8c20753f5c06d23a7ee4d83d490ea4e78385c97/cdktf-0.11.2.tar.gz"
             }
           ],
           "project_name": "cdktf",
@@ -325,122 +325,122 @@
             "publication>=0.0.3"
           ],
           "requires_python": ">=3.6",
-          "version": "0.11.1"
+          "version": "0.11.2"
         },
         {
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "cb4c111bcb57f3c9da1c7fe6a3c3ea30f49573ed287656c2b5b2c32a7ae7068f",
-              "url": "https://files.pythonhosted.org/packages/b5/e8/bda97088839da02df656cbfc0556c75e64ceeed0baeb232ca892952841b2/cdktf_cdktf_provider_aws-8.0.3-py3-none-any.whl"
+              "hash": "bba1ce52f911692b77ddf6eacdaf0a11887d753c6cc2a9f92f58ff334f143d27",
+              "url": "https://files.pythonhosted.org/packages/aa/3f/4433bce3a03387678d59d4f6f41911bafda803ea768b56965ae2efc08de7/cdktf_cdktf_provider_aws-8.0.14-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "0b5905288d6a5d26401424b930a3a376f89f8a8a3124d910b2666f2957175804",
-              "url": "https://files.pythonhosted.org/packages/b7/03/77a99e83caffac1c1b59108aaa630decafe6ef8fe765584700b76cb2dad4/cdktf-cdktf-provider-aws-8.0.3.tar.gz"
+              "hash": "34a07db1bdedb13a9ac8bccf9ef25552c29bc933ec6264978d18f2e68c3e727c",
+              "url": "https://files.pythonhosted.org/packages/f1/36/b3b1d55324a79dd11508e64d225b756651cbd439db882c1b06c5ba09fc50/cdktf-cdktf-provider-aws-8.0.14.tar.gz"
             }
           ],
           "project_name": "cdktf-cdktf-provider-aws",
           "requires_dists": [
             "cdktf<0.12.0,>=0.11.0",
             "constructs<11.0.0,>=10.0.0",
-            "jsii<2.0.0,>=1.59.0",
+            "jsii<2.0.0,>=1.61.0",
             "publication>=0.0.3"
           ],
           "requires_python": "~=3.7",
-          "version": "8.0.3"
+          "version": "8.0.14"
         },
         {
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "a1943c8081b358f85d14663889606b18a0c4ac82f48a7e69deb0c73fe45c816a",
-              "url": "https://files.pythonhosted.org/packages/e9/28/8bacb8214df09d04a62580e089e6ace24837f52721e16b7faefaa03e9f37/cdktf_cdktf_provider_digitalocean-0.1.10-py3-none-any.whl"
+              "hash": "61f9a9827b45cbeda3713bbec28b57e6c22b57d594b21631aa662c21a9eb5163",
+              "url": "https://files.pythonhosted.org/packages/3d/40/de57176240c64e878b4e1a5529aef0c17409c41e4e93b85159c66bfc5cc6/cdktf_cdktf_provider_digitalocean-0.1.49-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "92ca05e40175259ada27b07aef37e93625d5cbbe564b989cfc8cad75a2546e81",
-              "url": "https://files.pythonhosted.org/packages/6c/fa/f7eeef6360aca74c025cb98d49b88160c2c3c8c0b1ea86ddb894c294a285/cdktf-cdktf-provider-digitalocean-0.1.10.tar.gz"
+              "hash": "b8dae44a09a44ea1b638196c827a5927483cb110371fc31e4082344573db58e2",
+              "url": "https://files.pythonhosted.org/packages/de/a2/ecaeef8fb9aa4bebbcff4c95a4cc33dd3be24ff138a9ae2c13c9fc70f82a/cdktf-cdktf-provider-digitalocean-0.1.49.tar.gz"
             }
           ],
           "project_name": "cdktf-cdktf-provider-digitalocean",
           "requires_dists": [
             "cdktf<0.12.0,>=0.11.0",
             "constructs<11.0.0,>=10.0.0",
-            "jsii<2.0.0,>=1.59.0",
+            "jsii<2.0.0,>=1.61.0",
             "publication>=0.0.3"
           ],
           "requires_python": "~=3.7",
-          "version": "0.1.10"
+          "version": "0.1.49"
         },
         {
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "f4c93ae36d9699dc1d71b63460c8c9d9a95eec8191d0a0762c6f1109cb2de26e",
-              "url": "https://files.pythonhosted.org/packages/b7/d4/2d6ba4b7153b6b99b0e8a50fc9be05267084f9490fb7e73067e25ebc4e7e/cdktf_cdktf_provider_github-0.8.11-py3-none-any.whl"
+              "hash": "414e148e673858a17064a5adbda24ec29ce014fce35e31e8b08d7d9c18167f1d",
+              "url": "https://files.pythonhosted.org/packages/73/b4/a219f139447226c231f0d1eded697b570b8b0808c520aaf22d346f6ac584/cdktf_cdktf_provider_github-0.8.28-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "402d285ed716e3d7bd2a5af4eba0e3528178fbd852af19fbcdfd37e9ab2b9f28",
-              "url": "https://files.pythonhosted.org/packages/34/c1/05e28b6dd4e1e4ef572e437b4bac8c21d77afa1c8d6a3a5d83317299bbcd/cdktf-cdktf-provider-github-0.8.11.tar.gz"
+              "hash": "83e1a1b1323226dca78ef63db47940203d9feca64433c532d5efae50454b1d06",
+              "url": "https://files.pythonhosted.org/packages/9f/86/ff00081aca4014d26500a0b8a540e04f5ac0df15f9b068ec46258ca9aa89/cdktf-cdktf-provider-github-0.8.28.tar.gz"
             }
           ],
           "project_name": "cdktf-cdktf-provider-github",
           "requires_dists": [
             "cdktf<0.12.0,>=0.11.0",
             "constructs<11.0.0,>=10.0.0",
-            "jsii<2.0.0,>=1.59.0",
+            "jsii<2.0.0,>=1.61.0",
             "publication>=0.0.3"
           ],
           "requires_python": "~=3.7",
-          "version": "0.8.11"
+          "version": "0.8.28"
         },
         {
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "b353ca6e7ff4d697f126501c72e07547f04d2072fd1c1b41b2177cfc3ba0ff5e",
-              "url": "https://files.pythonhosted.org/packages/cb/f4/c9b1a2593f517ce8cc0afcdd69457567d6e459d23d59bb35ecafa228529d/cdktf_cdktf_provider_null-0.7.10-py3-none-any.whl"
+              "hash": "b9e88f44dff15f9313bbb23dbd0e82162cf3ff9ab790c5e69ab197ad342efe76",
+              "url": "https://files.pythonhosted.org/packages/60/4a/c3ba4a8e6dcecb96c8d337034d0b9b59a883bc5793f7b665dbb5ad8a8365/cdktf_cdktf_provider_null-0.7.27-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "93522bd8bbec30b38b56cd4ca4320023db047f2d419085e29a56976f4fe613ca",
-              "url": "https://files.pythonhosted.org/packages/10/e3/da19522d62efd37dd354964334c6d57b8d65afd980731ef07968441936ad/cdktf-cdktf-provider-null-0.7.10.tar.gz"
+              "hash": "667da237f337c48c1d12ab9d78aee0937c57410a3d9ceba8e1ed10bd31331dea",
+              "url": "https://files.pythonhosted.org/packages/f9/7f/3444da49ad513923f494e1f51fdc7c5b6161dca1437c546fe22ba0255038/cdktf-cdktf-provider-null-0.7.27.tar.gz"
             }
           ],
           "project_name": "cdktf-cdktf-provider-null",
           "requires_dists": [
             "cdktf<0.12.0,>=0.11.0",
             "constructs<11.0.0,>=10.0.0",
-            "jsii<2.0.0,>=1.59.0",
+            "jsii<2.0.0,>=1.61.0",
             "publication>=0.0.3"
           ],
           "requires_python": "~=3.7",
-          "version": "0.7.10"
+          "version": "0.7.27"
         },
         {
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "80545ab7d313d4ef55132e6b9affdc0353dd55012fc121272c1e9e0d9903e649",
-              "url": "https://files.pythonhosted.org/packages/b5/5c/625c30dbb87bdba95344246717ea253be1902f33855581f034c140c573ee/cdktf_cdktf_provider_tfe-0.3.10-py3-none-any.whl"
+              "hash": "70e1c1459589b1e8d9973cd898626db8b4f445dff2ee301194e6834c0912f93d",
+              "url": "https://files.pythonhosted.org/packages/5f/75/eacf792d2ea5b1d1b9be061a8122dab89d96a01f0a17712e22b441bf9d72/cdktf_cdktf_provider_tfe-0.4.16-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "be4b73484c077571d5b62c4dca4830a6c4e1617073b287e980f1236196ad2458",
-              "url": "https://files.pythonhosted.org/packages/d7/1e/9ed9d679bd1a858b6b92a6f666a57d293f5c7194c4bceb40e146c57c99ac/cdktf-cdktf-provider-tfe-0.3.10.tar.gz"
+              "hash": "4793ac9edfd6769ccfec3e81a3e5d2f6f7e5bb5139ddbc98e3f24b966debba36",
+              "url": "https://files.pythonhosted.org/packages/b7/e0/77271b090b5a96a0cb8099874731ffea31f9effd3a2da81b44ee01095ff6/cdktf-cdktf-provider-tfe-0.4.16.tar.gz"
             }
           ],
           "project_name": "cdktf-cdktf-provider-tfe",
           "requires_dists": [
             "cdktf<0.12.0,>=0.11.0",
             "constructs<11.0.0,>=10.0.0",
-            "jsii<2.0.0,>=1.59.0",
+            "jsii<2.0.0,>=1.61.0",
             "publication>=0.0.3"
           ],
           "requires_python": "~=3.7",
-          "version": "0.3.10"
+          "version": "0.4.16"
         },
         {
           "artifacts": [
@@ -545,34 +545,34 @@
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "cf0aacda3505fec4bbc5dffd69ea434a0410e341d0e4448d4a154c08af85af57",
-              "url": "https://files.pythonhosted.org/packages/90/9d/a6ff27ef35bcfa30b3cf2414d93484a393b1dd6fa06f16e22e543f74887c/constructs-10.1.25-py3-none-any.whl"
+              "hash": "f37e8c3432f94f403b50bf69476bea55719bcc3fa0d3a0e60bf0975dfe492867",
+              "url": "https://files.pythonhosted.org/packages/a9/68/cee7680433a8e57bd0cc8222c88743a2b70f63d1dcbb62a0fef478e06e46/constructs-10.1.43-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "6db9ff815123f91e11959a2f32320e1b2126624b9dd9191e3e62ee5910eaa5e3",
-              "url": "https://files.pythonhosted.org/packages/be/be/8c762d2175a1661846a0051a0a3cf2c0e12033b5d814cb0475c3da423539/constructs-10.1.25.tar.gz"
+              "hash": "69fd6da574c9506f44ca61e112af7d5db08ebb29b4bedc67b6d200b616f4abce",
+              "url": "https://files.pythonhosted.org/packages/c4/c9/917a3341cf6206338d4c474770412d5cf1ea2f782d40bb7f2b6681e05ad3/constructs-10.1.43.tar.gz"
             }
           ],
           "project_name": "constructs",
           "requires_dists": [
-            "jsii<2.0.0,>=1.59.0",
+            "jsii<2.0.0,>=1.60.1",
             "publication>=0.0.3"
           ],
           "requires_python": "~=3.7",
-          "version": "10.1.25"
+          "version": "10.1.43"
         },
         {
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "82dc1cfc21bb5f921a25925e80ec696c71b7d108c6c63bd8a786abe2b73c3263",
-              "url": "https://files.pythonhosted.org/packages/8b/31/e81a7685eed779b50632cfe53202225584e9635efc817a01076ff6214733/exceptiongroup-1.0.0rc7-py3-none-any.whl"
+              "hash": "ab0a968e1ef769e55d9a596f4a89f7be9ffedbc9fdefdb77cc68cf5c33ce1035",
+              "url": "https://files.pythonhosted.org/packages/9a/8e/21e73923dabbf1b4bb36bc1c0f8f6da5c7d6becd0902213dbefa386ca8dc/exceptiongroup-1.0.0rc8-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "2019e6e9d6ef84ff65c5c7c451b75802c662d53bcb124abf47ad118d39f9a1ca",
-              "url": "https://files.pythonhosted.org/packages/e7/4f/0e7d12b079b8d694be4b47997780d149e14a504a638caa56ac03ef48e248/exceptiongroup-1.0.0rc7.tar.gz"
+              "hash": "6990c24f06b8d33c8065cfe43e5e8a4bfa384e0358be036af9cc60b6321bd11a",
+              "url": "https://files.pythonhosted.org/packages/94/e0/2f58a7e00e28cd57f8239bd8d16963c2810142af58028cf5b0681ed9fdfd/exceptiongroup-1.0.0rc8.tar.gz"
             }
           ],
           "project_name": "exceptiongroup",
@@ -580,7 +580,7 @@
             "pytest>=6; extra == \"test\""
           ],
           "requires_python": ">=3.7",
-          "version": "1rc7"
+          "version": "1rc8"
         },
         {
           "artifacts": [
@@ -866,13 +866,13 @@
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "6a9f587cdc1b03129375f9faed876d864383d2b341471c1296a0040622fe938a",
-              "url": "https://files.pythonhosted.org/packages/fc/f5/839c3af3574c47c987b9abd61322c36ca10f68f3e54e6c0ec251f39f1f1b/jsii-1.59.0-py3-none-any.whl"
+              "hash": "542a72cd1a144d36fa530dc359b5295b82d9e7ecdd76d5c7b4b61195f132a746",
+              "url": "https://files.pythonhosted.org/packages/92/68/d0c70aa1a260e65b68a1fd52b4424b1cb108411515d53879111b02d8d2d4/jsii-1.61.0-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "d7ea32e1d6c8aa597be7ecf10eb0e05355db60e6ca986f82dab3fb5aa52d914f",
-              "url": "https://files.pythonhosted.org/packages/93/e8/5b87206f35ee6dc6623363fea4dc543efb910a0a4accd8dbd640e8505753/jsii-1.59.0.tar.gz"
+              "hash": "b2899f24bcc95ce009bc256558c81cde8cff9f830eddbe9b0d581c40558a1ff0",
+              "url": "https://files.pythonhosted.org/packages/ff/0a/310922539059d5b919e4a6028ddc97d068893aa6516ea0a6a4705447725b/jsii-1.61.0.tar.gz"
             }
           ],
           "project_name": "jsii",
@@ -883,7 +883,7 @@
             "typing-extensions<5.0,>=3.7"
           ],
           "requires_python": "~=3.7",
-          "version": "1.59"
+          "version": "1.61"
         },
         {
           "artifacts": [
@@ -1455,13 +1455,13 @@
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "e8467f0ebac0c81366c2168d6ad9f888efdfb6d4e1d3d5b4a004f46fa444b5c3",
-              "url": "https://files.pythonhosted.org/packages/52/bb/2bf41b92ea42ed36874669afad18ffe1c5b95d96d2f26dacfa33edb22b79/typer-0.4.1-py3-none-any.whl"
+              "hash": "a34409c0029ba7e48cb9e4f54c6400bf4158a6145b5dea32788e7a36ebbcb312",
+              "url": "https://files.pythonhosted.org/packages/81/3b/5f09648e180279eefe964c6792c40525840e0e21ad57f8fef1a2c3ddddf7/typer-0.5.0-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "5646aef0d936b2c761a10393f0384ee6b5c7fe0bb3e5cd710b17134ca1d99cff",
-              "url": "https://files.pythonhosted.org/packages/84/f2/71a04c8aa8718570d6f7570f6871fd358c29c715035f63630dadbd460da8/typer-0.4.1.tar.gz"
+              "hash": "4c285a5585c94d32c305444af934f0078b6a8ba91464f3f85807c91cd499d195",
+              "url": "https://files.pythonhosted.org/packages/38/01/1d26c2cccef5bf4c5b23b77423e5feb0402c2f6d474fa20bf831d07df524/typer-0.5.0.tar.gz"
             }
           ],
           "project_name": "typer",
@@ -1477,33 +1477,36 @@
             "mkdocs-material<9.0.0,>=8.1.4; extra == \"doc\"",
             "mkdocs<2.0.0,>=1.1.2; extra == \"doc\"",
             "mypy==0.910; extra == \"test\"",
+            "pre-commit<3.0.0,>=2.17.0; extra == \"dev\"",
             "pytest-cov<3.0.0,>=2.10.0; extra == \"test\"",
             "pytest-sugar<0.10.0,>=0.9.4; extra == \"test\"",
             "pytest-xdist<2.0.0,>=1.32.0; extra == \"test\"",
             "pytest<5.4.0,>=4.4.0; extra == \"test\"",
+            "rich<13.0.0,>=10.11.0; extra == \"all\"",
+            "rich<13.0.0,>=10.11.0; extra == \"test\"",
             "shellingham<2.0.0,>=1.3.0; extra == \"all\"",
             "shellingham<2.0.0,>=1.3.0; extra == \"test\""
           ],
           "requires_python": ">=3.6",
-          "version": "0.4.1"
+          "version": "0.5"
         },
         {
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "6657594ee297170d19f67d55c05852a874e7eb634f4f753dbd667855e07c1708",
-              "url": "https://files.pythonhosted.org/packages/75/e1/932e06004039dd670c9d5e1df0cd606bf46e29a28e65d5bb28e894ea29c9/typing_extensions-4.2.0-py3-none-any.whl"
+              "hash": "25642c956049920a5aa49edcdd6ab1e06d7e5d467fc00e0506c44ac86fbfca02",
+              "url": "https://files.pythonhosted.org/packages/ed/d6/2afc375a8d55b8be879d6b4986d4f69f01115e795e36827fd3a40166028b/typing_extensions-4.3.0-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "f1c24655a0da0d1b67f07e17a5e6b2a105894e6824b92096378bb3668ef02376",
-              "url": "https://files.pythonhosted.org/packages/fe/71/1df93bd59163c8084d812d166c907639646e8aac72886d563851b966bf18/typing_extensions-4.2.0.tar.gz"
+              "hash": "e6d2677a32f47fc7eb2795db1dd15c1f34eff616bcaf2cfb5e997f854fa1c4a6",
+              "url": "https://files.pythonhosted.org/packages/9e/1d/d128169ff58c501059330f1ad96ed62b79114a2eb30b8238af63a2e27f70/typing_extensions-4.3.0.tar.gz"
             }
           ],
           "project_name": "typing-extensions",
           "requires_dists": [],
           "requires_python": ">=3.7",
-          "version": "4.2"
+          "version": "4.3"
         },
         {
           "artifacts": [
@@ -1667,25 +1670,25 @@
     "attrs==21.4.0",
     "cachetools==5.2.0",
     "cattrs==22.1.0",
-    "cdktf-cdktf-provider-aws==8.0.3",
-    "cdktf-cdktf-provider-digitalocean==0.1.10",
-    "cdktf-cdktf-provider-github==0.8.11",
-    "cdktf-cdktf-provider-null==0.7.10",
-    "cdktf-cdktf-provider-tfe==0.3.10",
-    "cdktf==0.11.1",
+    "cdktf-cdktf-provider-aws==8.0.14",
+    "cdktf-cdktf-provider-digitalocean==0.1.49",
+    "cdktf-cdktf-provider-github==0.8.28",
+    "cdktf-cdktf-provider-null==0.7.27",
+    "cdktf-cdktf-provider-tfe==0.4.16",
+    "cdktf==0.11.2",
     "certifi==2022.6.15",
     "charset-normalizer==2.1.0",
     "click==8.1.3",
     "commonmark==0.9.1",
-    "constructs==10.1.25",
-    "exceptiongroup==1.0.0rc7",
+    "constructs==10.1.43",
+    "exceptiongroup==1.0.0rc8",
     "frozenlist==1.3.0",
     "google-auth==2.9.0",
     "grpcio-tools==1.47.0",
     "grpcio==1.47.0",
     "idna==3.3",
     "iso8601==1.0.2",
-    "jsii==1.59.0",
+    "jsii==1.61.0",
     "kopf==1.35.5",
     "kubernetes==24.2.0",
     "multidict==6.0.2",
@@ -1704,8 +1707,8 @@
     "rsa==4.8",
     "six==1.16.0",
     "textual==0.1.18",
-    "typer==0.4.1",
-    "typing-extensions==4.2.0",
+    "typer==0.5.0",
+    "typing-extensions==4.3.0",
     "urllib3==1.26.10",
     "websocket-client==1.3.3",
     "yarl==1.7.2"
