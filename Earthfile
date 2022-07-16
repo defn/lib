@@ -75,3 +75,9 @@ edit:
     ARG stack
     ARG cmd
     DO lib+EDIT --stack=${stack} --cmd=${cmd}
+
+bean:
+    FROM python:3.10.5-slim-buster
+    COPY dist/src.defn/bean-client.pex /main
+    ENTRYPOINT ["/main"]
+    SAVE IMAGE localhost:5000/hello
