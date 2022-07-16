@@ -17,7 +17,7 @@ class GreeterService(bean_pb2_grpc.BeanStoreServiceServicer):
 async def serve() -> None:
     server = grpc.aio.server()
     bean_pb2_grpc.add_BeanStoreServiceServicer_to_server(GreeterService(), server)
-    listen_addr = "[::]:50051"
+    listen_addr = "0.0.0.0:50051"
     server.add_insecure_port(listen_addr)
     logging.info("Starting server on %s", listen_addr)
     await server.start()
