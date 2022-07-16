@@ -80,5 +80,5 @@ bean:
     FROM localhost:5000/defn/dev:latest
     COPY dist/src.defn/bean-client.pex /main
     ENTRYPOINT ["bash", "-c"]
-    COMMAND ["exec ~/bin/e /main"]
+    CMD ["exec ~/bin/e /main"]
     SAVE IMAGE --push defn/bean
