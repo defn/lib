@@ -368,28 +368,28 @@
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "a49722cf16abbcd2af89de25b460b1dca17afb677ffc0d37f7c37dd1ed78bc83",
-              "url": "https://files.pythonhosted.org/packages/0f/ce/49e809ae9c8268511e0d1c284d50f8bd6579e06caa88c19328bdd0d9bf85/pantsbuild.pants-2.12.0-cp39-cp39-manylinux2014_x86_64.whl"
+              "hash": "832705639a6fa68787a9be5e90c909bf9344921b4c7da684440803db19446a24",
+              "url": "https://files.pythonhosted.org/packages/a5/06/56a61033e7e3b207e15b1bdb0c29d60e1c10f63f68e70b6cda539043fff2/pantsbuild.pants-2.12.1rc0-cp39-cp39-manylinux2014_x86_64.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "5fe2ff081295bc9df7b8d2e550d6e74353b7c9a27c1d6de54726b78c1d2b1b67",
-              "url": "https://files.pythonhosted.org/packages/10/55/0a2d46d6d457f5e33377e6df91f7319ec77049174b3860c625fae9111430/pantsbuild.pants-2.12.0-cp39-cp39-macosx_10_15_x86_64.whl"
+              "hash": "1cdad940edccc476b868a4d8945e36ffb2bfb710cb32cc3242184bbe64089d85",
+              "url": "https://files.pythonhosted.org/packages/3c/68/0c2c8e77003cda639389f1598b4e0f438c8772a659bf53fa455589db7fef/pantsbuild.pants-2.12.1rc0-cp39-cp39-macosx_11_0_arm64.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "e75df6eb01cb8dfe778757c1d4660f4f64f143c0219b9567147e91cf8ca626db",
-              "url": "https://files.pythonhosted.org/packages/51/c0/d1f9c070bf37a899730d9084c431e6aedcf590f9ba3025c4b5f6264ea435/pantsbuild.pants-2.12.0-cp38-cp38-manylinux2014_x86_64.whl"
+              "hash": "a49382946124bebf0459eba52f3af505f187cbbf18b449247a10fafd426cd547",
+              "url": "https://files.pythonhosted.org/packages/8a/40/14b76d6e71df18dbebda2c89e2c38a08861d1b7bc1a963db33b791f1bf87/pantsbuild.pants-2.12.1rc0-cp38-cp38-manylinux2014_x86_64.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "0578fc91e6055be70ae2af93aeae066cc251d160406d5d92e51ae811a1eec91f",
-              "url": "https://files.pythonhosted.org/packages/5d/51/b18b1dd01553e457a7c50cdcc71e948fa71b6dfacef86cffb3adc824290a/pantsbuild.pants-2.12.0-cp38-cp38-macosx_10_15_x86_64.whl"
+              "hash": "a43e2b44e5b31006f043bd4cb012200c29db8ffd059efd6be8d3b283ea3e3b67",
+              "url": "https://files.pythonhosted.org/packages/c4/24/d0468596d55dd35493aa4aef90dc833acd950bbbd12003780d4fc3af1888/pantsbuild.pants-2.12.1rc0-cp38-cp38-macosx_10_15_x86_64.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "69146e81a704b14429df11b01414c14c04cb74d05cda5558a441bdcef71973b5",
-              "url": "https://files.pythonhosted.org/packages/ef/96/6e2c2f5eac202527d6a73c61a8c0cc86df1b544cb36e5957dffcb8d651c8/pantsbuild.pants-2.12.0-cp39-cp39-macosx_11_0_arm64.whl"
+              "hash": "4e42c191b67ca5ac022ddc9fe023710d645185ff43e99d36e4a26f98628a196e",
+              "url": "https://files.pythonhosted.org/packages/cf/b0/6e9ca50167afbecc8691029cd6808b6f116b34280f888c83dae0eb296884/pantsbuild.pants-2.12.1rc0-cp39-cp39-macosx_10_15_x86_64.whl"
             }
           ],
           "project_name": "pantsbuild-pants",
@@ -412,23 +412,23 @@
             "typing-extensions==4.0.1"
           ],
           "requires_python": "<3.10,>=3.7",
-          "version": "2.12"
+          "version": "2.12.1rc0"
         },
         {
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "5ff71e62ceea562646310e569d6691a84226e83d7599071783b515f1f2534ba4",
-              "url": "https://files.pythonhosted.org/packages/2c/ee/aa12d09cf57f994f53a2fd8f6a3977b68c75d04f03d3bdcfe72a6ebd80ab/pantsbuild.pants.testutil-2.12.0-py3-none-any.whl"
+              "hash": "cabbaea35abdbd49119ca30a248c906c5acbf9acc773258a35a355f89053be2c",
+              "url": "https://files.pythonhosted.org/packages/2f/5b/52f8b8e1afa3bd6a4617010cd2e03c602bcf5b7c3ebfad4e6512cfce37cd/pantsbuild.pants.testutil-2.12.1rc0-py3-none-any.whl"
             }
           ],
           "project_name": "pantsbuild-pants-testutil",
           "requires_dists": [
-            "pantsbuild.pants==2.12.0",
+            "pantsbuild.pants==2.12.1rc0",
             "pytest<7.1.0,>=6.2.4"
           ],
           "requires_python": "<3.10,>=3.7",
-          "version": "2.12"
+          "version": "2.12.1rc0"
         },
         {
           "artifacts": [
