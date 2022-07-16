@@ -77,8 +77,7 @@ edit:
     DO lib+EDIT --stack=${stack} --cmd=${cmd}
 
 bean:
-    FROM localhost:5000/defn/dev:latest
-    COPY dist/src.defn/bean-client.pex /main
-    ENTRYPOINT ["bash", "-c"]
-    CMD ["exec ~/bin/e /main"]
+    FROM python:3.10.5-slim-buster
+    COPY dist/src.defn/bean-server.pex /main
+    ENTRYPOINT ["/main"]
     SAVE IMAGE --push defn/bean
