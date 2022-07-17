@@ -50,3 +50,7 @@ Generate .aws/config
 
 kubectl patch service kourier-internal-x-kourier-system-x-vc1 -p \
 "{"metadata":{"annotations":{"traefik.ingress.kubernetes.io/service.serversscheme":"h2c"}}}"
+
+cat meh.json | jq -r '"  tls.crt: \"\(.certificate | @base64)\"\n . tls.key: \"\(.privateKey | @base64)\""' | ssh super pbcopy
+
+n traefik edit secret/default-certificate
