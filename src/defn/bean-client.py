@@ -10,7 +10,7 @@ import defn.dev.legumes.v1.bean_pb2_grpc as bean_pb2_grpc
 
 def run():
     with grpc.insecure_channel(
-        os.environ.get("server","kourier-internal_kourier-system_svc_80.mesh:80"),
+        os.environ.get("server","kourier-internal-x-kourier-system-x-vc1.vc1.svc:80"),
         options=(("grpc.default_authority", os.environ.get("authority","hello.demo.svc.cluster.local")),),
     ) as channel:
         stub = bean_pb2_grpc.BeanStoreServiceStub(channel)
