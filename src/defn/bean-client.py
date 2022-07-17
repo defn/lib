@@ -1,6 +1,5 @@
 import logging
 import os
-import sys
 
 import grpc
 from google.protobuf.json_format import Parse, ParseDict
