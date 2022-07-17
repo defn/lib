@@ -1,4 +1,6 @@
 import logging
+import os
+import sys
 
 import grpc
 from google.protobuf.json_format import Parse, ParseDict
@@ -9,12 +11,12 @@ import defn.dev.legumes.v1.bean_pb2_grpc as bean_pb2_grpc
 
 def run():
     with grpc.insecure_channel(
-        "kourier-internal_kourier-system_svc_80.mesh:80",
-        options=(("grpc.default_authority", "hello.demo.svc.cluster.local"),),
+        os.environ.get("server","kourier-internal_kourier-system_svc_80.mesh:80"),
+        options=(("grpc.default_authority", os.environ.get("authority","hello.demo.svc.cluster.local")),),
     ) as channel:
         stub = bean_pb2_grpc.BeanStoreServiceStub(channel)
 
-        response: bean_pb2.Bean = stub.GetBean(bean_pb2.Bean(url="cool", sha256="beans"))
+        response: bean_pb2.Bean = stub.GetBean(bean_pb2.Bean(url=os.environ.get("url","cool"), sha256=os.environ.get("sha256","beans")))
         print(f"Bean client received: {response.url}, {response.sha256}")
 
 
