@@ -46,3 +46,7 @@ Then cdktf initial accounts
 Generate .aws/config
     - export region=us-west-1 sso_region=us-west-2 url=https://.../start name=curl
     - bin/awsconfig >> ~/.aws/config
+
+
+kubectl patch service kourier-internal-x-kourier-system-x-vc1 -p \
+"{"metadata":{"annotations":{"traefik.ingress.kubernetes.io/service.serversscheme":"h2c"}}}"
