@@ -53,6 +53,5 @@ kubectl --context pod patch -n vc1 service kourier-internal-x-kourier-system-x-v
 
  v write pki/issue/gyre.defn.dev common_name="hello.demo.svc.cluster.local" ttl=1h -format=json  > meh.json
 
-cat meh.json | jq -r '"  tls.crt: \"\(.certificate | @base64)\"\n  tls.key: \"\(.private_key | @base64)\""' | ssh super pbcopy
-
-n traefik edit secret/default-certificate
+k --context pod patch -n traefik secret default-certificate --type='json' -p='[{"op" : "replace" ,"path" : "/data/tls.key" ,"value" : "'$(cat meh.json | jq -r '.private_key | @base64')'"}]'
+k --context pod patch -n traefik secret default-certificate --type='json' -p='[{"op" : "replace" ,"path" : "/data/tls.crt" ,"value" : "'$(cat meh.json | jq -r '.certificate | @base64')'"}]'
