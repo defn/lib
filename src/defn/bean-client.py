@@ -1,6 +1,9 @@
 import logging
 import os
 
+import timeit
+
+
 import grpc
 from google.protobuf.json_format import Parse, ParseDict
 
@@ -25,23 +28,21 @@ def run():
             )
         ],
     ) as channel:
-        stub = bean_pb2_grpc.BeanStoreServiceStub(channel)
+        for a in range(1,10):
+            print(timeit.timeit(lambda: req(channel), number=1))
 
-        for a in range(1,100):
-            response: bean_pb2.Bean = stub.GetBean(
-                bean_pb2.Bean(
-                    url=os.environ.get("url", "cool"),
-                    sha256=os.environ.get("sha256", "beans"),
-                )
-            )
+def req(ch):
+    stub = bean_pb2_grpc.BeanStoreServiceStub(ch)
 
+    for a in range(1,100):
         response: bean_pb2.Bean = stub.GetBean(
             bean_pb2.Bean(
                 url=os.environ.get("url", "cool"),
                 sha256=os.environ.get("sha256", "beans"),
             )
         )
-        print(f"Bean client received: {response.url}, {response.sha256}")
+
+    return response
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
