@@ -27,6 +27,14 @@ def run():
     ) as channel:
         stub = bean_pb2_grpc.BeanStoreServiceStub(channel)
 
+        for a in range(1,100):
+            response: bean_pb2.Bean = stub.GetBean(
+                bean_pb2.Bean(
+                    url=os.environ.get("url", "cool"),
+                    sha256=os.environ.get("sha256", "beans"),
+                )
+            )
+
         response: bean_pb2.Bean = stub.GetBean(
             bean_pb2.Bean(
                 url=os.environ.get("url", "cool"),
@@ -34,7 +42,6 @@ def run():
             )
         )
         print(f"Bean client received: {response.url}, {response.sha256}")
-
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
