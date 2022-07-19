@@ -51,7 +51,6 @@ Generate .aws/config
 kubectl --context pod patch -n vc1 service kourier-internal-x-kourier-system-x-vc1 -p \
 '{"metadata":{"annotations":{"traefik.ingress.kubernetes.io/service.serversscheme":"h2c"}}}'
 
- v write pki/issue/gyre.defn.dev common_name="hello.demo.svc.cluster.local" ttl=1h -format=json  > meh.json
-
+v write pki/issue/gyre.defn.dev common_name="hello.demo.svc.cluster.local" ttl=1h -format=json | jq .data > meh.json
 k --context pod patch -n traefik secret default-certificate --type='json' -p='[{"op" : "replace" ,"path" : "/data/tls.key" ,"value" : "'$(cat meh.json | jq -r '.private_key | @base64')'"}]'
 k --context pod patch -n traefik secret default-certificate --type='json' -p='[{"op" : "replace" ,"path" : "/data/tls.crt" ,"value" : "'$(cat meh.json | jq -r '.certificate | @base64')'"}]'
