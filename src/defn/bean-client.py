@@ -18,7 +18,7 @@ with open(os.environ["GRPC_DEFAULT_SSL_ROOTS_FILE_PATH"], "rb") as f:
 
 def run():
     with grpc.secure_channel(
-        os.environ.get("server", "traefik.traefik.svc:9701"),
+        os.environ.get("server", "169.254.32.1:443"),
         grpc.ssl_channel_credentials(root_certificates=certificate_chain),
         options=[
             (
