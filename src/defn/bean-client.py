@@ -10,7 +10,7 @@ import defn.dev.legumes.v1.bean_pb2_grpc as bean_pb2_grpc
 
 
 os.environ["GRPC_VERBOSITY"] = "DEBUG"
-os.environ["GRPC_DEFAULT_SSL_ROOTS_FILE_PATH"] = "meh.ca"
+os.environ["GRPC_DEFAULT_SSL_ROOTS_FILE_PATH"] = "/home/ubuntu/etc/ca.crt"
 
 with open(os.environ["GRPC_DEFAULT_SSL_ROOTS_FILE_PATH"], "rb") as f:
     certificate_chain = f.read()
