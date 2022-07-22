@@ -9,17 +9,19 @@ import defn.dev.legumes.v1.bean_pb2 as bean_pb2
 import defn.dev.legumes.v1.bean_pb2_grpc as bean_pb2_grpc
 
 
-os.environ["GRPC_VERBOSITY"] = "DEBUG"
+#os.environ["GRPC_VERBOSITY"] = "DEBUG"
 os.environ["GRPC_DEFAULT_SSL_ROOTS_FILE_PATH"] = "/home/ubuntu/etc/ca.crt"
 
 with open(os.environ["GRPC_DEFAULT_SSL_ROOTS_FILE_PATH"], "rb") as f:
     certificate_chain = f.read()
 
+# remote = "remocal:443"
+remote = "localhost:9000"
 
 def run():
-    with grpc.secure_channel(
-        os.environ.get("server", "remocal.net:443"),
-        grpc.ssl_channel_credentials(root_certificates=certificate_chain),
+    with grpc.insecure_channel(
+        os.environ.get("server", remote),
+        #grpc.ssl_channel_credentials(root_certificates=certificate_chain),
         options=[
             (
                 "grpc.default_authority",
