@@ -1,8 +1,5 @@
 include ~/Makefile.common
 
-init-site:
-	@true
-
 get:
 	earthly +get
 	rsync -ia provider.new/. provider/.
@@ -19,7 +16,7 @@ dist/defn-$(shell cat src/defn/VERSION).tar.gz:
 	echo >> src/BUILD
 	./pants update-build-files src/BUILD
 
-login:
+login-site:
 	aws --profile gyre-ops sts get-caller-identity
 	aws --profile curl-lib sts get-caller-identity
 	aws --profile coil-lib sts get-caller-identity
@@ -69,7 +66,7 @@ pants-venv:
 	cd 3rdparty/python && make all
 
 pants-lock:
-	-python -mvenv dist/export/python/virtualenvs/defn/3.10.5
+	-python -mvenv dist/export/python/virtualenvs/defn/3.10.6
 	cd 3rdparty/python && make clean all
 
 server client oper:
