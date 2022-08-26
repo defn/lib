@@ -2,35 +2,6 @@ include("/home/ubuntu/Tiltfile")
 
 load("ext://uibutton", "cmd_button", "location")
 
-local_resource(
-    "python",
-    serve_cmd="""
-        cd; cd work/cloud;
-        . .venv/bin/activate;
-        p export src::;
-        code --install-extension ms-python.python || true;
-        code --install-extension bungcip.better-toml || true;
-        p --loop fmt lint check package ::;
-    """,
-    allow_parallel=True,
-    labels=["automation"],
-)
-
-cmd_button(
-    name="zmake login",
-    text="make login",
-    icon_name="login",
-    argv=[
-        "bash",
-        "-c",
-        """
-            cd; cd work/cloud;
-            make login;
-        """,
-    ],
-    location="nav",
-)
-
 aws_sso = {
     "coil": "https://d-90674c3cfd.awsapps.com/start#/",
     "curl": "https://d-926760a859.awsapps.com/start#/",
