@@ -1,18 +1,4 @@
 python_distribution(
-    name="defn_cdktf_provider_boundary",
-    repositories=["@pypi"],
-    dependencies=[
-        "provider/defn_cdktf_provider_boundary",
-        "provider/defn_cdktf_provider_boundary/_jsii",
-    ],
-    provides=python_artifact(
-        name="defn_cdktf_provider_boundary",
-        version="0.4.1",
-    ),
-    sdist=False,
-)
-
-python_distribution(
     name="defn_cdktf_provider_vault",
     repositories=["@pypi"],
     dependencies=[
@@ -21,19 +7,6 @@ python_distribution(
     ],
     provides=python_artifact(
         name="defn_cdktf_provider_vault",
-        version="0.4.1",
-    ),
-    sdist=False,
-)
-python_distribution(
-    name="defn_cdktf_provider_buildkite",
-    repositories=["@pypi"],
-    dependencies=[
-        "provider/defn_cdktf_provider_buildkite",
-        "provider/defn_cdktf_provider_buildkite/_jsii",
-    ],
-    provides=python_artifact(
-        name="defn_cdktf_provider_buildkite",
         version="0.4.1",
     ),
     sdist=False,

@@ -16,10 +16,12 @@
 //     "cachetools==5.2.0",
 //     "cattrs==22.1.0",
 //     "cdktf-cdktf-provider-aws==9.0.15",
+//     "cdktf-cdktf-provider-cloudflare==2.0.35",
 //     "cdktf-cdktf-provider-digitalocean==2.0.36",
 //     "cdktf-cdktf-provider-github==2.0.36",
 //     "cdktf-cdktf-provider-null==2.0.34",
 //     "cdktf-cdktf-provider-tfe==2.0.38",
+//     "cdktf-cdktf-provider-vault==2.0.36",
 //     "cdktf==0.12.1",
 //     "certifi==2022.6.15",
 //     "charset-normalizer==2.1.1",
@@ -354,6 +356,30 @@
           "artifacts": [
             {
               "algorithm": "sha256",
+              "hash": "9bb9148a527d2fbd002fa11ec9e8f6c0b3708022bbe016a4d4f206cfc782f664",
+              "url": "https://files.pythonhosted.org/packages/9b/7f/e5630f5c758f83f94f14904a07cdf58a0315f109ce5965eef53a1885f988/cdktf_cdktf_provider_cloudflare-2.0.35-py3-none-any.whl"
+            },
+            {
+              "algorithm": "sha256",
+              "hash": "eb15fc54eee6d59c02a289a57f77d0adac2d44fcd48b54a329e23aa8ed241dd7",
+              "url": "https://files.pythonhosted.org/packages/6b/59/db542e68ab2cda3ea02937177cf2d8092dea6d2a5ca249da64985676f7d2/cdktf-cdktf-provider-cloudflare-2.0.35.tar.gz"
+            }
+          ],
+          "project_name": "cdktf-cdktf-provider-cloudflare",
+          "requires_dists": [
+            "cdktf<0.13.0,>=0.12.0",
+            "constructs<11.0.0,>=10.0.0",
+            "jsii<2.0.0,>=1.65.0",
+            "publication>=0.0.3",
+            "typeguard~=2.13.3"
+          ],
+          "requires_python": "~=3.7",
+          "version": "2.0.35"
+        },
+        {
+          "artifacts": [
+            {
+              "algorithm": "sha256",
               "hash": "a074c432921d91347d853f5e20bd74724fafcfd6ad0cac9ac5a6de732a6a74d4",
               "url": "https://files.pythonhosted.org/packages/29/a4/cc8aac31766bffb6f35c34bb83f300829d6ab6cfdf478094bc5ffdc0da99/cdktf_cdktf_provider_digitalocean-2.0.36-py3-none-any.whl"
             },
@@ -445,6 +471,30 @@
           ],
           "requires_python": "~=3.7",
           "version": "2.0.38"
+        },
+        {
+          "artifacts": [
+            {
+              "algorithm": "sha256",
+              "hash": "7bdea852bf4ee321d12d6bb59573722ae2609f90899b9756d18471c3291f5646",
+              "url": "https://files.pythonhosted.org/packages/d6/55/52609e7a87f406e6f46909775d05c75c182688228995b3a8b015a44bef19/cdktf_cdktf_provider_vault-2.0.36-py3-none-any.whl"
+            },
+            {
+              "algorithm": "sha256",
+              "hash": "f735720751683fba259cf5bfcbb138b34af163a5461a97a17a4713e634908378",
+              "url": "https://files.pythonhosted.org/packages/46/a9/639a92c18b4f1390b25dd7679e8a471e782c64b2304e32aa3ca13de95ad0/cdktf-cdktf-provider-vault-2.0.36.tar.gz"
+            }
+          ],
+          "project_name": "cdktf-cdktf-provider-vault",
+          "requires_dists": [
+            "cdktf<0.13.0,>=0.12.0",
+            "constructs<11.0.0,>=10.0.0",
+            "jsii<2.0.0,>=1.65.0",
+            "publication>=0.0.3",
+            "typeguard~=2.13.3"
+          ],
+          "requires_python": "~=3.7",
+          "version": "2.0.36"
         },
         {
           "artifacts": [
@@ -1708,10 +1758,12 @@
     "cachetools==5.2.0",
     "cattrs==22.1.0",
     "cdktf-cdktf-provider-aws==9.0.15",
+    "cdktf-cdktf-provider-cloudflare==2.0.35",
     "cdktf-cdktf-provider-digitalocean==2.0.36",
     "cdktf-cdktf-provider-github==2.0.36",
     "cdktf-cdktf-provider-null==2.0.34",
     "cdktf-cdktf-provider-tfe==2.0.38",
+    "cdktf-cdktf-provider-vault==2.0.36",
     "cdktf==0.12.1",
     "certifi==2022.6.15",
     "charset-normalizer==2.1.1",

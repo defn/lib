@@ -6,6 +6,8 @@ cdktf-cdktf-provider-aws
 cdktf-cdktf-provider-digitalocean
 cdktf-cdktf-provider-tfe
 cdktf-cdktf-provider-github
+cdktf-cdktf-provider-vault
+cdktf-cdktf-provider-cloudflare
 protobuf
 grpcio
 grpcio-tools

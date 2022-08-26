@@ -23,11 +23,15 @@ cdktf==0.12.1
     # via
     #   -r packages.txt
     #   cdktf-cdktf-provider-aws
+    #   cdktf-cdktf-provider-cloudflare
     #   cdktf-cdktf-provider-digitalocean
     #   cdktf-cdktf-provider-github
     #   cdktf-cdktf-provider-null
     #   cdktf-cdktf-provider-tfe
+    #   cdktf-cdktf-provider-vault
 cdktf-cdktf-provider-aws==9.0.15
+    # via -r packages.txt
+cdktf-cdktf-provider-cloudflare==2.0.35
     # via -r packages.txt
 cdktf-cdktf-provider-digitalocean==2.0.36
     # via -r packages.txt
@@ -36,6 +40,8 @@ cdktf-cdktf-provider-github==2.0.36
 cdktf-cdktf-provider-null==2.0.34
     # via -r packages.txt
 cdktf-cdktf-provider-tfe==2.0.38
+    # via -r packages.txt
+cdktf-cdktf-provider-vault==2.0.36
     # via -r packages.txt
 certifi==2022.6.15
     # via
@@ -55,10 +61,12 @@ constructs==10.1.87
     # via
     #   cdktf
     #   cdktf-cdktf-provider-aws
+    #   cdktf-cdktf-provider-cloudflare
     #   cdktf-cdktf-provider-digitalocean
     #   cdktf-cdktf-provider-github
     #   cdktf-cdktf-provider-null
     #   cdktf-cdktf-provider-tfe
+    #   cdktf-cdktf-provider-vault
 exceptiongroup==1.0.0rc8
     # via cattrs
 frozenlist==1.3.1
@@ -83,10 +91,12 @@ jsii==1.65.0
     # via
     #   cdktf
     #   cdktf-cdktf-provider-aws
+    #   cdktf-cdktf-provider-cloudflare
     #   cdktf-cdktf-provider-digitalocean
     #   cdktf-cdktf-provider-github
     #   cdktf-cdktf-provider-null
     #   cdktf-cdktf-provider-tfe
+    #   cdktf-cdktf-provider-vault
     #   constructs
 kopf==1.35.6
     # via -r packages.txt
@@ -106,10 +116,12 @@ publication==0.0.3
     # via
     #   cdktf
     #   cdktf-cdktf-provider-aws
+    #   cdktf-cdktf-provider-cloudflare
     #   cdktf-cdktf-provider-digitalocean
     #   cdktf-cdktf-provider-github
     #   cdktf-cdktf-provider-null
     #   cdktf-cdktf-provider-tfe
+    #   cdktf-cdktf-provider-vault
     #   constructs
     #   jsii
 pyasn1==0.4.8
@@ -152,10 +164,12 @@ typeguard==2.13.3
     # via
     #   cdktf
     #   cdktf-cdktf-provider-aws
+    #   cdktf-cdktf-provider-cloudflare
     #   cdktf-cdktf-provider-digitalocean
     #   cdktf-cdktf-provider-github
     #   cdktf-cdktf-provider-null
     #   cdktf-cdktf-provider-tfe
+    #   cdktf-cdktf-provider-vault
     #   constructs
     #   jsii
 typer==0.6.1
