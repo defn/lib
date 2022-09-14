@@ -1,5 +1,5 @@
 go_package()
 
 go_binary(
-    name="defn",
+    name="defm-cli",
 )
