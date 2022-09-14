@@ -59,6 +59,7 @@ enabled = false
 
 [golang]
 minimum_expected_version = "1.19"
+go_search_paths = ["ASDF"]
 
 [python]
 enable_resolves = true
