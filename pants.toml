@@ -15,12 +15,17 @@ backend_packages = [
   'pants.backend.python.lint.isort',
   'pants.backend.python.lint.docformatter',
   'pants.backend.experimental.python',
+  'pants.backend.python.mixed_interpreter_constraints',
+
   'pants.backend.shell',
   'pants.backend.shell.lint.shfmt',
   'pants.backend.shell.lint.shellcheck',
+
+  'pants.backend.experimental.go',
+
   'pants.backend.docker',
+
   'pants.backend.plugin_development',
-  'pants.backend.python.mixed_interpreter_constraints',
   'meh',
 ]
 
@@ -51,6 +56,9 @@ log = false
 
 [anonymous-telemetry]
 enabled = false
+
+[golang]
+expected_version = "1.19"
 
 [python]
 enable_resolves = true
