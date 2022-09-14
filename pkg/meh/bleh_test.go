@@ -2,7 +2,7 @@ package meh
 
 import "testing"
 
-func TestSum(t *testing.T) {
+func TestHello(t *testing.T) {
 	expected := "hello pants"
 	greeting := Hello("pants")
 	if greeting != expected {
