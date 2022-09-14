@@ -1,6 +1,9 @@
 [GLOBAL]
 pantsd = false
-pants_version = '2.12.0'
+pants_version = '2.13.0'
+
+use_deprecated_directory_cli_args_semantics = false
+use_deprecated_pex_binary_run_semantics = false
 
 pythonpath = ["%(buildroot)s/pants-plugins"]
 

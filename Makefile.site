@@ -61,7 +61,7 @@ buf:
 	buf generate --include-wkt --include-imports
 	cd p/defn/dev && $(MAKE)
 
-pansts:
+pants:
 	curl -sSL -o pants https://raw.githubusercontent.com/pantsbuild/setup/gh-pages/pants
 
 pants-venv:
