@@ -64,16 +64,16 @@ go_search_paths = ["<ASDF>"]
 enable_resolves = true
 
 [python-bootstrap]
-search_path = ["<ASDF>"]
+search_path = ["<ASDF>", "<PATH>"]
 
 [python.resolves]
-python-default = "3rdparty/python/default.lock"
 pants-plugins = "pants-plugins/plugins.lock"
+python-default = "3rdparty/python/default.lock"
 defn = "3rdparty/python/defn.lock"
 
 [python.resolves_to_interpreter_constraints]
-python-default = [">=3.7,<4"]
 pants-plugins = [">=3.8,<3.10"]
+python-default = [">=3.10,<4"]
 defn = [">=3.10,<4"]
 
 [isort]

@@ -3,6 +3,7 @@ python_sources(
     skip_isort=True,
     skip_docformatter=True,
     dependencies=[":jsii"],
+    resolve="defn",
 )
 
 resource(

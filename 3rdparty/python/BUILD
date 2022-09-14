@@ -3,5 +3,4 @@
 python_requirements(
     name="reqs",
     resolve="defn",
-    module_mapping={"grpcio": ["grpc"]},
 )

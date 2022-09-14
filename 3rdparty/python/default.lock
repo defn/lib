@@ -4,11 +4,15 @@
 //
 // --- BEGIN PANTS LOCKFILE METADATA: DO NOT EDIT OR REMOVE ---
 // {
-//   "version": 2,
+//   "version": 3,
 //   "valid_for_interpreter_constraints": [
-//     "CPython<4,>=3.7"
+//     "CPython<4,>=3.10"
 //   ],
-//   "generated_with_requirements": []
+//   "generated_with_requirements": [],
+//   "manylinux": "manylinux2014",
+//   "requirement_constraints": [],
+//   "only_binary": [],
+//   "no_binary": []
 // }
 // --- END PANTS LOCKFILE METADATA ---
 
@@ -18,18 +22,13 @@
   "allow_wheels": true,
   "build_isolation": true,
   "constraints": [],
-  "locked_resolves": [
-    {
-      "locked_requirements": [],
-      "platform_tag": null
-    }
-  ],
+  "locked_resolves": [],
   "path_mappings": {},
-  "pex_version": "2.1.102",
+  "pex_version": "2.1.103",
   "prefer_older_binary": false,
   "requirements": [],
   "requires_python": [
-    "<4,>=3.7"
+    "<4,>=3.10"
   ],
   "resolver_version": "pip-2020-resolver",
   "style": "universal",
