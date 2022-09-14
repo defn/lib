@@ -65,10 +65,13 @@ pants:
 	curl -sSL -o pants https://raw.githubusercontent.com/pantsbuild/setup/gh-pages/pants
 
 pants-venv:
+	-python -mvenv dist/export/python/virtualenvs/defn/$(shell python --version | awk '{print $$2}')
+	ln -nfs dist/export/python/virtualenvs/defn/$(shell python --version | awk '{print $$2}') .venv
 	cd 3rdparty/python && make all
 
 pants-lock:
-	-python -mvenv dist/export/python/virtualenvs/defn/3.10.6
+	-python -mvenv dist/export/python/virtualenvs/defn/$(shell python --version | awk '{print $$2}')
+	ln -nfs dist/export/python/virtualenvs/defn/$(shell python --version | awk '{print $$2}') .venv
 	cd 3rdparty/python && make clean all
 
 server client oper:
