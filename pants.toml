@@ -1,9 +1,6 @@
 [GLOBAL]
 pantsd = false
-pants_version = '2.13.0'
-
-use_deprecated_directory_cli_args_semantics = false
-use_deprecated_pex_binary_run_semantics = false
+pants_version = '2.14.0rc0'
 
 pythonpath = ["%(buildroot)s/pants-plugins"]
 
@@ -63,7 +60,6 @@ go_search_paths = ["ASDF"]
 
 [python]
 enable_resolves = true
-lockfile_generator = 'pex'
 
 [python-bootstrap]
 search_path = ["<ASDF>"]
