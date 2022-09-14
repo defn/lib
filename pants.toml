@@ -65,7 +65,7 @@ enable_resolves = true
 lockfile_generator = 'pex'
 
 [python-bootstrap]
-search_path = ["<PATH>"]
+search_path = ["<ASDF>"]
 
 [python.resolves]
 python-default = "3rdparty/python/default.lock"
