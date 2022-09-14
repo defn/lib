@@ -58,7 +58,7 @@ log = false
 enabled = false
 
 [golang]
-expected_version = "1.19"
+minimum_expected_version = "1.19"
 
 [python]
 enable_resolves = true
