@@ -5,13 +5,16 @@ IMPORT ./lib AS lib
 mehBase:
     FROM ubuntu
 
-
 meh:
     FROM +mehBase
 
     ARG image
 
     RUN mkdir -p /app
+
+    COPY dist/cmd.defn/bin /app/cmd
+
+    ENTRYPOINT ["/app/cmd"]
 
     SAVE IMAGE --push ${image}
 
