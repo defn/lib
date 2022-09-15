@@ -2,6 +2,19 @@ VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-ar
 
 IMPORT ./lib AS lib
 
+mehBase:
+    FROM ubuntu
+
+
+meh:
+    FROM +mehBase
+
+    ARG image
+
+    RUN mkdir -p /app
+
+    SAVE IMAGE --push ${image}
+
 pre-commit:
     FROM quay.io/defn/dev
     ARG workdir
