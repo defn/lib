@@ -12,7 +12,7 @@ custom_build_with_restart(
     command=(
         "earthly --push --remote-cache=${EXPECTED_REGISTRY}/${EXPECTED_IMAGE}-cache +meh --image=${EXPECTED_REF}"
     ),
-    entrypoint="/app/cmd",
+    entrypoint="/app/cmd.defn/bin",
     deps=["./dist"],
     live_update=[
         sync("./dist", "/app"),

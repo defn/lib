@@ -12,9 +12,10 @@ meh:
 
     RUN mkdir -p /app
 
-    COPY dist/cmd.defn/bin /app/cmd
+    COPY dist/cmd.defn app/cmd.defn
+    COPY dist/cmd.defm app/cmd.defm
 
-    ENTRYPOINT ["/app/cmd"]
+    ENTRYPOINT ["/app/cmd.defn/bin"]
 
     SAVE IMAGE --push ${image}
 
