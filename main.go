@@ -4,25 +4,25 @@ import (
 	"github.com/defn/cloud/generated/kreuzwerker/docker"
 
 	"github.com/aws/constructs-go/constructs/v10"
-	"github.com/aws/jsii-runtime-go"
+	j "github.com/aws/jsii-runtime-go"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 )
 
-func NewExampleCdktfGoDockerStack(scope constructs.Construct, id string) cdktf.TerraformStack {
+func NewDockerStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 	stack := cdktf.NewTerraformStack(scope, &id)
 
-	docker.NewDockerProvider(stack, jsii.String("provider"), &docker.DockerProviderConfig{})
+	docker.NewDockerProvider(stack, j.String("provider"), &docker.DockerProviderConfig{})
 
-	dockerImage := docker.NewImage(stack, jsii.String("nginxImage"), &docker.ImageConfig{
-		Name:        jsii.String("nginx:latest"),
-		KeepLocally: jsii.Bool(false),
+	dockerImage := docker.NewImage(stack, j.String("nginxImage"), &docker.ImageConfig{
+		Name:        j.String("nginx:latest"),
+		KeepLocally: j.Bool(false),
 	})
 
-	docker.NewContainer(stack, jsii.String("nginxContainer"), &docker.ContainerConfig{
+	docker.NewContainer(stack, j.String("nginxContainer"), &docker.ContainerConfig{
 		Image: dockerImage.Latest(),
-		Name:  jsii.String("tutorial"),
+		Name:  j.String("tutorial"),
 		Ports: &[]*docker.ContainerPorts{{
-			Internal: jsii.Number(80), External: jsii.Number(8000),
+			Internal: j.Number(80), External: j.Number(8000),
 		}},
 	})
 
@@ -32,7 +32,7 @@ func NewExampleCdktfGoDockerStack(scope constructs.Construct, id string) cdktf.T
 func main() {
 	app := cdktf.NewApp(nil)
 
-	NewExampleCdktfGoDockerStack(app, "ExampleCdktfGoDockerStack")
+	NewDockerStack(app, "DockerStack")
 
 	app.Synth()
 }
