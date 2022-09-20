@@ -1,4 +1,9 @@
 {
-  "language": "python",
-  "app": "dist/src.defn/cli.pex synth"
+  "language": "go",
+  "app": "go run main.go",
+  "codeMakerOutput": "generated",
+  "terraformProviders": [
+    "kreuzwerker/docker@~> 2.21.0"
+  ],
+  "projectId": "1f6cf73a-9d44-4694-8f6e-e7eabe1f04d2"
 }

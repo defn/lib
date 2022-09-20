@@ -1,8 +1,0 @@
-{
-  "language": "python",
-  "app": "dist/src.defn/cli.pex synth",
-  "terraformProviders": [
-    "hashicorp/vault@~> 3.8.2",
-    "cloudflare/cloudflare@~> 3.22.0"
-  ]
-}
