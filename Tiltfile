@@ -5,7 +5,7 @@ load("ext://restart_process", "custom_build_with_restart")
 
 default_registry("169.254.32.1:5000")
 
-local_resource("vite", serve_cmd="cd ~/work/cloud/lit && while true; do ./node_modules/.bin/vite --host 0.0.0.0; sleep 1; done")
+local_resource("vite", serve_cmd="while true; do ./node_modules/.bin/vite --host 0.0.0.0; sleep 1; done")
 
 k8s_yaml("meh.yaml")
 
