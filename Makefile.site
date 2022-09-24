@@ -41,6 +41,6 @@ import:
 apply:
 	earthly --push +apply --stack=$(stack)
 
-build:
+build-dist:
 	npx vite build --base /dist/ --outDir /work/dist/ --emptyOutDir
 	
