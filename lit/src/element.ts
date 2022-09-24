@@ -6,6 +6,9 @@ import { signal } from '@preact/signals-core';
 
 const counter = signal(1);
 
+const input1 = signal(1);
+const input2 = signal(1);
+
 class ExtElement extends LitElement {
     createRenderRoot() {
         return this;
@@ -31,8 +34,8 @@ export class MyElement extends SignalWatcher(ExtElement) {
     }
 }
 
-@customElement("my-input")
-export class MyInput extends SignalWatcher(ExtElement) {
+@customElement("my-input1")
+export class MyInput1 extends SignalWatcher(ExtElement) {
     render() {
         return html`
             <input
@@ -43,6 +46,30 @@ export class MyInput extends SignalWatcher(ExtElement) {
 
     resetCounter(event: Event) {
         const input = event.target as HTMLInputElement;
-        counter.value = parseInt(input.value);
+        input1.value = parseInt(input.value);
+        if (isNaN(input1.value)) {
+            input1.value = 0
+        }
+        counter.value = input1.value + input2.value
+    }
+}
+
+@customElement("my-input2")
+export class MyInput2 extends SignalWatcher(ExtElement) {
+    render() {
+        return html`
+            <input
+                class="p-2 m-4"
+                @input=${this.resetCounter} placeholder="Enter a number">
+        `;
+    }
+
+    resetCounter(event: Event) {
+        const input = event.target as HTMLInputElement;
+        input2.value = parseInt(input.value);
+        if (isNaN(input2.value)) {
+            input2.value = 0
+        }
+        counter.value = input1.value + input2.value
     }
 }
