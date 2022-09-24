@@ -17,7 +17,7 @@ class ExtElement extends LitElement {
 
 @customElement("my-element")
 export class MyElement extends SignalWatcher(ExtElement) {
-    @property() name = "Earthly";
+    @property() name = "Earthly.....";
     @property() mul = 1;
 
     render() {
