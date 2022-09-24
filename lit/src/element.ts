@@ -15,6 +15,7 @@ class ExtElement extends LitElement {
 @customElement("my-element")
 export class MyElement extends SignalWatcher(ExtElement) {
     @property() name = "Earthly";
+    @property() mul = 1;
 
     render() {
         return html`
@@ -24,10 +25,7 @@ export class MyElement extends SignalWatcher(ExtElement) {
                 text-white shadow-sm hover:bg-indigo-700 focus:outline-none
                 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 @click=${() => counter.value++}>
-            ${this.name} ${counter}
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
+            ${this.name} ${counter * this.mul}
             </button>
         `;
     }

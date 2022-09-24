@@ -12,16 +12,28 @@
 </head>
 
 <body>
-    <p>
-        <my-element name="defn"></my-element>
-        <my-element name="tolan"></my-element>
-    </p>
-    <p>
-        <my-element name="lamda"></my-element>
-        <my-element name="hana"></my-element>
-    </p>
+    <table>
+        <tr>
+            <td>
+                <my-element name="defn"></my-element>
+            </td>
+            <td>
+                <my-element name="tolan" mul="2"></my-element>
+            </td>
+        </tr>
+    </table>
     <my-input>
     </my-input>
+    <table>
+        <tr>
+            <td>
+                <my-element name="lamda" mul="100"></my-element>
+            </td>
+            <td>
+                <my-element name="hana" mul="-100"></my-element>
+            </td>
+        </tr>
+    </table>
     <script type="module" src="/src/element.ts"></script>
 </body>
 
