@@ -8,6 +8,6 @@ import (
 )
 
 func main() {
-	fmt.Println(meh.Hello("pants 3"))
+	fmt.Println(meh.Hello("pants 5"))
 	time.Sleep(86400 * time.Second)
 }

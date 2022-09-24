@@ -5,7 +5,10 @@ load("ext://restart_process", "custom_build_with_restart")
 
 default_registry("169.254.32.1:5000")
 
-local_resource("tests", serve_cmd="p --loop test package cmd:: pkg::")
+local_resource("pants", serve_cmd="p --loop test package cmd:: pkg::")
+local_resource("vite", serve_cmd="cd ~/work/cloud/lit && npx vite --host 0.0.0.0")
+
+k8s_yaml("meh.yaml")
 
 custom_build_with_restart(
     ref="meh",
@@ -18,5 +21,3 @@ custom_build_with_restart(
         sync("./dist", "/app"),
     ],
 )
-
-k8s_yaml("meh.yaml")
