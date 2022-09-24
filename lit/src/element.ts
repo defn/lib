@@ -31,6 +31,14 @@ export class MyElement extends SignalWatcher(ExtElement) {
                 <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
             </svg>
             </button>
+
+            <input @input=${this.resetCounter} placeholder="Enter a number">
         `;
     }
+
+    resetCounter(event: Event) {
+        const input = event.target as HTMLInputElement;
+        counter.value = parseInt(input.value);
+    }
+
 }
