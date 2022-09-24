@@ -25,7 +25,7 @@ export class MyElement extends SignalWatcher(ExtElement) {
                 text-white shadow-sm hover:bg-indigo-700 focus:outline-none
                 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 @click=${() => counter.value++}>
-            ${this.name} ${counter * this.mul}
+            ${this.name} ${counter.value * this.mul}
             </button>
         `;
     }
