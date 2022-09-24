@@ -1,5 +1,5 @@
 import './index.css'
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { SignalWatcher } from './signal-watcher.js';
 import { signal } from '@preact/signals-core';
