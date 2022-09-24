@@ -20,19 +20,19 @@ meh:
     SAVE IMAGE --push ${image}
 
 pre-commit:
-    FROM quay.io/defn/dev
+    FROM ghcr.io/defn/dev
     ARG workdir
     DO lib+PRECOMMIT --workdir=${workdir}
 
 get:
-    FROM quay.io/defn/dev
+    FROM ghcr.io/defn/dev
     COPY cdktf.json.get cdktf.json
     RUN ~/bin/e cdktf get
     SAVE ARTIFACT .gen/vault/* AS LOCAL provider.new/defn_cdktf_provider_vault/
     SAVE ARTIFACT .gen/cloudflare/* AS LOCAL provider.new/defn_cdktf_provider_cloudflare/
 
 synth:
-    FROM quay.io/defn/dev
+    FROM ghcr.io/defn/dev
     RUN ~/bin/e python -mvenv .v
     COPY --dir provider src 3rdparty pants-plugins .
     COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
@@ -46,7 +46,7 @@ synth:
     SAVE ARTIFACT cdktf.out/stacks/spiral/cdk.tf.json AS LOCAL cdktf.out/stacks/spiral/
 
 init:
-    FROM quay.io/defn/dev
+    FROM ghcr.io/defn/dev
     ARG stack
     DO lib+INIT --stack=${stack}
 
@@ -66,7 +66,7 @@ import:
     DO lib+IMPORT --stack=${stack}
 
 config:
-    FROM quay.io/defn/dev
+    FROM ghcr.io/defn/dev
     ARG stack
     ARG region
     ARG sso_region
