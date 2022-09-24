@@ -1,6 +1,42 @@
 ---
-import { MyElement } from "../element.js";
+import { MyElement, MyInput1, MyInput2 } from "../element.js";
 ---
 
-<p>cool</p>
-<MyElement />
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Lit Simple Starter Kit</title>
+
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    </head>
+
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <MyElement name="defn" />
+                </td>
+                <td>
+                    <MyElement name="tolan" mul="2" />
+                </td>
+            </tr>
+        </table>
+        <MyInput1 /><br />
+        <MyInput2 />
+        <table>
+            <tr>
+                <td>
+                    <MyElement name="lamda" mul="100" />
+                </td>
+                <td>
+                    <MyElement name="hana" mul="-100" />
+                </td>
+            </tr>
+        </table>
+        <script type="module" src="/src/element.ts"></script>
+    </body>
+</html>
