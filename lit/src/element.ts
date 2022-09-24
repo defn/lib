@@ -1,6 +1,10 @@
 import './index.css'
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { SignalWatcher } from './signal-watcher.js';
+import { signal } from '@preact/signals-core';
+
+const counter = signal(1);
 
 class ExtElement extends LitElement {
     createRenderRoot() {
@@ -9,7 +13,7 @@ class ExtElement extends LitElement {
 }
 
 @customElement("my-element")
-export class MyElement extends ExtElement {
+export class MyElement extends SignalWatcher(ExtElement) {
     @property() name = "Earthly";
 
     render() {
@@ -18,8 +22,9 @@ export class MyElement extends ExtElement {
                 class="m-2 inline-flex items-center rounded-md border
                 border-transparent bg-gray-600 px-6 py-3 text-base font-medium
                 text-white shadow-sm hover:bg-indigo-700 focus:outline-none
-                focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            ${this.name}
+                focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                @click=${() => counter.value++}>
+            ${this.name} ${counter}
             <!-- Heroicon name: mini/envelope -->
             <svg class="ml-3 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" />
