@@ -2,7 +2,6 @@ cue.mod/pkg
 dist
 __pycache__
 .test
-.pants.d
 .pids
 .plan
 .terraform
@@ -12,3 +11,4 @@ __pycache__
 meh.json
 generated
 node_modules
+.vite

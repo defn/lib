@@ -1,21 +1,5 @@
 include ~/Makefile.common
 
-get:
-	earthly +get
-	rsync -ia provider.new/. provider/.
-	rm -rf provider.new
-
-publish:
-	passenv TWINE_USERNAME TWINE_PASSWORD -- p publish provider::
-	passenv TWINE_USERNAME TWINE_PASSWORD -- p publish src:defn
-
-package: dist/defn-$(shell cat src/defn/VERSION).tar.gz
-	pipx install --force $<
-
-dist/defn-$(shell cat src/defn/VERSION).tar.gz:
-	echo >> src/BUILD
-	./pants update-build-files src/BUILD
-
 login-site:
 	for s in gyre curl coil helix spiral; do \
 		aws-vault exec $$s-org-sso aws sts get-caller-identity; \
@@ -56,23 +40,3 @@ import:
 
 apply:
 	earthly --push +apply --stack=$(stack)
-
-buf:
-	buf generate --include-wkt --include-imports
-	cd p/defn/dev && $(MAKE)
-
-pants:
-	curl -sSL -o pants https://raw.githubusercontent.com/pantsbuild/setup/gh-pages/pants
-
-pants-venv:
-	-python -mvenv dist/export/python/virtualenvs/defn/$(shell python --version | awk '{print $$2}')
-	ln -nfs dist/export/python/virtualenvs/defn/$(shell python --version | awk '{print $$2}') .venv
-	cd 3rdparty/python && make all
-
-pants-lock:
-	-python -mvenv dist/export/python/virtualenvs/defn/$(shell python --version | awk '{print $$2}')
-	ln -nfs dist/export/python/virtualenvs/defn/$(shell python --version | awk '{print $$2}') .venv
-	cd 3rdparty/python && make clean all
-
-server client oper:
-	./dist/src.defn/bean-$@.pex

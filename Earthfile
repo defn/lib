@@ -2,11 +2,11 @@ VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-ar
 
 IMPORT ./lib AS lib
 
-mehBase:
+meh-base:
     FROM ubuntu
 
 meh:
-    FROM +mehBase
+    FROM +meh-base
 
     ARG image
 
@@ -24,20 +24,8 @@ pre-commit:
     ARG workdir
     DO lib+PRECOMMIT --workdir=${workdir}
 
-get:
-    FROM ghcr.io/defn/dev
-    COPY cdktf.json.get cdktf.json
-    RUN ~/bin/e cdktf get
-    SAVE ARTIFACT .gen/vault/* AS LOCAL provider.new/defn_cdktf_provider_vault/
-    SAVE ARTIFACT .gen/cloudflare/* AS LOCAL provider.new/defn_cdktf_provider_cloudflare/
-
 synth:
     FROM ghcr.io/defn/dev
-    RUN ~/bin/e python -mvenv .v
-    COPY --dir provider src 3rdparty pants-plugins .
-    COPY BUILDROOT pants pants.toml .isort.cfg .flake8 .
-    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants sudo chown ubuntu:ubuntu /home/ubuntu/.cache/pants
-    RUN --mount=type=cache,target=/home/ubuntu/.cache/pants . .v/bin/activate && ~/bin/e p package src/defn:cli
     DO lib+SYNTH
     SAVE ARTIFACT cdktf.out/stacks/gyre/cdk.tf.json AS LOCAL cdktf.out/stacks/gyre/
     SAVE ARTIFACT cdktf.out/stacks/curl/cdk.tf.json AS LOCAL cdktf.out/stacks/curl/
@@ -83,9 +71,3 @@ edit:
     ARG stack
     ARG cmd
     DO lib+EDIT --stack=${stack} --cmd=${cmd}
-
-bean:
-    FROM python:3.10.6-slim-buster
-    COPY dist/src.defn/bean-server.pex /main
-    ENTRYPOINT ["/main"]
-    SAVE IMAGE --push defn/bean

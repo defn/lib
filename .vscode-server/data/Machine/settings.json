@@ -1,5 +1,0 @@
-{
-  "remote.SSH.defaultExtensions": [],
-  "remote.SSH.allowLocalServerDownload": "false",
-  "python.envFile": "${workspaceFolder}/.env"
-}
