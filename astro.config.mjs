@@ -6,5 +6,4 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   integrations: [lit(), tailwind()],
   base: "/dist/",
-  site: "https://control-0.tiger-mamba.ts.net"
 });
