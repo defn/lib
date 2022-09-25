@@ -17,18 +17,17 @@ export class VisaLogo extends ExtElement {
 
 @customElement("cc-summary")
 export class CCSummary extends ExtElement {
+    @property() endsWith = "4242"
+    @property() expires = "12/20"
+    @property() lastUpdated = "22 Aug 2017"
     render() {
         return html`
             <div class="mt-3 sm:mt-0 sm:ml-4">
-                <div class="text-sm font-medium text-gray-900">
-                    Ending with 4242</div>
+                <div class="text-sm font-medium text-gray-900">Ending with ${this.endsWith}</div>
                 <div class="mt-1 text-sm text-gray-600 sm:flex sm:items-center">
-                    <div>
-                        Expires 12/20</div>
-                    <span class="hidden sm:mx-2 sm:inline" aria-hidden="true">
-                        &middot;</span>
-                    <div class="mt-1 sm:mt-0">
-                        Last updated on 22 Aug 2017</div>
+                    <div>Expires ${this.expires}</div>
+                    <span class="hidden sm:mx-2 sm:inline" aria-hidden="true">&middot;</span>
+                    <div class="mt-1 sm:mt-0">Last updated on ${this.lastUpdated}</div>
                 </div>
             </div>
         `;
