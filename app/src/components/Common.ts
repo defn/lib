@@ -1,9 +1,9 @@
 import { LitElement, css, unsafeCSS, CSSResultGroup } from "lit";
-import { SignalWatcher } from './signal-watcher.js';
+import { SignalWatcher } from '../lib/signal-watcher.js';
 import { signal } from '@preact/signals-core';
 
 // @ts-ignore
-import componentStyle from './index.css'
+import componentStyle from '../assets/main.css'
 
 export const counter = signal(1);
 export const input1 = signal(1);
