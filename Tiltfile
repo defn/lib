@@ -5,8 +5,8 @@ load("ext://restart_process", "custom_build_with_restart")
 
 default_registry("169.254.32.1:5000")
 
-local_resource("vite", serve_cmd="while true; do ./node_modules/.bin/vite --host 0.0.0.0; sleep 1; done")
-#local_resource("astro", serve_cmd="while true; do ./node_modules/.bin/astro dev --host 0.0.0.0 --port 5173; sleep 1; done")
+#local_resource("vite", serve_cmd="while true; do ./node_modules/.bin/vite --host 0.0.0.0; sleep 1; done")
+local_resource("astro", serve_cmd="while true; do ./node_modules/.bin/astro dev --host 0.0.0.0 --port 5173; sleep 1; done")
 
 #local_resource("go-defn", "go build -o dist/cmd.defn/bin cmd/defn/main.go", deps=["cmd/defn", "generated"])
 #local_resource("go-defm", "go build -o dist/cmd.defm/bin cmd/defm/main.go", deps=["cmd/defm", "generated"])
