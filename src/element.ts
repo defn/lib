@@ -1,27 +1,24 @@
-import { SignalWatcher } from './signal-watcher.js';
-import { signal } from '@preact/signals-core';
-
+import './index.css'
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-
-import './index.css';
+import { SignalWatcher } from './signal-watcher.js';
+import { signal } from '@preact/signals-core';
 
 const counter = signal(1);
 
 const input1 = signal(1);
 const input2 = signal(1);
 
-class ExtElement extends SignalWatcher(LitElement) {
+class ExtElement extends LitElement {
     createRenderRoot() {
         return this;
     }
 }
 
 @customElement("my-element")
-export class MyElement extends ExtElement {
-    @property() who = "";
+export class MyElement extends SignalWatcher(ExtElement) {
+    @property() who = "Earthly";
     @property() mul = 1;
-    @property() counter = 0;
 
     render() {
         return html`
@@ -30,15 +27,15 @@ export class MyElement extends ExtElement {
                 border-transparent bg-gray-600 px-6 py-3 text-base font-medium
                 text-white shadow-sm hover:bg-indigo-700 focus:outline-none
                 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                @click=${() => this.counter++}>
-            ${this.who} ${this.counter * this.mul}
+                @click=${() => counter.value++}>
+            ${this.who} ${counter.value * this.mul}
             </button>
         `;
     }
 }
 
 @customElement("my-input1")
-export class MyInput1 extends ExtElement {
+export class MyInput1 extends SignalWatcher(ExtElement) {
     render() {
         return html`
             <input
@@ -58,7 +55,7 @@ export class MyInput1 extends ExtElement {
 }
 
 @customElement("my-input2")
-export class MyInput2 extends ExtElement {
+export class MyInput2 extends SignalWatcher(ExtElement) {
     render() {
         return html`
             <input
