@@ -83,7 +83,6 @@ export class MyInput2 extends SignalWatcher(ExtElement) {
     }
 }
 
-
 customElements.define('my-element', MyElement);
 customElements.define('my-input1', MyInput1);
 customElements.define('my-input2', MyInput2);
