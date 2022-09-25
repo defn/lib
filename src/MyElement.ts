@@ -1,12 +1,12 @@
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { ExtElement, counter } from "./Common.js"
+import { ExtElement, counter } from "./Common.js";
 
 @customElement("my-element")
 export class MyElement extends ExtElement {
-    @property() who = "Earthly";
-    @property() mul = 1;
+    @property() mul: number = 3;
+    @property() who: string = "Earthly";
 
     render() {
         return html`
@@ -16,8 +16,8 @@ export class MyElement extends ExtElement {
                 text-white shadow-sm hover:bg-indigo-700 focus:outline-none
                 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 @click=${() => counter.value++}>
-            ${this.who} ${counter.value * this.mul}
-            </button>
-        `;
+        ${this.who} ${this.mul} x ${counter.value} = ${counter.value * this.mul}
+</button>
+    `;
     }
 }
