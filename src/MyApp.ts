@@ -1,3 +1,3 @@
-import { MyCreditCard } from "./MyCreditCard.ts"
+import { MyCreditCard } from "./MyCreditCard.js"
 
 MyCreditCard;
