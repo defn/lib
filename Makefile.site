@@ -41,6 +41,7 @@ import:
 apply:
 	earthly --push +apply --stack=$(stack)
 
-build-dist:
-	npx vite build --base /dist/ --outDir /work/dist/ --emptyOutDir
+publish:
+	npx astro build
+	rsync -ia --delete dist/. /work/dist/.
 	
