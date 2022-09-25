@@ -42,4 +42,11 @@ apply:
 	earthly --push +apply --stack=$(stack)
 
 publish:
-	npx vite build --base /dist/ --outDir /work/dist/ --emptyOutDir
+	npx vite build
+
+preview:
+	$(MAKE) publish
+	echo preview > .vite-mode
+
+dev:
+	echo dev > .vite-mode
