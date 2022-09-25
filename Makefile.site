@@ -42,7 +42,4 @@ apply:
 	earthly --push +apply --stack=$(stack)
 
 publish:
-	npx astro build
-	rsync -ia dist/. /work/dist/.
-	rsync -ia --delete dist/. /work/dist/.
-	
+	npx vite build --base /dist/ --outDir /work/dist/ --emptyOutDir

@@ -13,7 +13,7 @@ const input2 = signal(1);
 
 class ExtElement extends SignalWatcher(LitElement) {
     createRenderRoot() {
-        return this.shadowRoot;
+        return this;
     }
 }
 
