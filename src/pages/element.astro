@@ -7,10 +7,11 @@ import { MyElement, MyInput1, MyInput2 } from "../element.js";
     <head>
         <title>Lit Simple Starter Kit</title>
 
-        <meta charset="UTF-8" />
+        <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </head>
 
@@ -25,10 +26,10 @@ import { MyElement, MyInput1, MyInput2 } from "../element.js";
         <table>
             <tr>
                 <td>
-                    <MyElement name="defn" />
+                    <MyElement who={"defn"} />
                 </td>
                 <td>
-                    <MyElement name="tolan" mul="2" />
+                    <MyElement who={"tolan"} mul={2} />
                 </td>
             </tr>
         </table>
@@ -37,10 +38,10 @@ import { MyElement, MyInput1, MyInput2 } from "../element.js";
         <table>
             <tr>
                 <td>
-                    <MyElement name="lamda" mul="100" />
+                    <MyElement who={"lamda"} mul={100} />
                 </td>
                 <td>
-                    <MyElement name="hana" mul="-100" />
+                    <MyElement who={"hana"} mul={-100} />
                 </td>
             </tr>
         </table>
