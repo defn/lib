@@ -1,6 +1,8 @@
 ---
 // @ts-nocheck
-import { MyElement, MyInput1, MyInput2 } from "../element.ts";
+import { MyElement } from "../MyElement.ts";
+import { MyInput1 } from "../MyInput1.ts";
+import { MyInput2 } from "../MyInput2.ts";
 ---
 
 <!DOCTYPE html>
@@ -29,7 +31,7 @@ import { MyElement, MyInput1, MyInput2 } from "../element.ts";
                     <MyElement client:load who={"defn"} />
                 </td>
                 <td>
-                    <MyElement client:load who={"tolan"} mul={2} />
+                    <MyElement client:load who={"tolan"} mul="2" />
                 </td>
             </tr>
         </table>

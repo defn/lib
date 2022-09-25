@@ -9,7 +9,7 @@ export const input1 = signal(1);
 export const input2 = signal(1);
 
 export class ExtElement extends SignalWatcher(LitElement) {
-    createRenderRoot() {
-        return this;
+    xcreateRenderRoot() {
+        return this.shadowRoot;
     }
 }
