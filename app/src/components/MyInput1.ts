@@ -7,7 +7,7 @@ export class MyInput1 extends ExtElement {
     render() {
         return html`
             <input
-                class="p-2 m-4"
+                class="p-2 m-8"
                 @input=${this.resetCounter} placeholder="Enter a number">
         `;
     }

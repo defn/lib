@@ -11,4 +11,4 @@ __pycache__
 meh.json
 generated
 node_modules
-.vite
+.vite*
