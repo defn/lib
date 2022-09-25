@@ -4,11 +4,14 @@ import { ExtElement, counter, input1, input2 } from "./Common.js"
 
 @customElement("my-input2")
 export class MyInput2 extends ExtElement {
+    static inputClasses = `
+        p-2 m-8`
+
     render() {
         return html`
-            <input
-                class="p-2 m-8"
-                @input=${this.resetCounter} placeholder="Enter a number">
+        <input
+            class=${MyInput2.inputClasses}
+            @input=${this.resetCounter} placeholder="Enter a number">
         `;
     }
 
