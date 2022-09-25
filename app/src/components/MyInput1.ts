@@ -1,3 +1,4 @@
+import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { ExtElement, counter, input1, input2 } from "./Common.js"
 
