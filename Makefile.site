@@ -43,5 +43,6 @@ apply:
 
 publish:
 	npx astro build
+	rsync -ia dist/. /work/dist/.
 	rsync -ia --delete dist/. /work/dist/.
 	
