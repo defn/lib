@@ -6,4 +6,7 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   integrations: [lit(), tailwind()],
   base: "/dist/",
+  vite: {
+    plugins: []
+  }
 });
