@@ -1,22 +1,22 @@
 import { SignalWatcher } from './signal-watcher.js';
 import { signal } from '@preact/signals-core';
 
-import { LitElement, html } from "lit";
+import { LitElement, html, css, unsafeCSS } from "lit";
 
-import './index.css'
+import componentStyles from './index.css'
 
 const counter = signal(1);
 
 const input1 = signal(1);
 const input2 = signal(1);
 
-class ExtElement extends LitElement {
-    createRenderRoot() {
-        return this;
-    }
+class ExtElement extends SignalWatcher(LitElement) {
+    static styles = [
+        css`${unsafeCSS(componentStyles)}`
+    ]
 }
 
-export class MyElement extends SignalWatcher(ExtElement) {
+export class MyElement extends ExtElement {
     who: string;
     mul: number;
 
@@ -45,7 +45,7 @@ export class MyElement extends SignalWatcher(ExtElement) {
     }
 }
 
-export class MyInput1 extends SignalWatcher(ExtElement) {
+export class MyInput1 extends ExtElement {
     render() {
         return html`
             <input
@@ -64,7 +64,7 @@ export class MyInput1 extends SignalWatcher(ExtElement) {
     }
 }
 
-export class MyInput2 extends SignalWatcher(ExtElement) {
+export class MyInput2 extends ExtElement {
     render() {
         return html`
             <input
