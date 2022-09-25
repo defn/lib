@@ -1,7 +1,7 @@
-import '../index.css'
-import { LitElement, html } from "lit";
+import './index.css'
+import { LitElement, html, css, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { SignalWatcher } from '../signal-watcher.js';
+import { SignalWatcher } from './signal-watcher.js';
 import { signal } from '@preact/signals-core';
 
 const counter = signal(1);
@@ -16,9 +16,10 @@ class ExtElement extends LitElement {
 }
 
 @customElement("my-element")
-export class MyElement extends SignalWatcher(ExtElement) {
+export class MyElement extends ExtElement {
     @property() who = "Earthly";
     @property() mul = 1;
+    @property() cnt = 0;
 
     render() {
         return html`
@@ -27,8 +28,8 @@ export class MyElement extends SignalWatcher(ExtElement) {
                 border-transparent bg-gray-600 px-6 py-3 text-base font-medium
                 text-white shadow-sm hover:bg-indigo-700 focus:outline-none
                 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                @click=${() => counter.value++}>
-            ${this.who} ${counter.value * this.mul}
+                @click=${() => this.cnt++}>
+            ${this.who} ${this.cnt * this.mul}
             </button>
         `;
     }

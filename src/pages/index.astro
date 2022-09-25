@@ -1,20 +1,49 @@
 ---
 // @ts-nocheck
-import Lorem from "../components/Lorem.astro";
-import { CalcAdd } from "../components/Test.js";
-import { Counter } from "../components/Counter.js";
+import { MyElement, MyInput1, MyInput2 } from "../elements.ts";
 ---
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <title>Demo</title>
+        <title>Lit Simple Starter Kit</title>
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </head>
+
     <body>
-        <h1>Test app</h1>
-        <Counter client:load />
-        <CalcAdd num={33} />
-        <Lorem />
+        <button
+            type="button"
+            class="m-2 inline-flex items-center rounded-md border border-transparent bg-gray-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+            meh
+        </button>
+
+        <table>
+            <tr>
+                <td>
+                    <MyElement client:load who={"defn"} />
+                </td>
+                <td>
+                    <MyElement client:load who={"tolan"} mul={2} />
+                </td>
+            </tr>
+        </table>
+        <MyInput1 client:load /><br />
+        <MyInput2 client:load />
+        <table>
+            <tr>
+                <td>
+                    <MyElement client:load who={"lamda"} mul={100} />
+                </td>
+                <td>
+                    <MyElement client:load who={"hana"} mul={-100} />
+                </td>
+            </tr>
+        </table>
     </body>
 </html>
