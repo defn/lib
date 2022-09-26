@@ -9,13 +9,10 @@ export type Kind = typeof kinds[number];
 export const baseUrl = 'https://swapi.dev/api/';
 
 export const kinds = [
-    '',
     'people',
     'starships',
     'species',
     'planets',
-    // Inserted to demo an error state.
-    'error'
 ] as const;
 
 export class NamesController {
@@ -23,7 +20,7 @@ export class NamesController {
     value?: string[];
     readonly kinds = kinds;
     private task!: Task;
-    private _kind: Kind = '';
+    private _kind: Kind = 'people';
 
     constructor(host: ReactiveControllerHost) {
         this.host = host;
@@ -36,6 +33,7 @@ export class NamesController {
                 if (!kind?.trim()) {
                     return initialState;
                 }
+
                 try {
                     const response = await fetch(`${baseUrl}${kind}`);
                     const data = await response.json();
@@ -62,26 +60,36 @@ export class NamesController {
 export class MySearch extends ExtElement {
     private names = new NamesController(this);
 
+    static selectClasses = `
+        inline-flex items-center rounded-md border border-gray-300 bg-white px-4 pr-8
+        py-2 font-medium text-gray-700 shadow-sm hover:bg-gray-50
+        focus:outline-none focus:ring-2 focus:ring-indigo-500
+        focus:ring-offset-2 sm:text-sm`
+
     render() {
         return html`
         <div class="m-8">
 
-        <select @change=${this._selectKind}>
+        <select class=${MySearch.selectClasses}
+            @change=${this._selectKind}>
             ${this.names.kinds.map((k) => html`<option value=${k}>${k}</option>`)}
         </select>
 
+        <div class="m-8">
         ${this.names.render({
+            initial: () => html`<p>Make a selection</p>`,
+
+            pending: () => html`<p>Fetching ${this.names.kind}...</p>`,
+
+            error: (e: any) => html`<p>${e}</p>`,
+
             complete: (result: Result) => html`
-                <p>List of ${this.names.kind}</p>
-        
                 <ul>
                     ${result.map(i => html`<li>${i.name}</li>`)}
                 </ul>
-            `,
-            initial: () => html`<p>Select a kind...</p>`,
-            pending: () => html`<p>Loading ${this.names.kind}...</p>`,
-            error: (e: any) => html`<p>${e}</p>`
+                `
         })}
+        </div>
 
         </div>
         `;

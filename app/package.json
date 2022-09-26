@@ -5,7 +5,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@preact/signals": "^1.1.1"
+    "@preact/signals": "^1.1.1",
+    "axios": "^0.27.2",
+    "immer": "^9.0.15"
   },
   "devDependencies": {
     "@lit-labs/task": "^1.1.3",
