@@ -18,9 +18,9 @@ type QueryResult struct {
 func main() {
 	app := fiber.New()
 
-	users := []User{{"defn"}, {"Tolan"}, {"lamda"}, {"Hana"}}
-
-	results := QueryResult{users}
+	results := QueryResult{
+		[]User{{"defn"}, {"Tolan"}, {"lamda"}, {"Hana"}},
+	}
 
 	app.Get("/meh", func(c *fiber.Ctx) error {
 		b, err := json.Marshal(results)
