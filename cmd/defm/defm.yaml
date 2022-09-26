@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: defm
+  labels:
+    app: defm
+spec:
+  selector:
+    matchLabels:
+      app: defm
+  template:
+    metadata:
+      labels:
+        app: defm
+    spec:
+      containers:
+      - name: defm
+        image: defm

@@ -2,20 +2,32 @@ VERSION --shell-out-anywhere --use-chmod --use-host-command --earthly-version-ar
 
 IMPORT ./lib AS lib
 
-meh-base:
+ubuntu:
     FROM ubuntu
 
-meh:
-    FROM +meh-base
+defn:
+    FROM +ubuntu
 
     ARG image
 
-    RUN mkdir -p /app
+    RUN mkdir -p app
 
-    COPY dist/cmd.defn app/cmd.defn
-    COPY dist/cmd.defm app/cmd.defm
+    COPY dist/cmd.defn/bin app/bin
 
-    ENTRYPOINT ["/app/cmd.defn/bin"]
+    ENTRYPOINT ["/app/bin"]
+
+    SAVE IMAGE --push ${image}
+
+defm:
+    FROM +ubuntu
+
+    ARG image
+
+    RUN mkdir -p app
+
+    COPY dist/cmd.defm/bin app/bin
+
+    ENTRYPOINT ["/app/bin"]
 
     SAVE IMAGE --push ${image}
 
