@@ -6,27 +6,20 @@ import { ExtElement } from "./Common.js"
 export type Result = Array<{ name: string }>;
 export type Kind = typeof kinds[number];
 
-export const baseUrl = 'https://swapi.dev/api/';
-
 export const kinds = [
-    'people',
-    'starships',
-    'species',
-    'planets',
+    '',
+    'meh',
 ] as const;
 
 export class NamesController {
     host: ReactiveControllerHost;
     value?: string[];
-    readonly kinds = kinds;
+
     private task!: Task;
-    private _kind: Kind = 'people';
+    private _kind: Kind = '';
 
     constructor(host: ReactiveControllerHost) {
         this.host = host;
-
-
-
 
         this.task = new Task<[Kind], Result>(host,
             async ([kind]: [Kind]) => {
@@ -35,21 +28,22 @@ export class NamesController {
                 }
 
                 try {
-                    const response = await fetch(`${baseUrl}${kind}`);
+                    const response = await fetch(`https://control-0.tiger-mamba.ts.net/api/${kind}`);
                     const data = await response.json();
                     return data.results as Result;
-                } catch {
-                    throw new Error(`Failed to fetch "${kind}"`);
+                } catch (err) {
+                    throw new Error(`Failed to fetch ${kind}: ${err.message}`);
                 }
             }, () => [this.kind]
         );
     }
 
+    get kind() { return this._kind; }
+
     set kind(value: Kind) {
         this._kind = value;
         this.host.requestUpdate();
     }
-    get kind() { return this._kind; }
 
     render(renderFunctions: StatusRenderer<Result>) {
         return this.task.render(renderFunctions);
@@ -72,7 +66,7 @@ export class MySearch extends ExtElement {
 
         <select class=${MySearch.selectClasses}
             @change=${this._selectKind}>
-            ${this.names.kinds.map((k) => html`<option value=${k}>${k}</option>`)}
+            ${kinds.map((k) => html`<option value=${k}>${k}</option>`)}
         </select>
 
         <div class="m-8">
