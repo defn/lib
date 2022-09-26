@@ -6,9 +6,11 @@
   "license": "ISC",
   "dependencies": {
     "@preact/signals": "^1.1.1",
+    "@preact/signals-core": "^1.2.0",
     "@reduxjs/toolkit": "^1.8.5",
     "axios": "^0.27.2",
-    "immer": "^9.0.15"
+    "immer": "^9.0.15",
+    "preact": "^10.11.0"
   },
   "devDependencies": {
     "@lit-labs/task": "^1.1.3",
