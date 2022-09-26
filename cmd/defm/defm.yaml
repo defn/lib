@@ -16,3 +16,15 @@ spec:
       containers:
       - name: defm
         image: defm
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: defm
+spec:
+  selector:
+    app: defm
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

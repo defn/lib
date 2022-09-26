@@ -9,6 +9,7 @@ repos:
       - id: check-json
         exclude: ^(provider|cdktf.out)
       - id: check-yaml
+        args: [--allow-multiple-documents]
         exclude: ^(p/.*?/kubernetes|provider|cdktf.out)/
       - id: check-toml
         exclude: ^(gen|provider|cdktf.out)

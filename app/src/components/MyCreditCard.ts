@@ -39,7 +39,7 @@ export class CCSummary extends ExtElement {
 export class CCEdit extends ExtElement {
     render() {
         return html`
-        <button type="button" 
+        <button type="button"
             class="inline-flex items-center rounded-md border border-gray-300
             bg-white px-4 py-2 font-medium text-gray-700 shadow-sm
             hover:bg-gray-50 focus:outline-none focus:ring-2
