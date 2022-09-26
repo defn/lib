@@ -47,3 +47,6 @@ pub:
 
 dev:
 	echo dev > .vite-mode
+
+api:
+	@env dom=control-0.tiger-mamba.ts.net bash -c 'curl --resolve $$dom:443:$$(dig +short @100.100.100.100 $$dom) https://$$dom/api/'
