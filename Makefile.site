@@ -41,11 +41,8 @@ import:
 apply:
 	earthly --push +apply --stack=$(stack)
 
-publish:
+pub:
 	npx vite build
-
-preview:
-	$(MAKE) publish
 	echo preview > .vite-mode
 
 dev:
