@@ -18,12 +18,7 @@ type QueryResult struct {
 func main() {
 	app := fiber.New()
 
-	defn := User{"defn"}
-	tolan := User{"tolan"}
-	lamda := User{"lamda"}
-	hana := User{"hana"}
-
-	users := []User{defn, tolan, lamda, hana}
+	users := []User{{"defn"}, {"Tolan"}, {"lamda"}, {"Hana"}}
 
 	results := QueryResult{users}
 
