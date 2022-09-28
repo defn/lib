@@ -23,3 +23,6 @@ for app in ["defn", "defm"]:
             sync("dist/cmd.%s/bin" % (app,), "/app/bin"),
         ],
     )
+
+
+local_resource("vite", serve_cmd="while true; do turbo dev; sleep 1; done", deps=[".vite-mode"])
