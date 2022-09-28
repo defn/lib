@@ -1,0 +1,40 @@
+[GLOBAL]
+pantsd = false
+pants_version = '2.14.0rc1'
+
+backend_packages = [
+  'pants.backend.shell',
+  'pants.backend.shell.lint.shfmt',
+  'pants.backend.shell.lint.shellcheck',
+
+  'pants.backend.experimental.go',
+]
+
+pants_ignore = [
+  ".*/",
+  "/dist/",
+  "/gen/"
+]
+
+[cli.alias]
+refresh = "update-build-files ::"
+green = "fmt lint check ::"
+since = "--changed-since=HEAD --changed-dependees=transitive"
+
+[subprocess-environment]
+env_vars = []
+
+[stats]
+log = false
+
+[anonymous-telemetry]
+enabled = false
+
+[golang]
+minimum_expected_version = "1.19"
+asdf_tool_name = "golang"
+asdf_bin_relpath = "go/bin"
+go_search_paths = ["<ASDF>"]
+
+[shfmt]
+args = ["-i 2", "-ci", "-sr"]

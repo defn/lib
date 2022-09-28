@@ -12,3 +12,4 @@ meh.json
 generated
 node_modules
 .vite*
+.pants.d
