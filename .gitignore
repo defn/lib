@@ -13,3 +13,5 @@ generated
 node_modules
 .vite*
 .pants.d
+.pnp
+.pnp.js
