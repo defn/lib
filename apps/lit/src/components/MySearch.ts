@@ -3,6 +3,8 @@ import { customElement, property } from "lit/decorators.js";
 import { initialState, StatusRenderer, Task } from '@lit-labs/task';
 import { ExtElement } from "./Common.js"
 
+import { meh } from '@defn/utils'
+
 export type Result = Array<{ name: string }>;
 export type Kind = typeof kinds[number];
 
@@ -71,7 +73,7 @@ export class MySearch extends ExtElement {
 
         <div class="m-8">
         ${this.names.render({
-            initial: () => html`<p>Make a selection</p>`,
+            initial: () => html`<p>Make a selection ${meh}</p>`,
 
             pending: () => html`<p>Fetching ${this.names.kind}...</p>`,
 

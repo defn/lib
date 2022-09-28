@@ -1,5 +1,5 @@
 import type { ReactiveElement } from 'lit';
-import { signal, effect } from '@preact/signals-core';
+import { effect } from '@preact/signals-core';
 
 type ReactiveElementConstructor = new (...args: any[]) => ReactiveElement;
 

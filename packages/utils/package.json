@@ -1,0 +1,16 @@
+{
+  "name": "@defn/utils",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "main": "index.ts",
+  "types": "index.ts",
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "scripts": {
+    "lint": "eslint"
+  }
+}
