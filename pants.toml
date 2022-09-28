@@ -1,5 +1,5 @@
 [GLOBAL]
-pantsd = true
+pantsd = false
 pants_version = '2.14.0rc1'
 
 backend_packages = [
