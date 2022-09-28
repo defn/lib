@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "devDependencies": {
+    "@defn/lit": "workspace:*"
+  },
+  "scripts": {
+    "dev": "turbo dev"
+  },
+  "packageManager": "pnpm@7.12.2"
+}
