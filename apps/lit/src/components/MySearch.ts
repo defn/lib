@@ -30,7 +30,7 @@ export class NamesController {
                 }
 
                 try {
-                    const response = await fetch(`https://control-0.tiger-mamba.ts.net/api/${kind}`);
+                    const response = await fetch(`${location.protocol}//${location.host}/api/${kind}`);
                     const data = await response.json();
                     return data.results as Result;
                 } catch (err) {
