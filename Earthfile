@@ -31,6 +31,19 @@ defm:
 
     SAVE IMAGE --push ${image}
 
+worker:
+    FROM +ubuntu
+
+    ARG image
+
+    RUN mkdir -p app
+
+    COPY dist/cmd.worker/bin app/bin
+
+    ENTRYPOINT ["/app/bin"]
+
+    SAVE IMAGE --push ${image}
+
 pre-commit:
     FROM ghcr.io/defn/dev
     ARG workdir

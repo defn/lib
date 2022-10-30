@@ -10,7 +10,7 @@ default_registry("169.254.32.1:5000")
 for app in ("defn", "defm", "client", "worker"):
     local_resource("go-%s" % (app,), "go build -o dist/cmd.%s/bin cmd/%s/%s.go" % (app,app,app), deps=["cmd/%s" % (app,)])
 
-for app in ("defn", "defm"):
+for app in ("defn", "defm", "worker"):
     k8s_yaml("cmd/%s/%s.yaml" % (app,app))
 
     custom_build_with_restart(
@@ -26,3 +26,16 @@ for app in ("defn", "defm"):
     )
 
 local_resource("vite", serve_cmd="pnpm install; while true; do turbo dev; sleep 1; done", deps=[".vite-mode"])
+
+cmd_button(
+    name="client",
+    text="Client",
+    icon_name="login",
+    argv=[
+        "bash", "-c",
+        """
+            ~/work/cloud/dist/cmd.client/bin
+        """,
+    ],
+    location=location.NAV,
+)
