@@ -1,4 +1,4 @@
-module github.com/defn/template
+module github.com/defn/cloud
 
 cue v0.4.0
 

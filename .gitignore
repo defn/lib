@@ -16,3 +16,5 @@ node_modules
 .pnp
 .pnp.js
 .turbo
+client/client
+worker/worker
