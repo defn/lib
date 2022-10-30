@@ -25,4 +25,4 @@ for app in ("defn", "defm"):
         ],
     )
 
-#local_resource("vite", serve_cmd="while true; do turbo dev; sleep 1; done", deps=[".vite-mode"])
+local_resource("vite", serve_cmd="pnpm install; while true; do turbo dev; sleep 1; done", deps=[".vite-mode"])
