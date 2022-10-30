@@ -6,7 +6,7 @@ load("ext://restart_process", "custom_build_with_restart")
 
 default_registry("169.254.32.1:5000")
 
-local_resource("pants-go", "p --loop package cmd::", deps=["cmd"])
+local_resource("pants-go", serve_cmd="p --loop package cmd::", deps=["cmd"])
 #local_resource("go-%s" % (app,), "go build -o dist/cmd.%s/bin cmd/%s/%s.go" % (app,app,app), deps=["cmd/%s" % (app,)])
 
 for app in ("defn", "defm"):
@@ -24,4 +24,4 @@ for app in ("defn", "defm"):
         ],
     )
 
-local_resource("vite", serve_cmd="while true; do turbo dev; sleep 1; done", deps=[".vite-mode"])
+#local_resource("vite", serve_cmd="while true; do turbo dev; sleep 1; done", deps=[".vite-mode"])
