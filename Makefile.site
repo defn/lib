@@ -49,7 +49,7 @@ dev:
 	echo dev > .vite-mode
 
 api:
-	@env dom=control-0.tiger-mamba.ts.net bash -c 'curl -sSL --resolve $$dom:443:$$(dig +short @100.100.100.100 $$dom) https://$$dom/api/meh' | jq .
+	@env dom="$$(wait-tailscale-domain)" bash -c 'curl -sSL --resolve $$dom:443:$$(dig +short @100.100.100.100 $$dom) https://$$dom/api/meh' | jq .
 
 pants:
 	curl -sSL -o pants https://raw.githubusercontent.com/pantsbuild/setup/gh-pages/pants
