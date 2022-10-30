@@ -1,6 +1,6 @@
 [GLOBAL]
-pantsd = false
-pants_version = '2.14.0rc1'
+pantsd = true
+pants_version = '2.14.0'
 
 backend_packages = [
   'pants.backend.shell',
