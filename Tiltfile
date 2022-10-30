@@ -6,10 +6,10 @@ load("ext://restart_process", "custom_build_with_restart")
 
 default_registry("169.254.32.1:5000")
 
-for app in ["defn", "defm"]:
-    local_resource("pants-go-%s" % (app,), "p package cmd/%s::" % (app), deps=["cmd/%s" % (app,)])
-    #local_resource("go-%s" % (app,), "go build -o dist/cmd.%s/bin cmd/%s/%s.go" % (app,app,app), deps=["cmd/%s" % (app,)])
+local_resource("pants-go", "p --loop package cmd::", deps=["cmd"])
+#local_resource("go-%s" % (app,), "go build -o dist/cmd.%s/bin cmd/%s/%s.go" % (app,app,app), deps=["cmd/%s" % (app,)])
 
+for app in ("defn", "defm"):
     k8s_yaml("cmd/%s/%s.yaml" % (app,app))
 
     custom_build_with_restart(
@@ -23,6 +23,5 @@ for app in ["defn", "defm"]:
             sync("dist/cmd.%s/bin" % (app,), "/app/bin"),
         ],
     )
-
 
 local_resource("vite", serve_cmd="while true; do turbo dev; sleep 1; done", deps=[".vite-mode"])
