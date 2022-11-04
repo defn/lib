@@ -16,7 +16,6 @@ defn:
 
     ARG image
 
-
     COPY dist/cmd.defn/bin /app/bin
 
     SAVE IMAGE --push ${image}
