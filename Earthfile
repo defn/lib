@@ -5,16 +5,19 @@ IMPORT ./lib AS lib
 ubuntu:
     FROM ubuntu
 
+    RUN mkdir -p /app /nix /nix/store
+
+    COPY nix/store/. /nix/store/.
+
+    ENTRYPOINT ["/app/bin"]
+
 defn:
     FROM +ubuntu
 
     ARG image
 
-    RUN mkdir -p app
 
-    COPY dist/cmd.defn/bin app/bin
-
-    ENTRYPOINT ["/app/bin"]
+    COPY dist/cmd.defn/bin /app/bin
 
     SAVE IMAGE --push ${image}
 
@@ -23,11 +26,7 @@ defm:
 
     ARG image
 
-    RUN mkdir -p app
-
-    COPY dist/cmd.defm/bin app/bin
-
-    ENTRYPOINT ["/app/bin"]
+    COPY dist/cmd.defm/bin /app/bin
 
     SAVE IMAGE --push ${image}
 
@@ -36,11 +35,7 @@ worker:
 
     ARG image
 
-    RUN mkdir -p app
-
-    COPY dist/cmd.worker/bin app/bin
-
-    ENTRYPOINT ["/app/bin"]
+    COPY dist/cmd.worker/bin /app/bin
 
     SAVE IMAGE --push ${image}
 
