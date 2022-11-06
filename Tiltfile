@@ -18,7 +18,7 @@ for app in ("defn", "defm", "worker"):
             "./bin/image.sh %s ${EXPECTED_REF}" % (app,)
         ),
         entrypoint="/app/bin",
-        deps=["dist/image-%s" % (app,)],
+        deps=["dist/image-%s/bin" % (app,)],
         live_update=[
             sync("dist/image-%s/bin" % (app,), "/app/bin"),
         ],
