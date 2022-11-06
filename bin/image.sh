@@ -12,7 +12,6 @@ rm -f flake.lock flake.nix
 cp ../../flake.{nix,lock} .
 git add -f --intent-to-add bin flake.nix flake.lock
 git update-index --assume-unchanged bin flake.nix flake.lock
-sudo rm -rf nix
 mkdir -p nix/store
 n build
 time for a in $(nix-store -qR ./result); do rsync -ia $a nix/store/; done
