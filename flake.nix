@@ -1,5 +1,5 @@
 {
-  description = "c: bash script example";
+  description = "defn/cloud";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -28,7 +28,7 @@
         defaultPackage =
           with import nixpkgs { inherit system; };
           stdenv.mkDerivation rec {
-            name = "hello-${version}";
+            name = "defn-cloud-${version}";
 
             version = "0.0.1";
 
@@ -42,8 +42,8 @@
             '';
 
             meta = with lib; {
-              homepage = "https://defn.sh/hello";
-              description = "containerizing golang binaries with flake";
+              homepage = "https://defn.sh/defn/cloud";
+              description = "nix golang / tilt integration";
               platforms = platforms.linux;
             };
           };
