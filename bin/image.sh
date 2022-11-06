@@ -15,7 +15,7 @@ git update-index --assume-unchanged bin flake.nix flake.lock
 mkdir -p nix/store
 n build
 time for a in $(nix-store -qR ./result); do rsync -ia $a nix/store/; done
-(echo '# syntax=docker/dockerfile:1'; echo FROM alpine; echo RUN mkdir -p /app; for a in nix/store/*/; do echo COPY --link "$a" "/$a/"; echo COPY bin /app/bin; done; echo ENTRYPOINT [ '"/app/bin"' ]) > Dockerfile
+(echo '# syntax=docker/dockerfile:1'; echo FROM alpine; echo RUN mkdir -p /app; for a in nix/store/*/; do echo COPY --link "$a" "/$a/"; done; echo RUN copy bin /app/bin; echo ENTRYPOINT [ '"/app/bin"' ]) > Dockerfile
 echo "ENV PATH $(for a in nix/store/*/; do echo -n "/$a/bin:"; done)/bin" >> Dockerfile
 time env DOCKER_BUILDKIT=1 docker build -t "${image}" .
 docker push "${image}"
