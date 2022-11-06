@@ -6,7 +6,6 @@ load("ext://restart_process", "custom_build_with_restart")
 
 default_registry("169.254.32.1:5000")
 
-#local_resource("pants-go", serve_cmd="p --loop package cmd::", deps=["cmd"])
 for app in ("defn", "defm", "client", "worker"):
     local_resource("go-%s" % (app,), "go build -o dist/cmd.%s/bin cmd/%s/%s.go" % (app,app,app), deps=["cmd/%s" % (app,)])
 
