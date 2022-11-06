@@ -33,7 +33,7 @@ cmd_button(
     argv=[
         "bash", "-c",
         """
-            ~/work/cloud/dist/cmd.client/bin
+            ~/work/cloud/dist/image-client/bin
         """,
     ],
     location=location.NAV,
