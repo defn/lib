@@ -32,7 +32,7 @@
 
             version = "0.0.1";
 
-            src = ./dist/cmd.hello/bin;
+            src = ./bin;
 
             dontUnpack = true;
 
