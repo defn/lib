@@ -11,6 +11,6 @@ import (
 
 func main() {
 	fmt.Println(fake.NewSimpleClientset().CoreV1().Events(""))
-	fmt.Println(meh.Hello("pants 88"))
+	fmt.Println(meh.Hello("pants 99"))
 	time.Sleep(86400 * time.Second)
 }
