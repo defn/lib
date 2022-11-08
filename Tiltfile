@@ -7,7 +7,7 @@ load("ext://restart_process", "custom_build_with_restart")
 default_registry("169.254.32.1:5000")
 
 for app in ("defn", "defm", "client", "worker"):
-    local_resource("go-%s" % (app,), "go build -o dist/image-%s/bin cmd/%s/%s.go; echo done" % (app,app,app), deps=["cmd/%s" % (app,)])
+    local_resource("%s-go" % (app,), "go build -o dist/image-%s/bin cmd/%s/%s.go; echo done" % (app,app,app), deps=["cmd/%s" % (app,)])
 
 for app in ("defn", "defm", "worker"):
     k8s_yaml("cmd/%s/%s.yaml" % (app,app))
