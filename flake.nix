@@ -27,6 +27,11 @@
             gopls
             go-outline
             gopkgs
+            nodejs-18_x
+            docker
+            docker-credential-helpers
+            rsync
+            pass
           ];
         };
 
@@ -38,20 +43,18 @@
           slug = "defn-cloud";
           version = "0.0.1";
 
-          src = ./bin;
-
           dontUnpack = true;
 
-          installPhase = ''
-            install -m 0755 -D $src/image.sh $out/bin/hello
-            chmod 755 $out/bin/hello
-          '';
+          installPhase = "mkdir -p $out";
 
-          meta = with lib; {
-            homepage = "https://defn.sh/${slug}";
-            description = "nix golang / tilt integration";
-            platforms = platforms.linux;
-          };
+          propagatedBuildInputs = [ ];
+
+          meta = with lib;
+            {
+              homepage = "https://defn.sh/${slug}";
+              description = "nix golang / tilt integration";
+              platforms = platforms.linux;
+            };
         };
     });
 }
