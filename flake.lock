@@ -90,14 +90,20 @@
         "tilt-pkg": "tilt-pkg"
       },
       "locked": {
-        "lastModified": 1667970955,
-        "narHash": "sha256-CiS6yQ4RWeKbFcLdDXuoHFK7hBei7S2qzjx6M98LJD4=",
-        "path": "/home/ubuntu/dev",
-        "type": "path"
+        "dir": "dev",
+        "lastModified": 1667973726,
+        "narHash": "sha256-0w2+yyiFcyK1rBotFxMLI0psP8Nyn3yUE5MzzCYhtEU=",
+        "owner": "defn",
+        "repo": "dev",
+        "rev": "0aa604a14a03b71e505803785ede6b5dd6dba441",
+        "type": "github"
       },
       "original": {
-        "path": "/home/ubuntu/dev",
-        "type": "path"
+        "dir": "dev",
+        "owner": "defn",
+        "ref": "v0.0.2",
+        "repo": "dev",
+        "type": "github"
       }
     },
     "nixpkgs": {
