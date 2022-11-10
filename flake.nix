@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    home.url = "github:defn/dev?dir=dev&ref=v0.0.2";
+    home.url = "github:defn/dev?dir=dev&ref=v0.0.4";
   };
 
   outputs =
@@ -28,10 +28,7 @@
             go-outline
             gopkgs
             nodejs-18_x
-            docker
-            docker-credential-helpers
             rsync
-            pass
           ];
         };
 
