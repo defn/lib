@@ -2,14 +2,14 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    home.url = "github:defn/dev?dir=dev&ref=v0.0.5";
+    dev.url = "github:defn/pkg?dir=dev&ref=v0.0.11";
   };
 
   outputs =
     { self
     , nixpkgs
     , flake-utils
-    , home
+    , dev
     }:
     flake-utils.lib.eachDefaultSystem (system:
     let
@@ -19,7 +19,7 @@
       devShell =
         pkgs.mkShell rec {
           buildInputs = with pkgs; [
-            home.defaultPackage.${system}
+            dev.defaultPackage.${system}
             go
             gotools
             go-tools
@@ -46,12 +46,11 @@
 
           propagatedBuildInputs = [ ];
 
-          meta = with lib;
-            {
-              homepage = "https://defn.sh/${slug}";
-              description = "nix golang / tilt integration";
-              platforms = platforms.linux;
-            };
+          meta = with lib; {
+            homepage = "https://defn.sh/${slug}";
+            description = "nix golang / tilt integration";
+            platforms = platforms.linux;
+          };
         };
     });
 }
