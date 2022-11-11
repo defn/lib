@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    dev.url = "github:defn/pkg?dir=dev&ref=v0.0.11";
+    dev.url = "github:defn/pkg?dir=dev&ref=v0.0.14";
   };
 
   outputs =
@@ -15,11 +15,12 @@
     let
       pkgs = import nixpkgs { inherit system; };
     in
-    {
+    rec {
       devShell =
         pkgs.mkShell rec {
           buildInputs = with pkgs; [
             dev.defaultPackage.${system}
+            defaultPackage
             go
             gotools
             go-tools
@@ -40,9 +41,18 @@
           slug = "defn-cloud";
           version = "0.0.1";
 
+          src = ./.;
+
           dontUnpack = true;
 
-          installPhase = "mkdir -p $out";
+          installPhase = ''
+            mkdir -p $out/bin
+            for a in $src/y/*.go; do
+              dst="$(basename "''${a%.go}")"
+              cp $a $out/bin/$dst
+              sed 's#^// yaegi#\#!/usr/bin/env yaegi#' -i $out/bin/$dst
+            done
+          '';
 
           propagatedBuildInputs = [ ];
 
