@@ -31,7 +31,6 @@
           pkgs.stdenv.mkDerivation rec {
             name = "${slug}-${version}";
 
-
             src = ./.;
 
             dontUnpack = true;
