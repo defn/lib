@@ -12,16 +12,16 @@
         wrap = inputs.dev.wrapper.wrap { other = inputs; inherit system; };
         slug = "defn-cloud";
         version = "0.0.1";
-        buildInputs = [
-          latest.rsync
-          latest.go
-          latest.gotools
-          latest.go-tools
-          latest.golangci-lint
-          latest.gopls
-          latest.go-outline
-          latest.gopkgs
-          latest.nodejs-18_x
+        buildInputs = with latest; [
+          rsync
+          go
+          gotools
+          go-tools
+          golangci-lint
+          gopls
+          go-outline
+          gopkgs
+          nodejs-18_x
         ];
       in
       rec {
