@@ -2,8 +2,9 @@
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
     flake-utils.url = github:numtide/flake-utils;
-    dev.url = github:defn/pkg?dir=dev&ref=v0.0.16;
     wrapper.url = github:defn/pkg?dir=wrapper&ref=v0.0.16;
+
+    dev.url = github:defn/pkg?dir=dev&ref=v0.0.16;
   };
 
   outputs = inputs:
@@ -13,22 +14,22 @@
         wrap = inputs.wrapper.wrap { other = inputs; inherit system; inherit pkgs; };
         slug = "defn-cloud";
         version = "0.0.1";
-        buildInputs = with pkgs; [
-          go
-          gotools
-          go-tools
-          golangci-lint
-          gopls
-          go-outline
-          gopkgs
-          nodejs-18_x
-          rsync
+        buildInputs = [
+          pkgs.rsync
+          pkgs.go
+          pkgs.gotools
+          pkgs.go-tools
+          pkgs.golangci-lint
+          pkgs.gopls
+          pkgs.go-outline
+          pkgs.gopkgs
+          pkgs.nodejs-18_x
         ];
       in
       rec {
         devShell = wrap.devShell;
-        defaultPackage =
-          pkgs.stdenv.mkDerivation rec {
+        defaultPackage = pkgs.stdenv.mkDerivation
+          rec {
             name = "${slug}-${version}";
 
             src = ./.;
@@ -52,5 +53,6 @@
               platforms = platforms.linux;
             };
           };
-      });
+      }
+    );
 }
