@@ -10,7 +10,7 @@
         latest = import inputs.nixpkgs { inherit system; };
         pkgs = import inputs.dev.wrapper.nixpkgs { inherit system; };
         wrap = inputs.dev.wrapper.wrap { other = inputs; inherit system; };
-        buildInputs = with latest; [
+        bi = with latest; [
           rsync
           go
           gotools
@@ -43,7 +43,7 @@
               done
             '';
 
-            propagatedBuildInputs = buildInputs;
+            propagatedBuildInputs = bi;
 
             meta = with pkgs.lib; with site; {
               inherit homepage;
@@ -51,6 +51,20 @@
               platforms = platforms.linux;
             };
           };
+        packages = {
+          go = pkgs.stdenv.mkDerivation
+            rec {
+              name = "${slug}-go-${version}";
+
+              src = ./.;
+
+              dontUnpack = true;
+
+              installPhase = "mkdir -p $out";
+
+              propagatedBuildInputs = [ latest.bash ];
+            };
+        };
       }
     );
 }
