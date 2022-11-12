@@ -3,6 +3,7 @@
 set -exu
 
 name="$1"; shift
+build="$1"; shift
 image="$1"; shift
 
 cd "dist/image-${name}"
@@ -12,7 +13,7 @@ rsync -ia ../../flake.lock ../../*.nix .
 git add -f --intent-to-add flake.lock *.nix bin
 git update-index --assume-unchanged flake.lock *.nix bin
 
-n build .#go
+n build "$build"
 sudo rm -rf nix/store
 time for a in $(nix-store -qR ./result); do rsync -ia $a nix/store/; done
 

@@ -15,7 +15,7 @@ for app in ("defn", "defm", "worker"):
     custom_build_with_restart(
         ref=app,
         command=(
-            "./bin/image.sh %s ${EXPECTED_REF}" % (app,)
+            "./bin/image.sh %s .#go ${EXPECTED_REF}" % (app,)
         ),
         entrypoint="/app/bin",
         deps=["dist/image-%s/bin" % (app,)],
