@@ -15,7 +15,7 @@ git update-index --assume-unchanged flake.lock *.nix bin
 
 n build .#go
 mkdir -p nix/store
-time for a in $(nix-store -qR ./result); do rsync -ia $a nix/store/; done
+time for a in $(nix-store -qR ./result | xargs ls -trhd ); do rsync -ia $a nix/store/; done
 
 (
     echo '# syntax=docker/dockerfile:1'
