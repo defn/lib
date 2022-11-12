@@ -1,29 +1,27 @@
 {
   inputs = {
+    dev.url = github:defn/pkg?dir=dev&ref=v0.0.22;
     nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
-    flake-utils.url = github:numtide/flake-utils;
-    wrapper.url = github:defn/pkg?dir=wrapper&ref=v0.0.16;
-
-    dev.url = github:defn/pkg?dir=dev&ref=v0.0.16;
   };
 
   outputs = inputs:
-    inputs.flake-utils.lib.eachDefaultSystem (system:
+    inputs.dev.wrapper.flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import inputs.nixpkgs { inherit system; };
-        wrap = inputs.wrapper.wrap { other = inputs; inherit system; inherit pkgs; };
+        latest = import inputs.nixpkgs { inherit system; };
+        pkgs = import inputs.dev.wrapper.nixpkgs { inherit system; };
+        wrap = inputs.dev.wrapper.wrap { other = inputs; inherit system; };
         slug = "defn-cloud";
         version = "0.0.1";
         buildInputs = [
-          pkgs.rsync
-          pkgs.go
-          pkgs.gotools
-          pkgs.go-tools
-          pkgs.golangci-lint
-          pkgs.gopls
-          pkgs.go-outline
-          pkgs.gopkgs
-          pkgs.nodejs-18_x
+          latest.rsync
+          latest.go
+          latest.gotools
+          latest.go-tools
+          latest.golangci-lint
+          latest.gopls
+          latest.go-outline
+          latest.gopkgs
+          latest.nodejs-18_x
         ];
       in
       rec {
