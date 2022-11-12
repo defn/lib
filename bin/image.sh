@@ -5,7 +5,6 @@ set -exu
 name="$1"; shift
 image="$1"; shift
 
-mkdir -p "dist/image-${name}"
 cd "dist/image-${name}"
 git init || true
 rsync -ia ../../flake.lock ../../*.nix .
@@ -14,8 +13,8 @@ git add -f --intent-to-add flake.lock *.nix bin
 git update-index --assume-unchanged flake.lock *.nix bin
 
 n build .#go
-mkdir -p nix/store
-time for a in $(nix-store -qR ./result | xargs ls -trhd ); do rsync -ia $a nix/store/; done
+sudo rm -rf nix/store
+time for a in $(nix-store -qR ./result); do rsync -ia $a nix/store/; done
 
 (
     echo '# syntax=docker/dockerfile:1'
