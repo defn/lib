@@ -24,7 +24,7 @@ time for a in $(nix-store -qR ./result); do rsync -ia $a nix/store/; done
     for a in nix/store/*/; do
         echo COPY --link "$a" "/$a/"
     done
-    echo COPY bin /app/bin
+    echo COPY app /app/
 
     echo ENTRYPOINT [ '"/app/bin"' ]
     echo "ENV PATH $(for a in nix/store/*/; do echo -n "/$a/bin:"; done)/bin"
