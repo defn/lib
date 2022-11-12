@@ -6,6 +6,21 @@ load("ext://restart_process", "custom_build_with_restart")
 
 default_registry("169.254.32.1:5000")
 
+# to reset, remove /home/ubuntu/.config/temporalite/db/default.db
+local_resource("temporal",
+    serve_cmd=[
+        "bash", "-c",
+        """
+            set -x;
+            while true; do
+                pkill -9 temporalit[e]
+                temporalite start --namespace default --ip 0.0.0.0
+                sleep 10
+            done
+        """
+    ]
+)
+
 for app in ("defn", "defm", "client", "worker"):
     local_resource("%s-go" % (app,), "mkdir -p dist/image-%s/app && go build -o dist/image-%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app), deps=["cmd/%s" % (app,)])
 
