@@ -1,5 +1,3 @@
-// yaegi
-
 package main
 
 import (

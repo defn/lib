@@ -36,11 +36,16 @@
             dontUnpack = true;
 
             installPhase = ''
+              set -exu
               mkdir -p $out/bin
               for a in $src/y/*.go; do
                 dst="$(basename "''${a%.go}")"
-                cp $a $out/bin/$dst
-                sed 's#^// yaegi#\#!/usr/bin/env yaegi#' -i $out/bin/$dst
+                (
+                  echo "#!/usr/bin/env yaegi"
+                  echo
+                  cat $a
+                ) > $out/bin/$dst
+                chmod 755 $out/bin/$dst
               done
             '';
 
