@@ -18,9 +18,9 @@ for app in ("defn", "defm", "worker"):
             "c nix-docker-build %s .#go ${EXPECTED_REF}" % (app,)
         ),
         entrypoint="/app/bin",
-        deps=["dist/image-%s/bin" % (app,)],
+        deps=["dist/image-%s/app/bin" % (app,)],
         live_update=[
-            sync("dist/image-%s/bin" % (app,), "/app/bin"),
+            sync("dist/image-%s/app/bin" % (app,), "/app/bin"),
         ],
     )
 
