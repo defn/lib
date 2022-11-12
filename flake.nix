@@ -10,8 +10,6 @@
         latest = import inputs.nixpkgs { inherit system; };
         pkgs = import inputs.dev.wrapper.nixpkgs { inherit system; };
         wrap = inputs.dev.wrapper.wrap { other = inputs; inherit system; };
-        slug = "defn-cloud";
-        version = "0.0.1";
         buildInputs = with latest; [
           rsync
           go
@@ -23,7 +21,9 @@
           gopkgs
           nodejs-18_x
         ];
+        site = import ./config.nix;
       in
+      with site;
       rec {
         devShell = wrap.devShell;
         defaultPackage = pkgs.stdenv.mkDerivation
