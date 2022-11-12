@@ -9,11 +9,12 @@ mkdir -p "dist/image-${name}"
 cd "dist/image-${name}"
 git init || true
 rsync -ia ../../flake.lock ../../*.nix .
-git add .
 
-mkdir -p nix/store
+git add -f --intent-to-add flake.lock *.nix bin
+git update-index --assume-unchanged flake.lock *.nix bin
 
 n build .#go
+mkdir -p nix/store
 time for a in $(nix-store -qR ./result); do rsync -ia $a nix/store/; done
 
 (
@@ -24,8 +25,8 @@ time for a in $(nix-store -qR ./result); do rsync -ia $a nix/store/; done
         echo COPY --link "$a" "/$a/"
     done
     echo COPY bin /app/bin
-    echo ENTRYPOINT [ '"/app/bin"' ]
 
+    echo ENTRYPOINT [ '"/app/bin"' ]
     echo "ENV PATH $(for a in nix/store/*/; do echo -n "/$a/bin:"; done)/bin"
 ) > Dockerfile
 
