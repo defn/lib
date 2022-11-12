@@ -45,9 +45,9 @@
 
             propagatedBuildInputs = buildInputs;
 
-            meta = with pkgs.lib; {
-              homepage = "https://defn.sh/${slug}";
-              description = "nix golang / tilt integration";
+            meta = with pkgs.lib; with site; {
+              inherit homepage;
+              inherit description;
               platforms = platforms.linux;
             };
           };
