@@ -6,6 +6,8 @@ load("ext://restart_process", "custom_build_with_restart")
 
 default_registry("169.254.32.1:5000")
 
+local_resource("vite", serve_cmd="pnpm install; while true; do turbo dev; sleep 1; done", deps=[".vite-mode"])
+
 # to reset, remove /home/ubuntu/.config/temporalite/db/default.db
 local_resource("temporal",
     serve_cmd=[
@@ -24,22 +26,20 @@ local_resource("temporal",
 for app in ("defn", "defm", "client", "worker"):
     local_resource("%s-go" % (app,), "mkdir -p dist/image-%s/app && go build -o dist/image-%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app), deps=["cmd/%s" % (app,)])
 
-for app in ("defn", "defm", "worker"):
-    k8s_yaml("cmd/%s/%s.yaml" % (app,app))
+    if app in ("defn","defm","worker"):
+        k8s_yaml("cmd/%s/%s.yaml" % (app,app))
 
-    custom_build_with_restart(
-        ref=app,
-        command=(
-            "c nix-docker-build %s .#go ${EXPECTED_REF}" % (app,)
-        ),
-        entrypoint="/app/bin",
-        deps=["dist/image-%s/app/bin" % (app,)],
-        live_update=[
-            sync("dist/image-%s/app/bin" % (app,), "/app/bin"),
-        ],
-    )
-
-local_resource("vite", serve_cmd="pnpm install; while true; do turbo dev; sleep 1; done", deps=[".vite-mode"])
+        custom_build_with_restart(
+            ref=app,
+            command=(
+                "c nix-docker-build %s .#go ${EXPECTED_REF}" % (app,)
+            ),
+            entrypoint="/app/bin",
+            deps=["dist/image-%s/app/bin" % (app,)],
+            live_update=[
+                sync("dist/image-%s/app/bin" % (app,), "/app/bin"),
+            ],
+        )
 
 cmd_button(
     name="client",
