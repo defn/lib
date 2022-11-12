@@ -56,7 +56,7 @@
             rec {
               name = "${slug}-go-${version}";
 
-              src = ./bin;
+              src = ./.;
 
               dontUnpack = true;
 
