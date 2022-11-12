@@ -7,7 +7,7 @@ load("ext://restart_process", "custom_build_with_restart")
 default_registry("169.254.32.1:5000")
 
 for app in ("defn", "defm", "client", "worker"):
-    local_resource("%s-go" % (app,), "mkdir -p dist/image-%s/app && go build -o dist/image-%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,appns), deps=["cmd/%s" % (app,)])
+    local_resource("%s-go" % (app,), "mkdir -p dist/image-%s/app && go build -o dist/image-%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app), deps=["cmd/%s" % (app,)])
 
 for app in ("defn", "defm", "worker"):
     k8s_yaml("cmd/%s/%s.yaml" % (app,app))
@@ -15,7 +15,7 @@ for app in ("defn", "defm", "worker"):
     custom_build_with_restart(
         ref=app,
         command=(
-            "./bin/image.sh %s .#go ${EXPECTED_REF}" % (app,)
+            "c nix-docker-build %s .#go ${EXPECTED_REF}" % (app,)
         ),
         entrypoint="/app/bin",
         deps=["dist/image-%s/bin" % (app,)],
