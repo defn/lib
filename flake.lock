@@ -624,6 +624,22 @@
         "type": "github"
       }
     },
+    "latest": {
+      "locked": {
+        "lastModified": 1668086072,
+        "narHash": "sha256-msFoXI5ThCmhTTqgl27hpCXWhaeqxphBaleJAgD8JYM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "72d8853228c9758820c39b8659415b6d89279493",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1653936696,
@@ -818,22 +834,6 @@
     },
     "nixpkgs_20": {
       "locked": {
-        "lastModified": 1667939680,
-        "narHash": "sha256-nu3zSaTsdhjSs0F8WTzFBlJ9Q2tNaw7A1EIPRhniqnw=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "9f1f990aee8ca8bc847bf41feabe0d91d8a59dc4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_21": {
-      "locked": {
         "lastModified": 1653936696,
         "narHash": "sha256-M6bJShji9AIDZ7Kh7CPwPBPb/T7RiVev2PAcOi4fxDQ=",
         "owner": "NixOS",
@@ -963,14 +963,14 @@
     "root": {
       "inputs": {
         "dev": "dev",
-        "nixpkgs": "nixpkgs_20",
+        "latest": "latest",
         "temporalite-pkg": "temporalite-pkg"
       }
     },
     "temporalite-pkg": {
       "inputs": {
         "flake-utils": "flake-utils_20",
-        "nixpkgs": "nixpkgs_21"
+        "nixpkgs": "nixpkgs_20"
       },
       "locked": {
         "dir": "temporalite",

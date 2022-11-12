@@ -2,15 +2,15 @@
   inputs = {
     dev.url = github:defn/pkg?dir=dev&ref=v0.0.26;
     temporalite-pkg.url = github:defn/pkg?dir=temporalite&ref=v0.0.4;
-    nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+    latest.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   };
 
   outputs = inputs:
     inputs.dev.wrapper.flake-utils.lib.eachDefaultSystem (system:
       let
-        latest = import inputs.nixpkgs { inherit system; };
         pkgs = import inputs.dev.wrapper.nixpkgs { inherit system; };
         wrap = inputs.dev.wrapper.wrap { other = inputs; inherit system; };
+        latest = import inputs.latest { inherit system; };
         bi = with latest; [
           rsync
           go
