@@ -2,26 +2,26 @@ package main
 
 import (
 	"github.com/aws/constructs-go/constructs/v10"
-	j "github.com/aws/jsii-runtime-go"
+	"github.com/aws/jsii-runtime-go"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/instance"
-	aws "github.com/cdktf/cdktf-provider-aws-go/aws/v10/provider"
+	awsprovider "github.com/cdktf/cdktf-provider-aws-go/aws/v10/provider"
 )
 
-func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
+func TheStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 	stack := cdktf.NewTerraformStack(scope, &id)
 
-	aws.NewAwsProvider(stack, j.String("AWS"), &aws.AwsProviderConfig{
-		Region: j.String("us-west-1"),
+	awsprovider.NewAwsProvider(stack, jsii.String("AWS"), &awsprovider.AwsProviderConfig{
+		Region: jsii.String("us-west-1"),
 	})
 
-	instance := instance.NewInstance(stack, j.String("compute"), &instance.InstanceConfig{
-		Ami:          j.String("ami-01456a894f71116f2"),
-		InstanceType: j.String("t2.micro"),
+	instance := instance.NewInstance(stack, jsii.String("compute"), &instance.InstanceConfig{
+		Ami:          jsii.String("ami-01456a894f71116f2"),
+		InstanceType: jsii.String("t2.micro"),
 	})
 
-	cdktf.NewTerraformOutput(stack, j.String("public_ip"), &cdktf.TerraformOutputConfig{
+	cdktf.NewTerraformOutput(stack, jsii.String("public_ip"), &cdktf.TerraformOutputConfig{
 		Value: instance.PublicIp(),
 	})
 
@@ -31,11 +31,11 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 func main() {
 	app := cdktf.NewApp(nil)
 
-	stack := NewMyStack(app, "default")
+	stack := TheStack(app, "default")
 	cdktf.NewCloudBackend(stack, &cdktf.CloudBackendProps{
-		Hostname:     j.String("app.terraform.io"),
-		Organization: j.String("defn"),
-		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("meh")),
+		Hostname:     jsii.String("app.terraform.io"),
+		Organization: jsii.String("defn"),
+		Workspaces:   cdktf.NewNamedCloudWorkspace(jsii.String("meh")),
 	})
 
 	app.Synth()
