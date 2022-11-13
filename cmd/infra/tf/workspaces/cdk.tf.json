@@ -17,15 +17,15 @@
   },
   "resource": {
     "tfe_workspace": {
-      "test-ws-1": {
+      "test-1-ws": {
         "//": {
           "metadata": {
-            "path": "workspaces/test-ws-1",
-            "uniqueId": "test-ws-1"
+            "path": "workspaces/test-1-ws",
+            "uniqueId": "test-1-ws"
           }
         },
         "execution_mode": "local",
-        "name": "test-ws-1",
+        "name": "test-1-ws",
         "organization": "defn"
       }
     }

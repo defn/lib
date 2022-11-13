@@ -19,9 +19,9 @@ func defnWorkspacesStack(scope constructs.Construct, id string) cdktf.TerraformS
 		Hostname: j.String("app.terraform.io"),
 	})
 
-	workspace.NewWorkspace(stack, j.String("test-ws-1"), &workspace.WorkspaceConfig{
-		Name:         j.String("test-ws-1"),
-		Organization: j.String("defn"),
+	workspace.NewWorkspace(stack, j.String("test-1-ws"), &workspace.WorkspaceConfig{
+		Name:          j.String("test-1-ws"),
+		Organization:  j.String("defn"),
 		ExecutionMode: j.String("local"),
 	})
 
@@ -57,13 +57,13 @@ func main() {
 		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("workspaces")),
 	})
 
-	//	a := TheStack(app, "a")
-	//	cdktf.NewCloudBackend(a, &cdktf.CloudBackendProps{
-	//		Hostname:     j.String("app.terraform.io"),
-	//		Organization: j.String("defn"),
-	//		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("a")),
-	//	})
-	//
+	test_1 := TheStack(app, "test-1")
+	cdktf.NewCloudBackend(test_1, &cdktf.CloudBackendProps{
+		Hostname:     j.String("app.terraform.io"),
+		Organization: j.String("defn"),
+		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("test-1-ws")),
+	})
+
 	//	b := TheStack(app, "b")
 	//	cdktf.NewCloudBackend(b, &cdktf.CloudBackendProps{
 	//		Hostname:     j.String("app.terraform.io"),

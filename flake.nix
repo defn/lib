@@ -52,6 +52,7 @@
             gopkgs
             nodejs-18_x
             terraform
+            aws-vault
           ];
         };
 
