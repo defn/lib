@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/aws/constructs-go/constructs/v10"
 	j "github.com/aws/jsii-runtime-go"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
@@ -17,18 +19,6 @@ func defnWorkspacesStack(scope constructs.Construct, id string) cdktf.TerraformS
 
 	tfe.NewTfeProvider(stack, j.String("tfe"), &tfe.TfeProviderConfig{
 		Hostname: j.String("app.terraform.io"),
-	})
-
-	workspace.NewWorkspace(stack, j.String("test-1-ws"), &workspace.WorkspaceConfig{
-		Name:          j.String("test-1-ws"),
-		Organization:  j.String("defn"),
-		ExecutionMode: j.String("local"),
-	})
-
-	workspace.NewWorkspace(stack, j.String("test-2-ws"), &workspace.WorkspaceConfig{
-		Name:          j.String("test-2-ws"),
-		Organization:  j.String("defn"),
-		ExecutionMode: j.String("local"),
 	})
 
 	return stack
@@ -54,28 +44,35 @@ func TheStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 }
 
 func main() {
+	tfc_org := "defn"
+
 	app := cdktf.NewApp(nil)
 
 	workspaces := defnWorkspacesStack(app, "workspaces")
 	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
 		Hostname:     j.String("app.terraform.io"),
-		Organization: j.String("defn"),
+		Organization: j.String(tfc_org),
 		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("workspaces")),
 	})
 
-	test_1 := TheStack(app, "test-1")
-	cdktf.NewCloudBackend(test_1, &cdktf.CloudBackendProps{
-		Hostname:     j.String("app.terraform.io"),
-		Organization: j.String("defn"),
-		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("test-1-ws")),
-	})
+	accounts := []string{"test-1", "test-2"}
 
-	test_2 := TheStack(app, "test-2")
-	cdktf.NewCloudBackend(test_2, &cdktf.CloudBackendProps{
-		Hostname:     j.String("app.terraform.io"),
-		Organization: j.String("defn"),
-		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("test-2-ws")),
-	})
+	for _, acc := range accounts {
+		ws_name := fmt.Sprintf("%s-ws", acc)
+
+		workspace.NewWorkspace(workspaces, j.String(ws_name), &workspace.WorkspaceConfig{
+			Name:          j.String(ws_name),
+			Organization:  j.String(tfc_org),
+			ExecutionMode: j.String("local"),
+		})
+
+		st := TheStack(app, acc)
+		cdktf.NewCloudBackend(st, &cdktf.CloudBackendProps{
+			Hostname:     j.String("app.terraform.io"),
+			Organization: j.String(tfc_org),
+			Workspaces:   cdktf.NewNamedCloudWorkspace(j.String(ws_name)),
+		})
+	}
 
 	app.Synth()
 }
