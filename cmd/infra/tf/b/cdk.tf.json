@@ -2,11 +2,11 @@
   "//": {
     "metadata": {
       "backend": "cloud",
-      "stackName": "default",
+      "stackName": "b",
       "version": "0.13.3"
     },
     "outputs": {
-      "default": {
+      "b": {
         "public_ip": "public_ip"
       }
     }
@@ -28,7 +28,7 @@
       "compute": {
         "//": {
           "metadata": {
-            "path": "default/compute",
+            "path": "b/compute",
             "uniqueId": "compute"
           }
         },
@@ -42,7 +42,7 @@
       "hostname": "app.terraform.io",
       "organization": "defn",
       "workspaces": {
-        "name": "meh"
+        "name": "b"
       }
     },
     "required_providers": {

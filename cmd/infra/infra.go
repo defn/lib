@@ -31,11 +31,18 @@ func TheStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 func main() {
 	app := cdktf.NewApp(nil)
 
-	stack := TheStack(app, "default")
-	cdktf.NewCloudBackend(stack, &cdktf.CloudBackendProps{
+	a := TheStack(app, "a")
+	cdktf.NewCloudBackend(a, &cdktf.CloudBackendProps{
 		Hostname:     j.String("app.terraform.io"),
 		Organization: j.String("defn"),
-		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("meh")),
+		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("a")),
+	})
+
+	b := TheStack(app, "b")
+	cdktf.NewCloudBackend(b, &cdktf.CloudBackendProps{
+		Hostname:     j.String("app.terraform.io"),
+		Organization: j.String("defn"),
+		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("b")),
 	})
 
 	app.Synth()

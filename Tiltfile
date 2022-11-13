@@ -51,12 +51,13 @@ for app in ("defn", "api", "client", "workflow", "infra"):
                 """
                     set -exfu
                     export CDKTF_CONTEXT_JSON="$(jq -n '{excludeStackIdFromLogicalIds: "true", allowSepCharsInLogicalIds: "true"}')"
-                    (cd dist/%s && ./app/bin)
+                    (cd dist/%s && rm -rf cdktf.out && ./app/bin)
                     mkdir -p cmd/%s/tf
-                    (set +f; cp -a dist/%s/cdktf.out/stacks/* cmd/%s/tf/)
+                    (set +f; rsync -ia --delete dist/%s/cdktf.out/stacks/. cmd/%s/tf/.)
                     set +x
-                    if git diff cmd/%s/tf; then for a in {1..10}; do echo; done; echo no changes; fi
-                """ % (app,app,app,app,app)
+                    if git diff cmd/%s/tf; then for a in {1..10}; do echo; done; echo no changes; echo; fi
+                    git status -sb cmd/%s/tf
+                """ % (app,app,app,app,app,app)
             ]
         )
 
