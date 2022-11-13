@@ -49,18 +49,9 @@
         };
 
         packages = {
-          go = pkgs.stdenv.mkDerivation
-            rec {
-              name = "${slug}-go-${version}";
-
-              src = ./.;
-
-              dontUnpack = true;
-
-              installPhase = "mkdir -p $out";
-
-              propagatedBuildInputs = [ latest.bash ];
-            };
+          go = wrap.nullBuilder {
+            propagatedBuildInputs = [ latest.bash ];
+          };
         };
       }
     );
