@@ -55,7 +55,7 @@ for app in ("defn", "api", "client", "workflow", "infra"):
                     mkdir -p cmd/%s/tf
                     (set +f; rsync -ia --delete dist/%s/cdktf.out/stacks/. cmd/%s/tf/.)
                     set +x
-                    if git diff cmd/%s/tf; then for a in {1..10}; do echo; done; echo no changes; echo; fi
+                    if ! git diff cmd/%s/tf; then for a in {1..10}; do echo; done; echo no changes; echo; fi
                     git status -sb cmd/%s/tf
                 """ % (app,app,app,app,app,app)
             ]

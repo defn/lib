@@ -6,13 +6,13 @@ require github.com/aws/constructs-go/constructs/v10 v10.1.135
 
 require (
 	github.com/cdktf/cdktf-provider-aws-go/aws/v10 v10.0.11
+	github.com/cdktf/cdktf-provider-tfe-go/tfe/v3 v3.0.12
 	github.com/hashicorp/terraform-cdk-go/cdktf v0.13.3
 )
 
 require (
 	github.com/Masterminds/semver/v3 v3.1.1 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/cdktf/cdktf-provider-tfe-go/tfe/v3 v3.0.12 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
 	github.com/go-logr/logr v1.2.3 // indirect

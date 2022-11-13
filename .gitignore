@@ -21,3 +21,4 @@ worker/worker
 nix
 .direnv
 result
+node_modules
