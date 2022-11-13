@@ -16,28 +16,17 @@
     ]
   },
   "resource": {
-    "tfe_organization": {
-      "org-aws": {
-        "//": {
-          "metadata": {
-            "path": "workspaces/org-aws",
-            "uniqueId": "org-aws"
-          }
-        },
-        "email": "org-aws@defn.sh",
-        "name": "org-aws"
-      }
-    },
     "tfe_workspace": {
-      "meh-a": {
+      "test-ws-1": {
         "//": {
           "metadata": {
-            "path": "workspaces/meh-a",
-            "uniqueId": "meh-a"
+            "path": "workspaces/test-ws-1",
+            "uniqueId": "test-ws-1"
           }
         },
-        "name": "meh-a",
-        "organization": "${tfe_organization.org-aws.name}"
+        "execution_mode": "local",
+        "name": "test-ws-1",
+        "organization": "defn"
       }
     }
   },

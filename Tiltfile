@@ -56,9 +56,18 @@ for app in ("defn", "api", "client", "workflow", "infra"):
                     (set +f; rsync -ia dist/%s/cdktf.out/stacks/. cmd/%s/tf/.)
                     set +x
                     if ! git diff cmd/%s/tf; then for a in {1..10}; do echo; done; echo no changes; echo; fi
-                    git status -sb cmd/%s/tf
-                    (set +f; rsync -ia -n --delete dist/%s/cdktf.out/stacks/. cmd/%s/tf/.)
-                """ % (app,app,app,app,app,app,app,app)
+                    (cd cmd/%s/tf/workspaces && make plan)
+                """ % (app,app,app,app,app,app)
+            ]
+        )
+        local_resource("%s-plan" % (app,),
+            deps=["cmd/%s/tf/workspaces/cdk.tf.json" % (app,)],
+            cmd=[
+                "bash", "-c",
+                """
+                    set -exfu
+                    (cd cmd/%s/tf/workspaces && make plan)
+                """ % (app,)
             ]
         )
 

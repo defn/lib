@@ -8,7 +8,6 @@ import (
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/instance"
 	aws "github.com/cdktf/cdktf-provider-aws-go/aws/v10/provider"
 
-	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/organization"
 	tfe "github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/provider"
 	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/workspace"
 )
@@ -20,14 +19,10 @@ func defnWorkspacesStack(scope constructs.Construct, id string) cdktf.TerraformS
 		Hostname: j.String("app.terraform.io"),
 	})
 
-	org_aws := organization.NewOrganization(stack, j.String("org-aws"), &organization.OrganizationConfig{
-		Name:  j.String("org-aws"),
-		Email: j.String("org-aws@defn.sh"),
-	})
-
-	workspace.NewWorkspace(stack, j.String("meh-a"), &workspace.WorkspaceConfig{
-		Name:         j.String("meh-a"),
-		Organization: org_aws.Name(),
+	workspace.NewWorkspace(stack, j.String("test-ws-1"), &workspace.WorkspaceConfig{
+		Name:         j.String("test-ws-1"),
+		Organization: j.String("defn"),
+		ExecutionMode: j.String("local"),
 	})
 
 	return stack
