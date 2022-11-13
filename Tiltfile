@@ -50,6 +50,7 @@ for app in ("defn", "api", "client", "workflow", "infra"):
                 "bash", "-c",
                 """
                     set -exfu
+                    export CDKTF_CONTEXT_JSON="$(jq -n '{excludeStackIdFromLogicalIds: "true", allowSepCharsInLogicalIds: "true"}')"
                     (cd dist/%s && ./app/bin)
                     mkdir -p cmd/%s/tf
                     (set +f; cp -a dist/%s/cdktf.out/stacks/* cmd/%s/tf/)

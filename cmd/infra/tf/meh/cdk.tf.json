@@ -7,13 +7,13 @@
     },
     "outputs": {
       "meh": {
-        "public_ip": "meh_publicip_F5DCCB98"
+        "public_ip": "public_ip"
       }
     }
   },
   "output": {
-    "meh_publicip_F5DCCB98": {
-      "value": "${aws_instance.meh_compute_81610023.public_ip}"
+    "public_ip": {
+      "value": "${aws_instance.compute.public_ip}"
     }
   },
   "provider": {
@@ -25,11 +25,11 @@
   },
   "resource": {
     "aws_instance": {
-      "meh_compute_81610023": {
+      "compute": {
         "//": {
           "metadata": {
             "path": "meh/compute",
-            "uniqueId": "meh_compute_81610023"
+            "uniqueId": "compute"
           }
         },
         "ami": "ami-01456a894f71116f2",
