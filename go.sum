@@ -76,6 +76,8 @@ github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6r
 github.com/buger/jsonparser v1.1.1/go.mod h1:6RYKKt7H4d4+iWqouImQ9R2FZql3VbhNgx27UK13J/0=
 github.com/cdktf/cdktf-provider-aws-go/aws/v10 v10.0.11 h1:WQQaEqbcGU5xrYSZA0YRKm2s2sC56wj0XWaCV/fU4r0=
 github.com/cdktf/cdktf-provider-aws-go/aws/v10 v10.0.11/go.mod h1:yadbcijF8jd7mjT1IfPGNd/LlKT6RmgfkUy0+2ukVwo=
+github.com/cdktf/cdktf-provider-tfe-go/tfe/v3 v3.0.12 h1:luEDAn//p+bUSv5wL2f7PWolo1C3RYVm6hYojEPEa+k=
+github.com/cdktf/cdktf-provider-tfe-go/tfe/v3 v3.0.12/go.mod h1:NyuUsWNms2of0t2Q8u7FNK34KpawzDMScSc4Cu+ZUY0=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/cespare/xxhash v1.1.0/go.mod h1:XrSqR1VqqWfGrhpAt58auRo0WTKS1nRRg3ghfAqPWnc=
 github.com/cespare/xxhash/v2 v2.1.1/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
