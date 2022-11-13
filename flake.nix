@@ -1,6 +1,6 @@
 {
   inputs = {
-    dev.url = github:defn/pkg?dir=dev&ref=v0.0.47;
+    dev.url = github:defn/pkg?dir=dev&ref=v0.0.50;
     temporalite.url = github:defn/pkg?dir=temporalite&ref=v0.0.47;
     tilt.url = github:defn/pkg?dir=tilt&ref=v0.0.47;
     earthly.url = github:defn/pkg?dir=earthly&ref=v0.0.47;
@@ -8,7 +8,7 @@
   };
 
   outputs = inputs:
-    inputs.dev.wrapper.flake-utils.lib.eachDefaultSystem (system:
+    inputs.dev.eachDefaultSystem (system:
       let
         site = import ./config.nix;
         pkgs = import inputs.dev.wrapper.nixpkgs { inherit system; };
