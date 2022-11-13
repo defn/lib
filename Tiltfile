@@ -8,7 +8,6 @@ default_registry("169.254.32.1:5000")
 
 local_resource("vite", serve_cmd="pnpm install; while true; do turbo dev; sleep 1; done", deps=[".vite-mode"])
 
-# to reset, remove /home/ubuntu/.config/temporalite/db/default.db
 local_resource("temporal",
     serve_cmd=[
         "bash", "-c",
@@ -16,6 +15,7 @@ local_resource("temporal",
             set -x;
             while true; do
                 pkill -9 temporalit[e]
+                rm -f ~/.config/temporalite/db/default.db
                 temporalite start --namespace default --ip 0.0.0.0
                 sleep 10
             done
