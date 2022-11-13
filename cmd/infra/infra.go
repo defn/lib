@@ -31,7 +31,7 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 func main() {
 	app := cdktf.NewApp(nil)
 
-	stack := NewMyStack(app, "meh")
+	stack := NewMyStack(app, "default")
 	cdktf.NewCloudBackend(stack, &cdktf.CloudBackendProps{
 		Hostname:     jsii.String("app.terraform.io"),
 		Organization: jsii.String("defn"),

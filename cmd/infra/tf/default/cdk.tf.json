@@ -2,11 +2,11 @@
   "//": {
     "metadata": {
       "backend": "cloud",
-      "stackName": "meh",
+      "stackName": "default",
       "version": "0.13.3"
     },
     "outputs": {
-      "meh": {
+      "default": {
         "public_ip": "public_ip"
       }
     }
@@ -28,7 +28,7 @@
       "compute": {
         "//": {
           "metadata": {
-            "path": "meh/compute",
+            "path": "default/compute",
             "uniqueId": "compute"
           }
         },
