@@ -7,25 +7,29 @@
     latest.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   };
 
-  outputs = inputs:
-    inputs.dev.main {
-      inherit inputs;
+  outputs = inputs: inputs.dev.main {
+    inherit inputs;
 
-      config = rec {
-        slug = "defn-cloud";
-        version = "0.0.1";
-        homepage = "https://defn.sh/${slug}";
-        description = "cloud infra and services";
-      };
+    config = rec {
+      slug = "defn-cloud";
+      version = "0.0.1";
+      homepage = "https://defn.sh/${slug}";
+      description = "cloud infra and services";
+    };
 
-      handler = { pkgs, wrap, system }:
-        let
-          latest = import inputs.latest { inherit system; };
-        in
-        rec {
-          devShell = wrap.devShell;
+    handler = { pkgs, wrap, system }:
+      let
+        latest = import inputs.latest { inherit system; };
+      in
+      rec {
+        devShell = wrap.devShell;
 
-          defaultPackage = wrap.bashBuilder {
+        packages = {
+          go = wrap.nullBuilder {
+            propagatedBuildInputs = with latest; [ bash ];
+          };
+
+          default = wrap.bashBuilder {
             src = ./.;
 
             installPhase = ''
@@ -54,12 +58,7 @@
               nodejs-18_x
             ];
           };
-
-          packages = {
-            go = wrap.nullBuilder {
-              propagatedBuildInputs = [ latest.bash ];
-            };
-          };
         };
-    };
+      };
+  };
 }
