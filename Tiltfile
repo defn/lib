@@ -23,8 +23,10 @@ local_resource("temporal",
     ]
 )
 
-for app in ("defn", "api", "client", "workflow"):
-    local_resource("%s-go" % (app,), "mkdir -p dist/%s/app && go build -o dist/%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app), deps=["cmd/%s" % (app,)])
+for app in ("defn", "api", "client", "workflow", "infra"):
+    local_resource("%s-go" % (app,),
+        "mkdir -p dist/%s/app && go build -o dist/%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app),
+        deps=["cmd/%s/%s.go" % (app,app)])
 
     if app in ("defn","api","workflow"):
         k8s_yaml("cmd/%s/%s.yaml" % (app,app))
@@ -40,6 +42,21 @@ for app in ("defn", "api", "client", "workflow"):
                 sync("dist/%s/app/bin" % (app,), "/app/bin"),
             ],
         )
+
+    if app in ("infra",):
+        local_resource("%s-tf" % (app,),
+            deps=["dist/%s/app/bin" % (app,)],
+            cmd=[
+                "bash", "-c",
+                """
+                    set -exfu
+                    (cd dist/%s && ./app/bin)
+                    mkdir -p cmd/%s/tf
+                    (set +f; cp -a dist/%s/cdktf.out/stacks/* cmd/%s/tf/)
+                """ % (app,app,app,app)
+            ]
+        )
+
 
 cmd_button(
     name="client",

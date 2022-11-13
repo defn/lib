@@ -1,0 +1,55 @@
+{
+  "//": {
+    "metadata": {
+      "backend": "cloud",
+      "stackName": "meh",
+      "version": "0.13.3"
+    },
+    "outputs": {
+      "meh": {
+        "public_ip": "meh_publicip_F5DCCB98"
+      }
+    }
+  },
+  "output": {
+    "meh_publicip_F5DCCB98": {
+      "value": "${aws_instance.meh_compute_81610023.public_ip}"
+    }
+  },
+  "provider": {
+    "aws": [
+      {
+        "region": "us-west-1"
+      }
+    ]
+  },
+  "resource": {
+    "aws_instance": {
+      "meh_compute_81610023": {
+        "//": {
+          "metadata": {
+            "path": "meh/compute",
+            "uniqueId": "meh_compute_81610023"
+          }
+        },
+        "ami": "ami-01456a894f71116f2",
+        "instance_type": "t2.micro"
+      }
+    }
+  },
+  "terraform": {
+    "cloud": {
+      "hostname": "app.terraform.io",
+      "organization": "defn",
+      "workspaces": {
+        "name": "meh"
+      }
+    },
+    "required_providers": {
+      "aws": {
+        "source": "aws",
+        "version": "4.36.1"
+      }
+    }
+  }
+}

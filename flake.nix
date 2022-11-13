@@ -51,6 +51,7 @@
             go-outline
             gopkgs
             nodejs-18_x
+            terraform
           ];
         };
 
