@@ -54,7 +54,8 @@ for app in ("defn", "api", "client", "workflow", "infra"):
                     (cd dist/%s && ./app/bin)
                     mkdir -p cmd/%s/tf
                     (set +f; cp -a dist/%s/cdktf.out/stacks/* cmd/%s/tf/)
-                    git diff cmd/%s/tf
+                    set +x
+                    if git diff cmd/%s/tf; then for a in {1..10}; do echo; done; echo no changes; fi
                 """ % (app,app,app,app,app)
             ]
         )
