@@ -11,9 +11,9 @@
     inherit inputs;
 
     config = rec {
-      slug = "defn-cloud";
+      slug = "cloud";
       version = "0.0.1";
-      homepage = "https://defn.sh/${slug}";
+      homepage = "https://github.com/defn/${slug}";
       description = "cloud infra and services";
     };
 
@@ -24,39 +24,39 @@
       rec {
         devShell = wrap.devShell;
 
+        defaultPackage = wrap.bashBuilder {
+          src = ./.;
+
+          installPhase = ''
+            set -exu
+            mkdir -p $out/bin
+            for a in $src/y/*.go; do
+              dst="$(basename "''${a%.go}")"
+              (
+                echo "#!/usr/bin/env yaegi"
+                echo
+                cat $a
+              ) > $out/bin/$dst
+              chmod 755 $out/bin/$dst
+            done
+          '';
+
+          propagatedBuildInputs = with latest; [
+            rsync
+            go
+            gotools
+            go-tools
+            golangci-lint
+            gopls
+            go-outline
+            gopkgs
+            nodejs-18_x
+          ];
+        };
+
         packages = {
           go = wrap.nullBuilder {
             propagatedBuildInputs = with latest; [ bash ];
-          };
-
-          default = wrap.bashBuilder {
-            src = ./.;
-
-            installPhase = ''
-              set -exu
-              mkdir -p $out/bin
-              for a in $src/y/*.go; do
-                dst="$(basename "''${a%.go}")"
-                (
-                  echo "#!/usr/bin/env yaegi"
-                  echo
-                  cat $a
-                ) > $out/bin/$dst
-                chmod 755 $out/bin/$dst
-              done
-            '';
-
-            propagatedBuildInputs = with latest; [
-              rsync
-              go
-              gotools
-              go-tools
-              golangci-lint
-              gopls
-              go-outline
-              gopkgs
-              nodejs-18_x
-            ];
           };
         };
       };
