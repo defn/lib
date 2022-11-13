@@ -91,7 +91,6 @@ RemoteBackend(
     stack, organization="defn", workspaces=NamedRemoteWorkspace(name="gyre")
 )
 
-
 class AwsOrganizationStack(TerraformStack):
     """cdktf Stack for an organization with accounts, sso."""
 
@@ -110,8 +109,76 @@ class AwsOrganizationStack(TerraformStack):
 
         AwsProvider(self, "aws_sso", region=sso_region)
 
-        defn.aws.organizations.organization(self, prefix, org, domain, [org] + accounts)
+        organization(self, prefix, org, domain, [org] + accounts)
 
+
+""" Creates Organizations, Accounts, and Administrator permission set """
+def organization(self, prefix: str, org: str, domain: str, accounts: list):
+    """The organization must be imported."""
+    OrganizationsOrganization(
+        self,
+        "organization",
+        feature_set="ALL",
+        enabled_policy_types=["SERVICE_CONTROL_POLICY", "TAG_POLICY"],
+        aws_service_access_principals=[
+            "cloudtrail.amazonaws.com",
+            "config.amazonaws.com",
+            "ram.amazonaws.com",
+            "ssm.amazonaws.com",
+            "sso.amazonaws.com",
+            "tagpolicies.tag.amazonaws.com",
+        ],
+    )
+
+    # Lookup pre-enabled AWS SSO instance
+    ssoadmin_instances = DataAwsSsoadminInstances(self, "sso_instance")
+
+    # Administrator SSO permission set with AdministratorAccess policy
+    sso_permission_set_admin = administrator(self, ssoadmin_instances)
+
+    # Lookup pre-created Administrators group
+    f = DataAwsIdentitystoreGroupFilter(
+        attribute_path="DisplayName", attribute_value="Administrators"
+    )
+    identitystore_group = DataAwsIdentitystoreGroup(
+        self,
+        "administrators_sso_group",
+        identity_store_id=Fn.element(ssoadmin_instances.identity_store_ids, 0),
+        filter=[f],
+    )
+
+    # The master account (named "org") must be imported.
+    for acct in accounts:
+        account(
+            self,
+            prefix,
+            org,
+            domain,
+            acct,
+            identitystore_group,
+            sso_permission_set_admin,
+        )
+
+def administrator(self, ssoadmin_instances):
+    """Administrator SSO permission set with AdministratorAccess policy."""
+    resource = SsoadminPermissionSet(
+        self,
+        "admin_sso_permission_set",
+        name="Administrator",
+        instance_arn=Fn.element(ssoadmin_instances.arns, 0),
+        session_duration="PT2H",
+        tags={"ManagedBy": "Terraform"},
+    )
+
+    SsoadminManagedPolicyAttachment(
+        self,
+        "admin_sso_managed_policy_attachment",
+        instance_arn=resource.instance_arn,
+        permission_set_arn=resource.arn,
+        managed_policy_arn="arn:aws:iam::aws:policy/AdministratorAccess",
+    )
+
+    return resource
 
 """ Creates Organizations, Accounts, and Administrator permission set """
 def account(
@@ -157,72 +224,3 @@ def account(
         target_id=organizations_account.id,
         target_type="AWS_ACCOUNT",
     )
-
-
-def organization(self, prefix: str, org: str, domain: str, accounts: list):
-    """The organization must be imported."""
-    OrganizationsOrganization(
-        self,
-        "organization",
-        feature_set="ALL",
-        enabled_policy_types=["SERVICE_CONTROL_POLICY", "TAG_POLICY"],
-        aws_service_access_principals=[
-            "cloudtrail.amazonaws.com",
-            "config.amazonaws.com",
-            "ram.amazonaws.com",
-            "ssm.amazonaws.com",
-            "sso.amazonaws.com",
-            "tagpolicies.tag.amazonaws.com",
-        ],
-    )
-
-    # Lookup pre-enabled AWS SSO instance
-    ssoadmin_instances = DataAwsSsoadminInstances(self, "sso_instance")
-
-    # Administrator SSO permission set with AdministratorAccess policy
-    sso_permission_set_admin = defn.aws.sso.administrator(self, ssoadmin_instances)
-
-    # Lookup pre-created Administrators group
-    f = DataAwsIdentitystoreGroupFilter(
-        attribute_path="DisplayName", attribute_value="Administrators"
-    )
-    identitystore_group = DataAwsIdentitystoreGroup(
-        self,
-        "administrators_sso_group",
-        identity_store_id=Fn.element(ssoadmin_instances.identity_store_ids, 0),
-        filter=[f],
-    )
-
-    # The master account (named "org") must be imported.
-    for acct in accounts:
-        account(
-            self,
-            prefix,
-            org,
-            domain,
-            acct,
-            identitystore_group,
-            sso_permission_set_admin,
-        )
-
-""" Creates Organizations, Accounts, and Administrator permission set """
-def administrator(self, ssoadmin_instances):
-    """Administrator SSO permission set with AdministratorAccess policy."""
-    resource = SsoadminPermissionSet(
-        self,
-        "admin_sso_permission_set",
-        name="Administrator",
-        instance_arn=Fn.element(ssoadmin_instances.arns, 0),
-        session_duration="PT2H",
-        tags={"ManagedBy": "Terraform"},
-    )
-
-    SsoadminManagedPolicyAttachment(
-        self,
-        "admin_sso_managed_policy_attachment",
-        instance_arn=resource.instance_arn,
-        permission_set_arn=resource.arn,
-        managed_policy_arn="arn:aws:iam::aws:policy/AdministratorAccess",
-    )
-
-    return resource
