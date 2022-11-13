@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: defm
+  name: api
   labels:
-    app: defm
+    app: api
 spec:
   selector:
     matchLabels:
-      app: defm
+      app: api
   template:
     metadata:
       labels:
-        app: defm
+        app: api
     spec:
       containers:
-      - name: defm
-        image: defm
+      - name: api
+        image: api
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: defm
+  name: api
 spec:
   selector:
-    app: defm
+    app: api
   ports:
     - protocol: TCP
       port: 80

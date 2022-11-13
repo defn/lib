@@ -23,10 +23,10 @@ local_resource("temporal",
     ]
 )
 
-for app in ("defn", "defm", "client", "worker"):
+for app in ("defn", "api", "client", "workflow"):
     local_resource("%s-go" % (app,), "mkdir -p dist/%s/app && go build -o dist/%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app), deps=["cmd/%s" % (app,)])
 
-    if app in ("defn","defm","worker"):
+    if app in ("defn","api","workflow"):
         k8s_yaml("cmd/%s/%s.yaml" % (app,app))
 
         custom_build_with_restart(

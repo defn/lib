@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: worker
+  name: workflow
   labels:
-    app: worker
+    app: workflow
 spec:
   selector:
     matchLabels:
-      app: worker
+      app: workflow
   template:
     metadata:
       labels:
-        app: worker
+        app: workflow
     spec:
       containers:
-      - name: worker
-        image: worker
+      - name: workflow
+        image: workflow
