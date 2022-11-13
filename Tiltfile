@@ -58,7 +58,7 @@ for app in ("defn", "api", "client", "workflow", "infra"):
                     if ! git diff cmd/%s/tf; then for a in {1..10}; do echo; done; echo no changes; echo; fi
                     git status -sb cmd/%s/tf
                     (set +f; rsync -ia -n --delete dist/%s/cdktf.out/stacks/. cmd/%s/tf/.)
-                """ % (app,app,app,app,app,app)
+                """ % (app,app,app,app,app,app,app,app)
             ]
         )
 

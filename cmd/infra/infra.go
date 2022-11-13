@@ -13,7 +13,7 @@ import (
 	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/workspace"
 )
 
-func TerraformCloudWorkspaceStack(scope constructs.Construct, id string) cdktf.TerraformStack {
+func defnWorkspacesStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 	stack := cdktf.NewTerraformStack(scope, &id)
 
 	tfe.NewTfeProvider(stack, j.String("tfe"), &tfe.TfeProviderConfig{
@@ -55,26 +55,26 @@ func TheStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 func main() {
 	app := cdktf.NewApp(nil)
 
-	workspaces := TerraformCloudWorkspaceStack(app, "tf-cloud-workspaces")
+	workspaces := defnWorkspacesStack(app, "workspaces")
 	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
 		Hostname:     j.String("app.terraform.io"),
 		Organization: j.String("defn"),
-		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("tf-cloud-workspaces")),
+		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("workspaces")),
 	})
 
-	a := TheStack(app, "a")
-	cdktf.NewCloudBackend(a, &cdktf.CloudBackendProps{
-		Hostname:     j.String("app.terraform.io"),
-		Organization: j.String("defn"),
-		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("a")),
-	})
-
-	b := TheStack(app, "b")
-	cdktf.NewCloudBackend(b, &cdktf.CloudBackendProps{
-		Hostname:     j.String("app.terraform.io"),
-		Organization: j.String("defn"),
-		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("b")),
-	})
+	//	a := TheStack(app, "a")
+	//	cdktf.NewCloudBackend(a, &cdktf.CloudBackendProps{
+	//		Hostname:     j.String("app.terraform.io"),
+	//		Organization: j.String("defn"),
+	//		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("a")),
+	//	})
+	//
+	//	b := TheStack(app, "b")
+	//	cdktf.NewCloudBackend(b, &cdktf.CloudBackendProps{
+	//		Hostname:     j.String("app.terraform.io"),
+	//		Organization: j.String("defn"),
+	//		Workspaces:   cdktf.NewNamedCloudWorkspace(j.String("b")),
+	//	})
 
 	app.Synth()
 }

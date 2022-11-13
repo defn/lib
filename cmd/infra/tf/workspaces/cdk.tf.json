@@ -2,7 +2,7 @@
   "//": {
     "metadata": {
       "backend": "cloud",
-      "stackName": "tf-cloud-workspaces",
+      "stackName": "workspaces",
       "version": "0.13.3"
     },
     "outputs": {
@@ -20,7 +20,7 @@
       "org-aws": {
         "//": {
           "metadata": {
-            "path": "tf-cloud-workspaces/org-aws",
+            "path": "workspaces/org-aws",
             "uniqueId": "org-aws"
           }
         },
@@ -32,7 +32,7 @@
       "meh-a": {
         "//": {
           "metadata": {
-            "path": "tf-cloud-workspaces/meh-a",
+            "path": "workspaces/meh-a",
             "uniqueId": "meh-a"
           }
         },
@@ -46,7 +46,7 @@
       "hostname": "app.terraform.io",
       "organization": "defn",
       "workspaces": {
-        "name": "tf-cloud-workspaces"
+        "name": "workspaces"
       }
     },
     "required_providers": {
