@@ -14,6 +14,7 @@ import (
 	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/workspace"
 )
 
+// alias
 func js(s string) *string {
 	return jsii.String(s)
 }
@@ -48,10 +49,13 @@ func TheStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 }
 
 func main() {
+	// Stacks under one tfc organization.
 	tfc_org := "defn"
 
 	app := cdktf.NewApp(nil)
 
+	// Bootstrap stack to create workspaces.  Manually create the `workspaces`
+	// workspace.
 	workspaces := defnWorkspacesStack(app, "workspaces")
 	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
 		Hostname:     js("app.terraform.io"),
@@ -59,17 +63,20 @@ func main() {
 		Workspaces:   cdktf.NewNamedCloudWorkspace(js("workspaces")),
 	})
 
+	// The infra stacks under management.
 	accounts := []string{"test-1", "test-2"}
 
 	for _, acc := range accounts {
 		ws_name := fmt.Sprintf("%s-ws", acc)
 
+		// Create a tfc workspace for each stack
 		workspace.NewWorkspace(workspaces, js(ws_name), &workspace.WorkspaceConfig{
 			Name:          js(ws_name),
 			Organization:  js(tfc_org),
 			ExecutionMode: js("local"),
 		})
 
+		// Create the infra stack.
 		st := TheStack(app, acc)
 		cdktf.NewCloudBackend(st, &cdktf.CloudBackendProps{
 			Hostname:     js("app.terraform.io"),
@@ -78,5 +85,6 @@ func main() {
 		})
 	}
 
+	// Emit cdk.tf.json
 	app.Synth()
 }
