@@ -27,6 +27,17 @@
         "execution_mode": "local",
         "name": "test-1-ws",
         "organization": "defn"
+      },
+      "test-2-ws": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/test-2-ws",
+            "uniqueId": "test-2-ws"
+          }
+        },
+        "execution_mode": "local",
+        "name": "test-2-ws",
+        "organization": "defn"
       }
     }
   },
