@@ -55,7 +55,10 @@ for app in ("defn", "api", "client", "workflow", "infra"):
                     mkdir -p cmd/%s/tf
                     (set +f; rsync -ia dist/%s/cdktf.out/stacks/. cmd/%s/tf/.)
                     set +x
-                    if ! git diff cmd/%s/tf; then for a in {1..10}; do echo; done; echo no changes; echo; fi
+                    for a in {1..10}; do echo; done
+                    set -x
+                    git diff cmd/%s/tf || true
+                    echo done
                 """ % (app,app,app,app,app)
             ]
         )
