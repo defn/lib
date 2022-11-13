@@ -6,13 +6,13 @@ import (
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/instance"
-	awsprovider "github.com/cdktf/cdktf-provider-aws-go/aws/v10/provider"
+	aws "github.com/cdktf/cdktf-provider-aws-go/aws/v10/provider"
 )
 
 func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 	stack := cdktf.NewTerraformStack(scope, &id)
 
-	awsprovider.NewAwsProvider(stack, j.String("AWS"), &awsprovider.AwsProviderConfig{
+	aws.NewAwsProvider(stack, j.String("AWS"), &aws.AwsProviderConfig{
 		Region: j.String("us-west-1"),
 	})
 
