@@ -24,7 +24,7 @@ local_resource("temporal",
 )
 
 for app in ("defn", "defm", "client", "worker"):
-    local_resource("%s-go" % (app,), "mkdir -p dist/image-%s/app && go build -o dist/image-%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app), deps=["cmd/%s" % (app,)])
+    local_resource("%s-go" % (app,), "mkdir -p dist/%s/app && go build -o dist/%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app), deps=["cmd/%s" % (app,)])
 
     if app in ("defn","defm","worker"):
         k8s_yaml("cmd/%s/%s.yaml" % (app,app))
@@ -35,9 +35,9 @@ for app in ("defn", "defm", "client", "worker"):
                 "c nix-docker-build %s .#go ${EXPECTED_REF}" % (app,)
             ),
             entrypoint="/app/bin",
-            deps=["dist/image-%s/app/bin" % (app,)],
+            deps=["dist/%s/app/bin" % (app,)],
             live_update=[
-                sync("dist/image-%s/app/bin" % (app,), "/app/bin"),
+                sync("dist/%s/app/bin" % (app,), "/app/bin"),
             ],
         )
 
@@ -48,7 +48,7 @@ cmd_button(
     argv=[
         "bash", "-c",
         """
-            ./dist/image-client/app/bin
+            ./dist/client/app/bin
         """,
     ],
     location=location.NAV,
