@@ -1,14 +1,18 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/aws/constructs-go/constructs/v10"
 	"github.com/aws/jsii-runtime-go"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/dataawsidentitystoregroup"
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/dataawsssoadmininstances"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/organizationsaccount"
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/organizationsorganization"
 	aws "github.com/cdktf/cdktf-provider-aws-go/aws/v10/provider"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/ssoadminaccountassignment"
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/ssoadminmanagedpolicyattachment"
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/ssoadminpermissionset"
 
@@ -71,8 +75,7 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 			Tags:            &map[string]*string{"ManagedBy": js("Terraform")},
 		})
 
-	//sso_permission_set_admin :=
-	ssoadminmanagedpolicyattachment.NewSsoadminManagedPolicyAttachment(stack,
+	sso_permission_set_admin := ssoadminmanagedpolicyattachment.NewSsoadminManagedPolicyAttachment(stack,
 		js("admin_sso_managed_policy_attachment"),
 		&ssoadminmanagedpolicyattachment.SsoadminManagedPolicyAttachmentConfig{
 			InstanceArn:      resource.InstanceArn(),
@@ -80,8 +83,7 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 			ManagedPolicyArn: js("arn:aws:iam::aws:policy/AdministratorAccess"),
 		})
 
-	//identitystore_group :=
-	dataawsidentitystoregroup.NewDataAwsIdentitystoreGroup(stack,
+	identitystore_group := dataawsidentitystoregroup.NewDataAwsIdentitystoreGroup(stack,
 		js("administrators_sso_group"),
 		&dataawsidentitystoregroup.DataAwsIdentitystoreGroupConfig{
 			// Lookup pre-created Administrators group
@@ -91,6 +93,47 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 			}},
 			IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instances_isid.Expression(), jsii.Number(0)).(string)),
 		})
+
+	// The master account (named "org") must be imported.
+	for _, acct := range sub_accounts {
+		// Create the organization account
+		var organizations_account organizationsaccount.OrganizationsAccount
+
+		if acct == org {
+			// The master organization account can't set
+			// iam_user_access_to_billing, role_name
+			organizations_account = organizationsaccount.NewOrganizationsAccount(stack,
+				js(acct),
+				&organizationsaccount.OrganizationsAccountConfig{
+					Name:  js(acct),
+					Email: js(fmt.Sprintf("%s%s@%s", prefix, org, domain)),
+					Tags:  &map[string]*string{"ManagedBy": js("Terraform")},
+				})
+		} else {
+			// Organization account
+			organizations_account = organizationsaccount.NewOrganizationsAccount(stack,
+				js(acct),
+				&organizationsaccount.OrganizationsAccountConfig{
+					Name:                   js(acct),
+					Email:                  js(fmt.Sprintf("%s%s+%s@%s", prefix, org, acct, domain)),
+					Tags:                   &map[string]*string{"ManagedBy": js("Terraform")},
+					IamUserAccessToBilling: js("ALLOW"),
+					RoleName:               js("OrganizationAccountAccessRole"),
+				})
+		}
+
+		// Organization accounts grant Administrator permission set to the Administrator group
+		ssoadminaccountassignment.NewSsoadminAccountAssignment(stack,
+			js(fmt.Sprintf("%s_admin_sso_account_assignment", acct)),
+			&ssoadminaccountassignment.SsoadminAccountAssignmentConfig{
+				InstanceArn:      sso_permission_set_admin.InstanceArn(),
+				PermissionSetArn: sso_permission_set_admin.PermissionSetArn(),
+				PrincipalId:      identitystore_group.GroupId(),
+				PrincipalType:    js("GROUP"),
+				TargetId:         organizations_account.Id(),
+				TargetType:       js("AWS_ACCOUNT"),
+			})
+	}
 
 	return stack
 }
