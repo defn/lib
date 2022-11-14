@@ -16,7 +16,7 @@ func js(s string) *string {
 	return jsii.String(s)
 }
 
-func defnWorkspacesStack(scope constructs.Construct, id string) cdktf.TerraformStack {
+func TfcOrganizationWorkspacesStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 	stack := cdktf.NewTerraformStack(scope, &id)
 
 	tfe.NewTfeProvider(stack, js("tfe"), &tfe.TfeProviderConfig{
@@ -26,7 +26,7 @@ func defnWorkspacesStack(scope constructs.Construct, id string) cdktf.TerraformS
 	return stack
 }
 
-func TheStack(scope constructs.Construct, id string, region string, sso_region string, namespace string, org string, prefix string, domain string, sub_accounts []string) cdktf.TerraformStack {
+func AwsOrganizationStack(scope constructs.Construct, id string, region string, sso_region string, org string, prefix string, domain string, sub_accounts []string) cdktf.TerraformStack {
 	stack := cdktf.NewTerraformStack(scope, &id)
 
 	aws.NewAwsProvider(stack, js("aws_sso"), &aws.AwsProviderConfig{
@@ -44,7 +44,7 @@ func main() {
 
 	// Bootstrap stack to create workspaces.  Manually create the `workspaces`
 	// workspace.
-	workspaces := defnWorkspacesStack(app, "workspaces")
+	workspaces := TfcOrganizationWorkspacesStack(app, "workspaces")
 	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
 		Hostname:     js("app.terraform.io"),
 		Organization: js(tfc_org),
@@ -69,13 +69,16 @@ func main() {
 
 		// Create a tfc workspace for each stack
 		workspace.NewWorkspace(workspaces, js(ws_name), &workspace.WorkspaceConfig{
-			Name:          js(ws_name),
-			Organization:  js(tfc_org),
-			ExecutionMode: js("local"),
+			Name:                js(ws_name),
+			Organization:        js(tfc_org),
+			ExecutionMode:       js("local"),
+			FileTriggersEnabled: false,
+			QueueAllRuns:        false,
+			SpeculativeEnabled:  false,
 		})
 
 		// Create the infra stack.
-		st := TheStack(app, acc, regions[i], sso_regions[i], namespaces[i], orgs[i], prefixes[i], domains[i], sub_accounts[i])
+		st := AwsOrganizationStack(app, namespaces[i], regions[i], sso_regions[i], orgs[i], prefixes[i], domains[i], sub_accounts[i])
 		cdktf.NewCloudBackend(st, &cdktf.CloudBackendProps{
 			Hostname:     js("app.terraform.io"),
 			Organization: js(tfc_org),

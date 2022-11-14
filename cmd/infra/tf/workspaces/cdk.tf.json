@@ -25,8 +25,11 @@
           }
         },
         "execution_mode": "local",
+        "file_triggers_enabled": false,
         "name": "coil",
-        "organization": "defn"
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
       },
       "curl": {
         "//": {
@@ -36,8 +39,11 @@
           }
         },
         "execution_mode": "local",
+        "file_triggers_enabled": false,
         "name": "curl",
-        "organization": "defn"
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
       },
       "gyre": {
         "//": {
@@ -47,8 +53,11 @@
           }
         },
         "execution_mode": "local",
+        "file_triggers_enabled": false,
         "name": "gyre",
-        "organization": "defn"
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
       },
       "helix": {
         "//": {
@@ -58,8 +67,11 @@
           }
         },
         "execution_mode": "local",
+        "file_triggers_enabled": false,
         "name": "helix",
-        "organization": "defn"
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
       },
       "spiral": {
         "//": {
@@ -69,8 +81,11 @@
           }
         },
         "execution_mode": "local",
+        "file_triggers_enabled": false,
         "name": "spiral",
-        "organization": "defn"
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
       }
     }
   },

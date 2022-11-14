@@ -18,30 +18,8 @@ from cdktf_cdktf_provider_aws.ssoadmin import (
     SsoadminPermissionSet,
 )
 
-class AwsOrganizationStack(TerraformStack):
-    """cdktf Stack for an organization with accounts, sso."""
-
-    def __init__(
-        self,
-        scope: Construct,
-        namespace: str,
-        prefix: str,
-        org: str,
-        domain: str,
-        region: str,
-        sso_region: str,
-        accounts,
-    ):
-        super().__init__(scope, namespace)
-
-        AwsProvider(self, "aws_sso", region=sso_region)
-
-        organization(self, prefix, org, domain, [org] + accounts)
-
-
-""" Creates Organizations, Accounts, and Administrator permission set """
+organization(self, prefix, org, domain, [org] + accounts)
 def organization(self, prefix: str, org: str, domain: str, accounts: list):
-    """The organization must be imported."""
     OrganizationsOrganization(
         self,
         "organization",
@@ -61,8 +39,22 @@ def organization(self, prefix: str, org: str, domain: str, accounts: list):
     ssoadmin_instances = DataAwsSsoadminInstances(self, "sso_instance")
 
     # Administrator SSO permission set with AdministratorAccess policy
-    sso_permission_set_admin = administrator(self, ssoadmin_instances)
+    resource = SsoadminPermissionSet(
+        self,
+        "admin_sso_permission_set",
+        name="Administrator",
+        instance_arn=Fn.element(ssoadmin_instances.arns, 0),
+        session_duration="PT2H",
+        tags={"ManagedBy": "Terraform"},
+    )
 
+    sso_permission_set_admin = SsoadminManagedPolicyAttachment(
+        self,
+        "admin_sso_managed_policy_attachment",
+        instance_arn=resource.instance_arn,
+        permission_set_arn=resource.arn,
+        managed_policy_arn="arn:aws:iam::aws:policy/AdministratorAccess",
+    )
     # Lookup pre-created Administrators group
     f = DataAwsIdentitystoreGroupFilter(
         attribute_path="DisplayName", attribute_value="Administrators"
@@ -85,69 +77,37 @@ def organization(self, prefix: str, org: str, domain: str, accounts: list):
             identitystore_group,
             sso_permission_set_admin,
         )
+        """Create the organization account."""
+        if acct == org:
+            # The master organization account can't set
+            # iam_user_access_to_billing, role_name
+            organizations_account = OrganizationsAccount(
+                self,
+                acct,
+                name=acct,
+                email=f"{prefix}{org}@{domain}",
+                tags={"ManagedBy": "Terraform"},
+            )
+        else:
+            # Organization account
+            organizations_account = OrganizationsAccount(
+                self,
+                acct,
+                name=acct,
+                email=f"{prefix}{org}+{acct}@{domain}",
+                iam_user_access_to_billing="ALLOW",
+                role_name="OrganizationAccountAccessRole",
+                tags={"ManagedBy": "Terraform"},
+            )
 
-def administrator(self, ssoadmin_instances):
-    """Administrator SSO permission set with AdministratorAccess policy."""
-    resource = SsoadminPermissionSet(
-        self,
-        "admin_sso_permission_set",
-        name="Administrator",
-        instance_arn=Fn.element(ssoadmin_instances.arns, 0),
-        session_duration="PT2H",
-        tags={"ManagedBy": "Terraform"},
-    )
-
-    SsoadminManagedPolicyAttachment(
-        self,
-        "admin_sso_managed_policy_attachment",
-        instance_arn=resource.instance_arn,
-        permission_set_arn=resource.arn,
-        managed_policy_arn="arn:aws:iam::aws:policy/AdministratorAccess",
-    )
-
-    return resource
-
-""" Creates Organizations, Accounts, and Administrator permission set """
-def account(
-    self,
-    prefix: str,
-    org: str,
-    domain: str,
-    acct: str,
-    identitystore_group,
-    sso_permission_set_admin,
-):
-    """Create the organization account."""
-    if acct == org:
-        # The master organization account can't set
-        # iam_user_access_to_billing, role_name
-        organizations_account = OrganizationsAccount(
+        # Organization accounts grant Administrator permission set to the Administrator group
+        SsoadminAccountAssignment(
             self,
-            acct,
-            name=acct,
-            email=f"{prefix}{org}@{domain}",
-            tags={"ManagedBy": "Terraform"},
+            f"{acct}_admin_sso_account_assignment",
+            instance_arn=sso_permission_set_admin.instance_arn,
+            permission_set_arn=sso_permission_set_admin.arn,
+            principal_id=identitystore_group.group_id,
+            principal_type="GROUP",
+            target_id=organizations_account.id,
+            target_type="AWS_ACCOUNT",
         )
-    else:
-        # Organization account
-        organizations_account = OrganizationsAccount(
-            self,
-            acct,
-            name=acct,
-            email=f"{prefix}{org}+{acct}@{domain}",
-            iam_user_access_to_billing="ALLOW",
-            role_name="OrganizationAccountAccessRole",
-            tags={"ManagedBy": "Terraform"},
-        )
-
-    # Organization accounts grant Administrator permission set to the Administrator group
-    SsoadminAccountAssignment(
-        self,
-        f"{acct}_admin_sso_account_assignment",
-        instance_arn=sso_permission_set_admin.instance_arn,
-        permission_set_arn=sso_permission_set_admin.arn,
-        principal_id=identitystore_group.group_id,
-        principal_type="GROUP",
-        target_id=organizations_account.id,
-        target_type="AWS_ACCOUNT",
-    )
