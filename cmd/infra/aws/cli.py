@@ -20,21 +20,6 @@ from cdktf_cdktf_provider_aws.ssoadmin import (
 
 organization(self, prefix, org, domain, [org] + accounts)
 def organization(self, prefix: str, org: str, domain: str, accounts: list):
-    OrganizationsOrganization(
-        self,
-        "organization",
-        feature_set="ALL",
-        enabled_policy_types=["SERVICE_CONTROL_POLICY", "TAG_POLICY"],
-        aws_service_access_principals=[
-            "cloudtrail.amazonaws.com",
-            "config.amazonaws.com",
-            "ram.amazonaws.com",
-            "ssm.amazonaws.com",
-            "sso.amazonaws.com",
-            "tagpolicies.tag.amazonaws.com",
-        ],
-    )
-
     # Lookup pre-enabled AWS SSO instance
     ssoadmin_instances = DataAwsSsoadminInstances(self, "sso_instance")
 

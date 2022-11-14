@@ -5,6 +5,7 @@ import (
 	"github.com/aws/jsii-runtime-go"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/organizationsorganization"
 	aws "github.com/cdktf/cdktf-provider-aws-go/aws/v10/provider"
 
 	tfe "github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/provider"
@@ -32,6 +33,21 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 	aws.NewAwsProvider(stack, js("aws_sso"), &aws.AwsProviderConfig{
 		Region: js(region),
 	})
+
+	organizationsorganization.NewOrganizationsOrganization(stack, js("organization"),
+		&organizationsorganization.OrganizationsOrganizationConfig{
+			FeatureSet: js("ALL"),
+			EnabledPolicyTypes: &[]*string{
+				js("SERVICE_CONTROL_POLICY"),
+				js("TAG_POLICY")},
+			AwsServiceAccessPrincipals: &[]*string{
+				js("cloudtrail.amazonaws.com"),
+				js("config.amazonaws.com"),
+				js("ram.amazonaws.com"),
+				js("ssm.amazonaws.com"),
+				js("sso.amazonaws.com"),
+				js("tagpolicies.tag.amazonaws.com")},
+		})
 
 	return stack
 }
@@ -77,7 +93,7 @@ func main() {
 			SpeculativeEnabled:  false,
 		})
 
-		// Create the infra stack.
+		// Create the aws organization + accounts stack
 		st := AwsOrganizationStack(app, namespaces[i], regions[i], sso_regions[i], orgs[i], prefixes[i], domains[i], sub_accounts[i])
 		cdktf.NewCloudBackend(st, &cdktf.CloudBackendProps{
 			Hostname:     js("app.terraform.io"),
