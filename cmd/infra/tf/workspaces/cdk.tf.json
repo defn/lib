@@ -17,26 +17,59 @@
   },
   "resource": {
     "tfe_workspace": {
-      "test-1-ws": {
+      "coil": {
         "//": {
           "metadata": {
-            "path": "workspaces/test-1-ws",
-            "uniqueId": "test-1-ws"
+            "path": "workspaces/coil",
+            "uniqueId": "coil"
           }
         },
         "execution_mode": "local",
-        "name": "test-1-ws",
+        "name": "coil",
         "organization": "defn"
       },
-      "test-2-ws": {
+      "curl": {
         "//": {
           "metadata": {
-            "path": "workspaces/test-2-ws",
-            "uniqueId": "test-2-ws"
+            "path": "workspaces/curl",
+            "uniqueId": "curl"
           }
         },
         "execution_mode": "local",
-        "name": "test-2-ws",
+        "name": "curl",
+        "organization": "defn"
+      },
+      "gyre": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/gyre",
+            "uniqueId": "gyre"
+          }
+        },
+        "execution_mode": "local",
+        "name": "gyre",
+        "organization": "defn"
+      },
+      "helix": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/helix",
+            "uniqueId": "helix"
+          }
+        },
+        "execution_mode": "local",
+        "name": "helix",
+        "organization": "defn"
+      },
+      "spiral": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/spiral",
+            "uniqueId": "spiral"
+          }
+        },
+        "execution_mode": "local",
+        "name": "spiral",
         "organization": "defn"
       }
     }

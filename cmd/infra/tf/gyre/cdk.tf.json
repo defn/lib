@@ -1,0 +1,33 @@
+{
+  "//": {
+    "metadata": {
+      "backend": "cloud",
+      "stackName": "gyre",
+      "version": "0.13.3"
+    },
+    "outputs": {
+    }
+  },
+  "provider": {
+    "aws": [
+      {
+        "region": "us-east-2"
+      }
+    ]
+  },
+  "terraform": {
+    "cloud": {
+      "hostname": "app.terraform.io",
+      "organization": "defn",
+      "workspaces": {
+        "name": "gyre"
+      }
+    },
+    "required_providers": {
+      "aws": {
+        "source": "aws",
+        "version": "4.36.1"
+      }
+    }
+  }
+}
