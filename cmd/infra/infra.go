@@ -59,14 +59,14 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 				js("tagpolicies.tag.amazonaws.com")},
 		})
 	// Lookup pre-enabled AWS SSO instance
-	ssoadmin_instances := dataawsssoadmininstances.NewDataAwsSsoadminInstances(stack,
+	ssoadmin_instance := dataawsssoadmininstances.NewDataAwsSsoadminInstances(stack,
 		js("sso_instance"),
 		&dataawsssoadmininstances.DataAwsSsoadminInstancesConfig{})
-	ssoadmin_instances_isid := cdktf.NewTerraformLocal(stack,
-		js("LocalInstanceStoreIds"),
-		ssoadmin_instances.IdentityStoreIds())
+	ssoadmin_instance_isid := cdktf.NewTerraformLocal(stack,
+		js("sso_instance_isid"),
+		ssoadmin_instance.IdentityStoreIds())
 
-	resource := ssoadminpermissionset.NewSsoadminPermissionSet(stack,
+	ssoadmin_permission_set := ssoadminpermissionset.NewSsoadminPermissionSet(stack,
 		js("admin_sso_permission_set"),
 		&ssoadminpermissionset.SsoadminPermissionSetConfig{
 			Name:            new(string),
@@ -78,8 +78,8 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 	sso_permission_set_admin := ssoadminmanagedpolicyattachment.NewSsoadminManagedPolicyAttachment(stack,
 		js("admin_sso_managed_policy_attachment"),
 		&ssoadminmanagedpolicyattachment.SsoadminManagedPolicyAttachmentConfig{
-			InstanceArn:      resource.InstanceArn(),
-			PermissionSetArn: resource.Arn(),
+			InstanceArn:      ssoadmin_permission_set.InstanceArn(),
+			PermissionSetArn: ssoadmin_permission_set.Arn(),
 			ManagedPolicyArn: js("arn:aws:iam::aws:policy/AdministratorAccess"),
 		})
 
@@ -91,7 +91,7 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 				AttributeValue: js("Administrators"),
 				AttributePath:  js("DisplayName"),
 			}},
-			IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instances_isid.Expression(), jsii.Number(0)).(string)),
+			IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsii.Number(0)).(string)),
 		})
 
 	// The master account (named "org") must be imported.
@@ -180,8 +180,8 @@ func main() {
 		})
 
 		// Create the aws organization + accounts stack
-		st := AwsOrganizationStack(app, namespaces[i], regions[i], sso_regions[i], orgs[i], prefixes[i], domains[i], sub_accounts[i])
-		cdktf.NewCloudBackend(st, &cdktf.CloudBackendProps{
+		aws_org_stack := AwsOrganizationStack(app, namespaces[i], regions[i], sso_regions[i], orgs[i], prefixes[i], domains[i], sub_accounts[i])
+		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendProps{
 			Hostname:     js("app.terraform.io"),
 			Organization: js(tfc_org),
 			Workspaces:   cdktf.NewNamedCloudWorkspace(js(ws_name)),

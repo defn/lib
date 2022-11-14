@@ -23,7 +23,7 @@
             "attribute_value": "Administrators"
           }
         ],
-        "identity_store_id": "${element(local.LocalInstanceStoreIds, 0)}"
+        "identity_store_id": "${element(local.sso_instance_isid, 0)}"
       }
     },
     "aws_ssoadmin_instances": {
@@ -38,7 +38,7 @@
     }
   },
   "locals": {
-    "LocalInstanceStoreIds": "${data.aws_ssoadmin_instances.sso_instance.identity_store_ids}"
+    "sso_instance_isid": "${data.aws_ssoadmin_instances.sso_instance.identity_store_ids}"
   },
   "provider": {
     "aws": [
