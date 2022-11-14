@@ -5,8 +5,12 @@ import (
 	"github.com/aws/jsii-runtime-go"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/dataawsidentitystoregroup"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/dataawsssoadmininstances"
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/organizationsorganization"
 	aws "github.com/cdktf/cdktf-provider-aws-go/aws/v10/provider"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/ssoadminmanagedpolicyattachment"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/ssoadminpermissionset"
 
 	tfe "github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/provider"
 	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/workspace"
@@ -30,11 +34,13 @@ func TfcOrganizationWorkspacesStack(scope constructs.Construct, id string) cdktf
 func AwsOrganizationStack(scope constructs.Construct, id string, region string, sso_region string, org string, prefix string, domain string, sub_accounts []string) cdktf.TerraformStack {
 	stack := cdktf.NewTerraformStack(scope, &id)
 
-	aws.NewAwsProvider(stack, js("aws_sso"), &aws.AwsProviderConfig{
-		Region: js(region),
-	})
+	aws.NewAwsProvider(stack,
+		js("aws_sso"), &aws.AwsProviderConfig{
+			Region: js(region),
+		})
 
-	organizationsorganization.NewOrganizationsOrganization(stack, js("organization"),
+	organizationsorganization.NewOrganizationsOrganization(stack,
+		js("organization"),
 		&organizationsorganization.OrganizationsOrganizationConfig{
 			FeatureSet: js("ALL"),
 			EnabledPolicyTypes: &[]*string{
@@ -47,6 +53,43 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 				js("ssm.amazonaws.com"),
 				js("sso.amazonaws.com"),
 				js("tagpolicies.tag.amazonaws.com")},
+		})
+	// Lookup pre-enabled AWS SSO instance
+	ssoadmin_instances := dataawsssoadmininstances.NewDataAwsSsoadminInstances(stack,
+		js("sso_instance"),
+		&dataawsssoadmininstances.DataAwsSsoadminInstancesConfig{})
+	ssoadmin_instances_isid := cdktf.NewTerraformLocal(stack,
+		js("LocalInstanceStoreIds"),
+		ssoadmin_instances.IdentityStoreIds())
+
+	resource := ssoadminpermissionset.NewSsoadminPermissionSet(stack,
+		js("admin_sso_permission_set"),
+		&ssoadminpermissionset.SsoadminPermissionSetConfig{
+			Name:            new(string),
+			InstanceArn:     new(string),
+			SessionDuration: js("PT2H"),
+			Tags:            &map[string]*string{"ManagedBy": js("Terraform")},
+		})
+
+	//sso_permission_set_admin :=
+	ssoadminmanagedpolicyattachment.NewSsoadminManagedPolicyAttachment(stack,
+		js("admin_sso_managed_policy_attachment"),
+		&ssoadminmanagedpolicyattachment.SsoadminManagedPolicyAttachmentConfig{
+			InstanceArn:      resource.InstanceArn(),
+			PermissionSetArn: resource.Arn(),
+			ManagedPolicyArn: js("arn:aws:iam::aws:policy/AdministratorAccess"),
+		})
+
+	//identitystore_group :=
+	dataawsidentitystoregroup.NewDataAwsIdentitystoreGroup(stack,
+		js("administrators_sso_group"),
+		&dataawsidentitystoregroup.DataAwsIdentitystoreGroupConfig{
+			// Lookup pre-created Administrators group
+			Filter: []interface{}{dataawsidentitystoregroup.DataAwsIdentitystoreGroupFilter{
+				AttributeValue: js("Administrators"),
+				AttributePath:  js("DisplayName"),
+			}},
+			IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instances_isid.Expression(), jsii.Number(0)).(string)),
 		})
 
 	return stack
