@@ -38,17 +38,31 @@
     }
   },
   "locals": {
+    "sso_instance_arn": "${data.aws_ssoadmin_instances.sso_instance.arns}",
     "sso_instance_isid": "${data.aws_ssoadmin_instances.sso_instance.identity_store_ids}"
   },
   "provider": {
     "aws": [
       {
-        "region": "us-west-1"
+        "region": "us-west-2"
       }
     ]
   },
   "resource": {
     "aws_organizations_account": {
+      "curl": {
+        "//": {
+          "metadata": {
+            "path": "curl/curl",
+            "uniqueId": "curl"
+          }
+        },
+        "email": "aws-curl@defn.us",
+        "name": "curl",
+        "tags": {
+          "ManagedBy": "Terraform"
+        }
+      },
       "hub": {
         "//": {
           "metadata": {
@@ -119,6 +133,20 @@
       }
     },
     "aws_ssoadmin_account_assignment": {
+      "curl_admin_sso_account_assignment": {
+        "//": {
+          "metadata": {
+            "path": "curl/curl_admin_sso_account_assignment",
+            "uniqueId": "curl_admin_sso_account_assignment"
+          }
+        },
+        "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
+        "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
+        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_type": "GROUP",
+        "target_id": "${aws_organizations_account.curl.id}",
+        "target_type": "AWS_ACCOUNT"
+      },
       "hub_admin_sso_account_assignment": {
         "//": {
           "metadata": {
@@ -183,8 +211,8 @@
             "uniqueId": "admin_sso_permission_set"
           }
         },
-        "instance_arn": "",
-        "name": "",
+        "instance_arn": "${element(local.sso_instance_arn, 0)}",
+        "name": "Administrator",
         "session_duration": "PT2H",
         "tags": {
           "ManagedBy": "Terraform"

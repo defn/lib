@@ -38,6 +38,7 @@
     }
   },
   "locals": {
+    "sso_instance_arn": "${data.aws_ssoadmin_instances.sso_instance.arns}",
     "sso_instance_isid": "${data.aws_ssoadmin_instances.sso_instance.identity_store_ids}"
   },
   "provider": {
@@ -49,6 +50,19 @@
   },
   "resource": {
     "aws_organizations_account": {
+      "gyre": {
+        "//": {
+          "metadata": {
+            "path": "gyre/gyre",
+            "uniqueId": "gyre"
+          }
+        },
+        "email": "aws-gyre@defn.us",
+        "name": "gyre",
+        "tags": {
+          "ManagedBy": "Terraform"
+        }
+      },
       "ops": {
         "//": {
           "metadata": {
@@ -89,6 +103,20 @@
       }
     },
     "aws_ssoadmin_account_assignment": {
+      "gyre_admin_sso_account_assignment": {
+        "//": {
+          "metadata": {
+            "path": "gyre/gyre_admin_sso_account_assignment",
+            "uniqueId": "gyre_admin_sso_account_assignment"
+          }
+        },
+        "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
+        "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
+        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_type": "GROUP",
+        "target_id": "${aws_organizations_account.gyre.id}",
+        "target_type": "AWS_ACCOUNT"
+      },
       "ops_admin_sso_account_assignment": {
         "//": {
           "metadata": {
@@ -125,8 +153,8 @@
             "uniqueId": "admin_sso_permission_set"
           }
         },
-        "instance_arn": "",
-        "name": "",
+        "instance_arn": "${element(local.sso_instance_arn, 0)}",
+        "name": "Administrator",
         "session_duration": "PT2H",
         "tags": {
           "ManagedBy": "Terraform"

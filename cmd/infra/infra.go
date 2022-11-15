@@ -39,8 +39,8 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 	stack := cdktf.NewTerraformStack(scope, &id)
 
 	aws.NewAwsProvider(stack,
-		js("aws_sso"), &aws.AwsProviderConfig{
-			Region: js(region),
+		js("aws"), &aws.AwsProviderConfig{
+			Region: js(sso_region),
 		})
 
 	organizationsorganization.NewOrganizationsOrganization(stack,
@@ -62,15 +62,16 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 	ssoadmin_instance := dataawsssoadmininstances.NewDataAwsSsoadminInstances(stack,
 		js("sso_instance"),
 		&dataawsssoadmininstances.DataAwsSsoadminInstancesConfig{})
-	ssoadmin_instance_isid := cdktf.NewTerraformLocal(stack,
-		js("sso_instance_isid"),
-		ssoadmin_instance.IdentityStoreIds())
+
+	ssoadmin_instance_arn := cdktf.NewTerraformLocal(stack,
+		js("sso_instance_arn"),
+		ssoadmin_instance.Arns())
 
 	ssoadmin_permission_set := ssoadminpermissionset.NewSsoadminPermissionSet(stack,
 		js("admin_sso_permission_set"),
 		&ssoadminpermissionset.SsoadminPermissionSetConfig{
-			Name:            new(string),
-			InstanceArn:     new(string),
+			Name:            js("Administrator"),
+			InstanceArn:     js(cdktf.Fn_Element(ssoadmin_instance_arn.Expression(), jsii.Number(0)).(string)),
 			SessionDuration: js("PT2H"),
 			Tags:            &map[string]*string{"ManagedBy": js("Terraform")},
 		})
@@ -82,6 +83,10 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 			PermissionSetArn: ssoadmin_permission_set.Arn(),
 			ManagedPolicyArn: js("arn:aws:iam::aws:policy/AdministratorAccess"),
 		})
+
+	ssoadmin_instance_isid := cdktf.NewTerraformLocal(stack,
+		js("sso_instance_isid"),
+		ssoadmin_instance.IdentityStoreIds())
 
 	identitystore_group := dataawsidentitystoregroup.NewDataAwsIdentitystoreGroup(stack,
 		js("administrators_sso_group"),
@@ -163,7 +168,7 @@ func main() {
 	namespaces := []string{"gyre", "curl", "coil", "helix", "spiral"}
 	orgs := []string{"gyre", "curl", "coil", "helix", "spiral"}
 	prefixes := []string{"aws-", "aws-", "aws-", "aws-", "aws-"}
-	domains := []string{"defn.us", "defn.us", "defn.us", "defn.us", "defn.us"}
+	domains := []string{"defn.us", "defn.us", "defn.us", "defn.sh", "defn.us"}
 	sub_accounts := [][]string{{"ops"}, env_accounts, env_accounts, full_accounts, full_accounts}
 
 	for i, acc := range accounts {
@@ -180,7 +185,7 @@ func main() {
 		})
 
 		// Create the aws organization + accounts stack
-		aws_org_stack := AwsOrganizationStack(app, namespaces[i], regions[i], sso_regions[i], orgs[i], prefixes[i], domains[i], sub_accounts[i])
+		aws_org_stack := AwsOrganizationStack(app, namespaces[i], regions[i], sso_regions[i], orgs[i], prefixes[i], domains[i], append([]string{orgs[i]}, sub_accounts[i]...))
 		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendProps{
 			Hostname:     js("app.terraform.io"),
 			Organization: js(tfc_org),

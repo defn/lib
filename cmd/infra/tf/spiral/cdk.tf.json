@@ -38,6 +38,7 @@
     }
   },
   "locals": {
+    "sso_instance_arn": "${data.aws_ssoadmin_instances.sso_instance.arns}",
     "sso_instance_isid": "${data.aws_ssoadmin_instances.sso_instance.identity_store_ids}"
   },
   "provider": {
@@ -180,6 +181,19 @@
         "iam_user_access_to_billing": "ALLOW",
         "name": "sec",
         "role_name": "OrganizationAccountAccessRole",
+        "tags": {
+          "ManagedBy": "Terraform"
+        }
+      },
+      "spiral": {
+        "//": {
+          "metadata": {
+            "path": "spiral/spiral",
+            "uniqueId": "spiral"
+          }
+        },
+        "email": "aws-spiral@defn.us",
+        "name": "spiral",
         "tags": {
           "ManagedBy": "Terraform"
         }
@@ -334,6 +348,20 @@
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.sec.id}",
         "target_type": "AWS_ACCOUNT"
+      },
+      "spiral_admin_sso_account_assignment": {
+        "//": {
+          "metadata": {
+            "path": "spiral/spiral_admin_sso_account_assignment",
+            "uniqueId": "spiral_admin_sso_account_assignment"
+          }
+        },
+        "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
+        "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
+        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_type": "GROUP",
+        "target_id": "${aws_organizations_account.spiral.id}",
+        "target_type": "AWS_ACCOUNT"
       }
     },
     "aws_ssoadmin_managed_policy_attachment": {
@@ -357,8 +385,8 @@
             "uniqueId": "admin_sso_permission_set"
           }
         },
-        "instance_arn": "",
-        "name": "",
+        "instance_arn": "${element(local.sso_instance_arn, 0)}",
+        "name": "Administrator",
         "session_duration": "PT2H",
         "tags": {
           "ManagedBy": "Terraform"
