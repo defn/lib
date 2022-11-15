@@ -9,6 +9,8 @@ import (
 
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/dataawsssoadmininstances"
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/identitystoregroup"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/identitystoregroupmembership"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/identitystoreuser"
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/organizationsaccount"
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/organizationsorganization"
 	aws "github.com/cdktf/cdktf-provider-aws-go/aws/v10/provider"
@@ -35,12 +37,12 @@ func TfcOrganizationWorkspacesStack(scope constructs.Construct, id string) cdktf
 	return stack
 }
 
-func AwsOrganizationStack(scope constructs.Construct, id string, region string, sso_region string, org string, prefix string, domain string, sub_accounts []string) cdktf.TerraformStack {
+func AwsOrganizationStack(scope constructs.Construct, id string, region string, org string, prefix string, domain string, sub_accounts []string, initial_admins []string, admin_emails []string) cdktf.TerraformStack {
 	stack := cdktf.NewTerraformStack(scope, &id)
 
 	aws.NewAwsProvider(stack,
 		js("aws"), &aws.AwsProviderConfig{
-			Region: js(sso_region),
+			Region: js(region),
 		})
 
 	organizationsorganization.NewOrganizationsOrganization(stack,
@@ -88,12 +90,41 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 		js("sso_instance_isid"),
 		ssoadmin_instance.IdentityStoreIds())
 
+	// Create Administrators group
 	identitystore_group := identitystoregroup.NewIdentitystoreGroup(stack,
 		js("administrators_sso_group"),
 		&identitystoregroup.IdentitystoreGroupConfig{
 			DisplayName:     js("Administrators"),
 			IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsii.Number(0)).(string)),
 		})
+
+	// Create initial users in the Administrators group
+	for i, name := range initial_admins {
+		identitystore_user := identitystoreuser.NewIdentitystoreUser(stack,
+			js(fmt.Sprintf("admin_sso_user_%s", name)),
+			&identitystoreuser.IdentitystoreUserConfig{
+				DisplayName: js(name),
+				UserName:    js(name),
+				Name: &identitystoreuser.IdentitystoreUserName{
+					GivenName:  js(name),
+					FamilyName: js(name),
+				},
+				Emails: &identitystoreuser.IdentitystoreUserEmails{
+					Primary: jsii.Bool(true),
+					Type:    js("work"),
+					Value:   js(admin_emails[i]),
+				},
+				IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsii.Number(0)).(string)),
+			})
+
+		identitystoregroupmembership.NewIdentitystoreGroupMembership(stack,
+			js(fmt.Sprintf("admin_sso_user_%s_membership", name)),
+			&identitystoregroupmembership.IdentitystoreGroupMembershipConfig{
+				MemberId:        identitystore_user.UserId(),
+				GroupId:         identitystore_group.GroupId(),
+				IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsii.Number(0)).(string)),
+			})
+	}
 
 	// The master account (named "org") must be imported.
 	for _, acct := range sub_accounts {
@@ -123,7 +154,7 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 			js(acct),
 			&organizations_account_config)
 
-		// Organization accounts grant Administrator permission set to the Administrator group
+		// Organization accounts grant Administrator permission set to the Administrators group
 		ssoadminaccountassignment.NewSsoadminAccountAssignment(stack,
 			js(fmt.Sprintf("%s_admin_sso_account_assignment", acct)),
 			&ssoadminaccountassignment.SsoadminAccountAssignmentConfig{
@@ -156,23 +187,24 @@ func main() {
 
 	full_accounts := []string{"net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"}
 	env_accounts := []string{"net", "lib", "hub"}
+	defn := []string{"defn"}
+	defne := []string{"iam@defn.sh"}
 
 	// The infra stacks under management.
 	accounts := []string{"gyre", "curl", "coil", "helix", "spiral"}
-	regions := []string{"us-east-2", "us-west-1", "us-east-1", "us-east-2", "us-west-2"}
-	sso_regions := []string{"us-east-2", "us-west-2", "us-east-1", "us-east-2", "us-west-2"}
+	regions := []string{"us-east-2", "us-west-2", "us-east-1", "us-east-2", "us-west-2"}
 	namespaces := []string{"gyre", "curl", "coil", "helix", "spiral"}
 	orgs := []string{"gyre", "curl", "coil", "helix", "spiral"}
 	prefixes := []string{"aws-", "aws-", "aws-", "aws-", "aws-"}
 	domains := []string{"defn.us", "defn.us", "defn.us", "defn.sh", "defn.us"}
 	sub_accounts := [][]string{{"ops"}, env_accounts, env_accounts, full_accounts, full_accounts}
+	initial_admins := [][]string{defn, defn, defn, defn, defn}
+	admin_emails := [][]string{defne, defne, defne, defne, defne}
 
 	for i, acc := range accounts {
-		ws_name := acc
-
 		// Create a tfc workspace for each stack
-		workspace.NewWorkspace(workspaces, js(ws_name), &workspace.WorkspaceConfig{
-			Name:                js(ws_name),
+		workspace.NewWorkspace(workspaces, js(acc), &workspace.WorkspaceConfig{
+			Name:                js(acc),
 			Organization:        js(tfc_org),
 			ExecutionMode:       js("local"),
 			FileTriggersEnabled: false,
@@ -181,11 +213,11 @@ func main() {
 		})
 
 		// Create the aws organization + accounts stack
-		aws_org_stack := AwsOrganizationStack(app, namespaces[i], regions[i], sso_regions[i], orgs[i], prefixes[i], domains[i], append([]string{orgs[i]}, sub_accounts[i]...))
+		aws_org_stack := AwsOrganizationStack(app, namespaces[i], regions[i], orgs[i], prefixes[i], domains[i], append([]string{orgs[i]}, sub_accounts[i]...), initial_admins[i], admin_emails[i])
 		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendProps{
 			Hostname:     js("app.terraform.io"),
 			Organization: js(tfc_org),
-			Workspaces:   cdktf.NewNamedCloudWorkspace(js(ws_name)),
+			Workspaces:   cdktf.NewNamedCloudWorkspace(js(acc)),
 		})
 	}
 
