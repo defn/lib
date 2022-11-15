@@ -141,7 +141,7 @@ func AwsOrganizationStack(scope constructs.Construct, org *Account) cdktf.Terraf
 	}
 
 	// The master account (named "org") must be imported.
-	for _, acct := range org.accounts {
+	for _, acct := range append(org.accounts, []string{org.name}...) {
 		// Create the organization account
 		var organizations_account_config organizationsaccount.OrganizationsAccountConfig
 
@@ -201,8 +201,9 @@ func main() {
 
 	full_accounts := []string{"net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"}
 	env_accounts := []string{"net", "lib", "hub"}
-
-	defn := Admin{name: "defn", email: "iam@defn.sh"}
+	admins := []*Admin{
+		{name: "defn", email: "iam@defn.sh"},
+	}
 
 	// The infra stacks under management.
 	orgs := []Account{
@@ -211,40 +212,40 @@ func main() {
 			region:   "us-east-2",
 			prefix:   "aws-",
 			domain:   "defn.us",
-			accounts: append([]string{"ops"}, []string{"gyre"}...),
-			admins:   []*Admin{&defn},
+			accounts: []string{"ops"},
+			admins:   admins,
 		},
 		{
 			name:     "curl",
 			region:   "us-west-2",
 			prefix:   "aws-",
 			domain:   "defn.us",
-			accounts: append(env_accounts, []string{"curl"}...),
-			admins:   []*Admin{&defn},
+			accounts: env_accounts,
+			admins:   admins,
 		},
 		{
 			name:     "coil",
 			region:   "us-east-1",
 			prefix:   "aws-",
 			domain:   "defn.us",
-			accounts: append(env_accounts, []string{"coil"}...),
-			admins:   []*Admin{&defn},
+			accounts: env_accounts,
+			admins:   admins,
 		},
 		{
 			name:     "helix",
 			region:   "us-east-2",
 			prefix:   "aws-",
 			domain:   "defn.sh",
-			accounts: append(full_accounts, []string{"helix"}...),
-			admins:   []*Admin{&defn},
+			accounts: full_accounts,
+			admins:   admins,
 		},
 		{
 			name:     "spiral",
 			region:   "us-west-2",
 			prefix:   "aws-",
 			domain:   "defn.us",
-			accounts: append(full_accounts, []string{"spiral"}...),
-			admins:   []*Admin{&defn},
+			accounts: full_accounts,
+			admins:   admins,
 		},
 	}
 
