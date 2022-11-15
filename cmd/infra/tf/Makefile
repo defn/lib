@@ -29,6 +29,9 @@ web:
 	pass hello
 	aws-vault login $(profile)-org-sso
 
+import:
+	$(terraform) import $(import)
+
 clean:
 	rm -f main.tf.json
 
