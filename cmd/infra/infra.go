@@ -185,35 +185,30 @@ func AwsOrganizationStack(scope constructs.Construct, org *Account) cdktf.Terraf
 }
 
 func main() {
-	// Stacks under one tfc organization.
+	// Workspaces under one tfc organization.  Create manually.
 	tfc_org := "defn"
 
-	app := cdktf.NewApp(nil)
+	// The initial bootstrap workspace.  Create manually under the organization above.
+	tfc_workspace := "workspaces"
 
-	// Bootstrap stack to create workspaces.  Manually create the `workspaces`
-	// workspace.
-	workspaces := TfcOrganizationWorkspacesStack(app, "workspaces")
-	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
-		Hostname:     js("app.terraform.io"),
-		Organization: js(tfc_org),
-		Workspaces:   cdktf.NewNamedCloudWorkspace(js("workspaces")),
-	})
-
-	full_accounts := []string{"net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"}
-	env_accounts := []string{"net", "lib", "hub"}
-	admins := []*Admin{
+	// initial aws_admins
+	aws_admins := []*Admin{
 		{name: "defn", email: "iam@defn.sh"},
 	}
 
-	// The infra stacks under management.
-	orgs := []Account{
+	// sets of organization accounts
+	full_accounts := []string{"net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"}
+	env_accounts := []string{"net", "lib", "hub"}
+
+	// The aws_organizations under management
+	aws_organizations := []Account{
 		{
 			name:     "gyre",
 			region:   "us-east-2",
 			prefix:   "aws-",
 			domain:   "defn.us",
 			accounts: []string{"ops"},
-			admins:   admins,
+			admins:   aws_admins,
 		},
 		{
 			name:     "curl",
@@ -221,7 +216,7 @@ func main() {
 			prefix:   "aws-",
 			domain:   "defn.us",
 			accounts: env_accounts,
-			admins:   admins,
+			admins:   aws_admins,
 		},
 		{
 			name:     "coil",
@@ -229,7 +224,7 @@ func main() {
 			prefix:   "aws-",
 			domain:   "defn.us",
 			accounts: env_accounts,
-			admins:   admins,
+			admins:   aws_admins,
 		},
 		{
 			name:     "helix",
@@ -237,7 +232,7 @@ func main() {
 			prefix:   "aws-",
 			domain:   "defn.sh",
 			accounts: full_accounts,
-			admins:   admins,
+			admins:   aws_admins,
 		},
 		{
 			name:     "spiral",
@@ -245,14 +240,24 @@ func main() {
 			prefix:   "aws-",
 			domain:   "defn.us",
 			accounts: full_accounts,
-			admins:   admins,
+			admins:   aws_admins,
 		},
 	}
 
-	for _, acc := range orgs {
+	// Our app manages the tfc workspaces, aws organizations plus their accounts
+	app := cdktf.NewApp(nil)
+
+	workspaces := TfcOrganizationWorkspacesStack(app, tfc_workspace)
+	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
+		Hostname:     js("app.terraform.io"),
+		Organization: js(tfc_org),
+		Workspaces:   cdktf.NewNamedCloudWorkspace(js("workspaces")),
+	})
+
+	for _, org := range aws_organizations {
 		// Create a tfc workspace for each stack
-		workspace.NewWorkspace(workspaces, js(acc.name), &workspace.WorkspaceConfig{
-			Name:                js(acc.name),
+		workspace.NewWorkspace(workspaces, js(org.name), &workspace.WorkspaceConfig{
+			Name:                js(org.name),
 			Organization:        js(tfc_org),
 			ExecutionMode:       js("local"),
 			FileTriggersEnabled: false,
@@ -261,11 +266,11 @@ func main() {
 		})
 
 		// Create the aws organization + accounts stack
-		aws_org_stack := AwsOrganizationStack(app, &acc)
+		aws_org_stack := AwsOrganizationStack(app, &org)
 		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendProps{
 			Hostname:     js("app.terraform.io"),
 			Organization: js(tfc_org),
-			Workspaces:   cdktf.NewNamedCloudWorkspace(js(acc.name)),
+			Workspaces:   cdktf.NewNamedCloudWorkspace(js(org.name)),
 		})
 	}
 
