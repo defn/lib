@@ -199,6 +199,7 @@ func main() {
 	// sets of organization accounts
 	full_accounts := []string{"net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"}
 	env_accounts := []string{"net", "lib", "hub"}
+	ops_accounts := []string{"ops"}
 
 	// The aws_organizations under management
 	aws_organizations := []Account{
@@ -207,7 +208,7 @@ func main() {
 			region:   "us-east-2",
 			prefix:   "aws-",
 			domain:   "defn.us",
-			accounts: []string{"ops"},
+			accounts: ops_accounts,
 			admins:   aws_admins,
 		},
 		{
