@@ -42,7 +42,7 @@ func js(s string) *string {
 }
 
 func TfcOrganizationWorkspacesStack(scope constructs.Construct, id string) cdktf.TerraformStack {
-	stack := cdktf.NewTerraformStack(scope, &id)
+	stack := cdktf.NewTerraformStack(scope, js(id))
 
 	tfe.NewTfeProvider(stack, js("tfe"), &tfe.TfeProviderConfig{
 		Hostname: js("app.terraform.io"),
