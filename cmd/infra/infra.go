@@ -22,6 +22,20 @@ import (
 	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/workspace"
 )
 
+type Admin struct {
+	name  string
+	email string
+}
+
+type Account struct {
+	name     string
+	region   string
+	prefix   string
+	domain   string
+	accounts []string
+	admins   []*Admin
+}
+
 // alias
 func js(s string) *string {
 	return jsii.String(s)
@@ -37,12 +51,12 @@ func TfcOrganizationWorkspacesStack(scope constructs.Construct, id string) cdktf
 	return stack
 }
 
-func AwsOrganizationStack(scope constructs.Construct, id string, region string, org string, prefix string, domain string, sub_accounts []string, initial_admins []string, admin_emails []string) cdktf.TerraformStack {
-	stack := cdktf.NewTerraformStack(scope, &id)
+func AwsOrganizationStack(scope constructs.Construct, org *Account) cdktf.TerraformStack {
+	stack := cdktf.NewTerraformStack(scope, js(org.name))
 
 	aws.NewAwsProvider(stack,
 		js("aws"), &aws.AwsProviderConfig{
-			Region: js(region),
+			Region: js(org.region),
 		})
 
 	organizationsorganization.NewOrganizationsOrganization(stack,
@@ -99,26 +113,26 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 		})
 
 	// Create initial users in the Administrators group
-	for i, name := range initial_admins {
+	for _, adm := range org.admins {
 		identitystore_user := identitystoreuser.NewIdentitystoreUser(stack,
-			js(fmt.Sprintf("admin_sso_user_%s", name)),
+			js(fmt.Sprintf("admin_sso_user_%s", adm.name)),
 			&identitystoreuser.IdentitystoreUserConfig{
-				DisplayName: js(name),
-				UserName:    js(name),
+				DisplayName: js(adm.name),
+				UserName:    js(adm.name),
 				Name: &identitystoreuser.IdentitystoreUserName{
-					GivenName:  js(name),
-					FamilyName: js(name),
+					GivenName:  js(adm.name),
+					FamilyName: js(adm.name),
 				},
 				Emails: &identitystoreuser.IdentitystoreUserEmails{
 					Primary: jsii.Bool(true),
 					Type:    js("work"),
-					Value:   js(admin_emails[i]),
+					Value:   js(adm.email),
 				},
 				IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsii.Number(0)).(string)),
 			})
 
 		identitystoregroupmembership.NewIdentitystoreGroupMembership(stack,
-			js(fmt.Sprintf("admin_sso_user_%s_membership", name)),
+			js(fmt.Sprintf("admin_sso_user_%s_membership", adm.name)),
 			&identitystoregroupmembership.IdentitystoreGroupMembershipConfig{
 				MemberId:        identitystore_user.UserId(),
 				GroupId:         identitystore_group.GroupId(),
@@ -127,23 +141,23 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 	}
 
 	// The master account (named "org") must be imported.
-	for _, acct := range sub_accounts {
+	for _, acct := range org.accounts {
 		// Create the organization account
 		var organizations_account_config organizationsaccount.OrganizationsAccountConfig
 
-		if acct == org {
+		if acct == org.name {
 			// The master organization account can't set
 			// iam_user_access_to_billing, role_name
 			organizations_account_config = organizationsaccount.OrganizationsAccountConfig{
 				Name:  js(acct),
-				Email: js(fmt.Sprintf("%s%s@%s", prefix, org, domain)),
+				Email: js(fmt.Sprintf("%s%s@%s", org.prefix, org.name, org.domain)),
 				Tags:  &map[string]*string{"ManagedBy": js("Terraform")},
 			}
 		} else {
 			// Organization account
 			organizations_account_config = organizationsaccount.OrganizationsAccountConfig{
 				Name:                   js(acct),
-				Email:                  js(fmt.Sprintf("%s%s+%s@%s", prefix, org, acct, domain)),
+				Email:                  js(fmt.Sprintf("%s%s+%s@%s", org.prefix, org.name, acct, org.domain)),
 				Tags:                   &map[string]*string{"ManagedBy": js("Terraform")},
 				IamUserAccessToBilling: js("ALLOW"),
 				RoleName:               js("OrganizationAccountAccessRole"),
@@ -187,24 +201,57 @@ func main() {
 
 	full_accounts := []string{"net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"}
 	env_accounts := []string{"net", "lib", "hub"}
-	defn := []string{"defn"}
-	defne := []string{"iam@defn.sh"}
+
+	defn := Admin{name: "defn", email: "iam@defn.sh"}
 
 	// The infra stacks under management.
-	accounts := []string{"gyre", "curl", "coil", "helix", "spiral"}
-	regions := []string{"us-east-2", "us-west-2", "us-east-1", "us-east-2", "us-west-2"}
-	namespaces := []string{"gyre", "curl", "coil", "helix", "spiral"}
-	orgs := []string{"gyre", "curl", "coil", "helix", "spiral"}
-	prefixes := []string{"aws-", "aws-", "aws-", "aws-", "aws-"}
-	domains := []string{"defn.us", "defn.us", "defn.us", "defn.sh", "defn.us"}
-	sub_accounts := [][]string{{"ops"}, env_accounts, env_accounts, full_accounts, full_accounts}
-	initial_admins := [][]string{defn, defn, defn, defn, defn}
-	admin_emails := [][]string{defne, defne, defne, defne, defne}
+	orgs := []Account{
+		{
+			name:     "gyre",
+			region:   "us-east-2",
+			prefix:   "aws-",
+			domain:   "defn.us",
+			accounts: append([]string{"ops"}, []string{"gyre"}...),
+			admins:   []*Admin{&defn},
+		},
+		{
+			name:     "curl",
+			region:   "us-west-2",
+			prefix:   "aws-",
+			domain:   "defn.us",
+			accounts: append(env_accounts, []string{"curl"}...),
+			admins:   []*Admin{&defn},
+		},
+		{
+			name:     "coil",
+			region:   "us-east-1",
+			prefix:   "aws-",
+			domain:   "defn.us",
+			accounts: append(env_accounts, []string{"coil"}...),
+			admins:   []*Admin{&defn},
+		},
+		{
+			name:     "helix",
+			region:   "us-east-2",
+			prefix:   "aws-",
+			domain:   "defn.sh",
+			accounts: append(full_accounts, []string{"helix"}...),
+			admins:   []*Admin{&defn},
+		},
+		{
+			name:     "spiral",
+			region:   "us-west-2",
+			prefix:   "aws-",
+			domain:   "defn.us",
+			accounts: append(full_accounts, []string{"spiral"}...),
+			admins:   []*Admin{&defn},
+		},
+	}
 
-	for i, acc := range accounts {
+	for _, acc := range orgs {
 		// Create a tfc workspace for each stack
-		workspace.NewWorkspace(workspaces, js(acc), &workspace.WorkspaceConfig{
-			Name:                js(acc),
+		workspace.NewWorkspace(workspaces, js(acc.name), &workspace.WorkspaceConfig{
+			Name:                js(acc.name),
 			Organization:        js(tfc_org),
 			ExecutionMode:       js("local"),
 			FileTriggersEnabled: false,
@@ -213,11 +260,11 @@ func main() {
 		})
 
 		// Create the aws organization + accounts stack
-		aws_org_stack := AwsOrganizationStack(app, namespaces[i], regions[i], orgs[i], prefixes[i], domains[i], append([]string{orgs[i]}, sub_accounts[i]...), initial_admins[i], admin_emails[i])
+		aws_org_stack := AwsOrganizationStack(app, &acc)
 		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendProps{
 			Hostname:     js("app.terraform.io"),
 			Organization: js(tfc_org),
-			Workspaces:   cdktf.NewNamedCloudWorkspace(js(acc)),
+			Workspaces:   cdktf.NewNamedCloudWorkspace(js(acc.name)),
 		})
 	}
 
