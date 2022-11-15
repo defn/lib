@@ -7,8 +7,8 @@ import (
 	"github.com/aws/jsii-runtime-go"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 
-	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/dataawsidentitystoregroup"
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/dataawsssoadmininstances"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/identitystoregroup"
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/organizationsaccount"
 	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/organizationsorganization"
 	aws "github.com/cdktf/cdktf-provider-aws-go/aws/v10/provider"
@@ -88,44 +88,40 @@ func AwsOrganizationStack(scope constructs.Construct, id string, region string, 
 		js("sso_instance_isid"),
 		ssoadmin_instance.IdentityStoreIds())
 
-	identitystore_group := dataawsidentitystoregroup.NewDataAwsIdentitystoreGroup(stack,
+	identitystore_group := identitystoregroup.NewIdentitystoreGroup(stack,
 		js("administrators_sso_group"),
-		&dataawsidentitystoregroup.DataAwsIdentitystoreGroupConfig{
-			// Lookup pre-created Administrators group
-			Filter: []interface{}{dataawsidentitystoregroup.DataAwsIdentitystoreGroupFilter{
-				AttributeValue: js("Administrators"),
-				AttributePath:  js("DisplayName"),
-			}},
+		&identitystoregroup.IdentitystoreGroupConfig{
+			DisplayName:     js("Administrators"),
 			IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsii.Number(0)).(string)),
 		})
 
 	// The master account (named "org") must be imported.
 	for _, acct := range sub_accounts {
 		// Create the organization account
-		var organizations_account organizationsaccount.OrganizationsAccount
+		var organizations_account_config organizationsaccount.OrganizationsAccountConfig
 
 		if acct == org {
 			// The master organization account can't set
 			// iam_user_access_to_billing, role_name
-			organizations_account = organizationsaccount.NewOrganizationsAccount(stack,
-				js(acct),
-				&organizationsaccount.OrganizationsAccountConfig{
-					Name:  js(acct),
-					Email: js(fmt.Sprintf("%s%s@%s", prefix, org, domain)),
-					Tags:  &map[string]*string{"ManagedBy": js("Terraform")},
-				})
+			organizations_account_config = organizationsaccount.OrganizationsAccountConfig{
+				Name:  js(acct),
+				Email: js(fmt.Sprintf("%s%s@%s", prefix, org, domain)),
+				Tags:  &map[string]*string{"ManagedBy": js("Terraform")},
+			}
 		} else {
 			// Organization account
-			organizations_account = organizationsaccount.NewOrganizationsAccount(stack,
-				js(acct),
-				&organizationsaccount.OrganizationsAccountConfig{
-					Name:                   js(acct),
-					Email:                  js(fmt.Sprintf("%s%s+%s@%s", prefix, org, acct, domain)),
-					Tags:                   &map[string]*string{"ManagedBy": js("Terraform")},
-					IamUserAccessToBilling: js("ALLOW"),
-					RoleName:               js("OrganizationAccountAccessRole"),
-				})
+			organizations_account_config = organizationsaccount.OrganizationsAccountConfig{
+				Name:                   js(acct),
+				Email:                  js(fmt.Sprintf("%s%s+%s@%s", prefix, org, acct, domain)),
+				Tags:                   &map[string]*string{"ManagedBy": js("Terraform")},
+				IamUserAccessToBilling: js("ALLOW"),
+				RoleName:               js("OrganizationAccountAccessRole"),
+			}
 		}
+
+		organizations_account := organizationsaccount.NewOrganizationsAccount(stack,
+			js(acct),
+			&organizations_account_config)
 
 		// Organization accounts grant Administrator permission set to the Administrator group
 		ssoadminaccountassignment.NewSsoadminAccountAssignment(stack,

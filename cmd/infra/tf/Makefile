@@ -1,8 +1,8 @@
 SHELL := /bin/bash
 
-podname ?= $(shell basename $(shell pwd))-0
-context ?= k3d-$(shell basename $(shell pwd))
-domain ?= $(shell wait-tailscale-domain | cut -d. -f2-)
+profile ?= $(shell basename $(shell pwd))
+
+terraform = env AWS_PROFILE=$(profile)-org terraform
 
 test:
 	$(MAKE) fmt
@@ -21,44 +21,52 @@ shell:
 		FLY_API_TOKEN="$$(pass FLY_API_TOKEN)" \
 		$(SHELL)
 
+login:
+	pass hello
+	aws-vault exec $(profile)-org-sso true
+
+web:
+	pass hello
+	aws-vault login $(profile)-org-sso
+
 clean:
 	rm -f main.tf.json
 
 init:
-	terraform init
+	$(terraform) init
 
 get:
-	terraform get -update
+	$(terraform) get -update
 
 upgrade:
-	terraform init -upgrade
-	terraform providers lock \
+	$(terraform) init -upgrade
+	$(terraform) providers lock \
 		-platform=linux_arm64 \
 		-platform=linux_amd64 \
 		-platform=darwin_amd64 \
 		-platform=darwin_arm64
 
 fmt:
-	terraform fmt .
+	$(terraform) fmt .
 
 validate:
-	terraform validate
+	$(terraform) validate
 
 plan:
-	env terraform plan -out=.plan
+	$(terraform) plan -out=.plan
 
 planned:
-	terraform show .plan
+	$(terraform) show .plan
 
 apply:
-	terraform apply .plan
+	$(terraform) apply .plan
 	rm -f .plan
 
 refresh:
-	terraform refresh
+	$(terraform) refresh
 
 console:
-	terraform console
+	$(terraform) console
 
 archive:
 	pass hello

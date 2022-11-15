@@ -9,23 +9,6 @@
     }
   },
   "data": {
-    "aws_identitystore_group": {
-      "administrators_sso_group": {
-        "//": {
-          "metadata": {
-            "path": "helix/administrators_sso_group",
-            "uniqueId": "administrators_sso_group"
-          }
-        },
-        "filter": [
-          {
-            "attribute_path": "DisplayName",
-            "attribute_value": "Administrators"
-          }
-        ],
-        "identity_store_id": "${element(local.sso_instance_isid, 0)}"
-      }
-    },
     "aws_ssoadmin_instances": {
       "sso_instance": {
         "//": {
@@ -49,6 +32,18 @@
     ]
   },
   "resource": {
+    "aws_identitystore_group": {
+      "administrators_sso_group": {
+        "//": {
+          "metadata": {
+            "path": "helix/administrators_sso_group",
+            "uniqueId": "administrators_sso_group"
+          }
+        },
+        "display_name": "Administrators",
+        "identity_store_id": "${element(local.sso_instance_isid, 0)}"
+      }
+    },
     "aws_organizations_account": {
       "dev": {
         "//": {
@@ -232,7 +227,7 @@
         },
         "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
         "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_id": "${aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.dev.id}",
         "target_type": "AWS_ACCOUNT"
@@ -246,7 +241,7 @@
         },
         "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
         "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_id": "${aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.dmz.id}",
         "target_type": "AWS_ACCOUNT"
@@ -260,7 +255,7 @@
         },
         "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
         "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_id": "${aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.helix.id}",
         "target_type": "AWS_ACCOUNT"
@@ -274,7 +269,7 @@
         },
         "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
         "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_id": "${aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.hub.id}",
         "target_type": "AWS_ACCOUNT"
@@ -288,7 +283,7 @@
         },
         "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
         "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_id": "${aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.lib.id}",
         "target_type": "AWS_ACCOUNT"
@@ -302,7 +297,7 @@
         },
         "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
         "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_id": "${aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.log.id}",
         "target_type": "AWS_ACCOUNT"
@@ -316,7 +311,7 @@
         },
         "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
         "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_id": "${aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.net.id}",
         "target_type": "AWS_ACCOUNT"
@@ -330,7 +325,7 @@
         },
         "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
         "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_id": "${aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.ops.id}",
         "target_type": "AWS_ACCOUNT"
@@ -344,7 +339,7 @@
         },
         "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
         "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_id": "${aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.pub.id}",
         "target_type": "AWS_ACCOUNT"
@@ -358,7 +353,7 @@
         },
         "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
         "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
-        "principal_id": "${data.aws_identitystore_group.administrators_sso_group.group_id}",
+        "principal_id": "${aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
         "target_id": "${aws_organizations_account.sec.id}",
         "target_type": "AWS_ACCOUNT"
