@@ -216,8 +216,6 @@ func main() {
 	var aws_props AwsProps
 	user_input.LookupPath(cue.ParsePath("input")).Decode(&aws_props)
 
-	fmt.Printf("%v\n", aws_props)
-
 	// Our app manages the tfc workspaces, aws organizations plus their accounts
 	app := cdktf.NewApp(nil)
 
