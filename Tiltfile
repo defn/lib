@@ -23,10 +23,14 @@ local_resource("temporal",
     ]
 )
 
-for app in ("defn", "api", "client", "workflow", "infra"):
+for app in ("api", "client", "workflow", "infra"):
     local_resource("%s-go" % (app,),
-        "cp cmd/%s/*.cue dist/%s/app/; mkdir -p dist/%s/app && go build -o dist/%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app,app,app),
-        deps=["cmd/%s/%s.go" % (app,app)])
+        "mkdir -p dist/%s/app; cp cmd/%s/*.cue dist/%s/app/; mkdir -p dist/%s/app && go build -o dist/%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app,app,app,app),
+        deps=[
+            "cmd/%s/%s.go" % (app,app),
+            "cmd/%s/main.cue" % (app,),
+            "cmd/%s/schema/" % (app,)
+        ])
 
     if app in ("defn","api","workflow"):
         k8s_yaml("cmd/%s/%s.yaml" % (app,app))
@@ -37,15 +41,20 @@ for app in ("defn", "api", "client", "workflow", "infra"):
                 "c nix-docker-build %s .#go ${EXPECTED_REF}" % (app,)
             ),
             entrypoint="/app/bin",
-            deps=["dist/%s/app/bin" % (app,)],
+            deps=[
+                "dist/%s/app/" % (app,),
+            ],
             live_update=[
-                sync("dist/%s/app/bin" % (app,), "/app/bin"),
+                sync("dist/%s/app/" % (app,), "/app/"),
             ],
         )
 
     if app in ("infra",):
         local_resource("%s-tf" % (app,),
-            deps=["dist/%s/app/bin" % (app,)],
+            deps=[
+                "dist/%s/app/bin" % (app,),
+                "dist/%s/app/main.cue" % (app,),
+            ],
             cmd=[
                 "bash", "-c",
                 """
@@ -54,7 +63,7 @@ for app in ("defn", "api", "client", "workflow", "infra"):
                     (set +f; cp cmd/%s/*.cue dist/%s/app/)
                     (cd dist/%s/app && rm -rf cdktf.out && ./bin)
                     mkdir -p cmd/%s/tf
-                    (set +f; rsync -ia dist/%s/app/cdktf.out/stacks/. cmd/%s/tf/.)
+                    (set +f; rsync -ia --no-times --checksum dist/%s/app/cdktf.out/stacks/. cmd/%s/tf/.)
                     set +x
                     for a in {1..10}; do echo; done
                     git diff cmd/%s/tf || true
@@ -63,7 +72,9 @@ for app in ("defn", "api", "client", "workflow", "infra"):
             ]
         )
         local_resource("%s-plan" % (app,),
-            deps=["cmd/%s/tf/workspaces/cdk.tf.json" % (app,)],
+            deps=[
+                "cmd/%s/tf/workspaces/cdk.tf.json" % (app,)
+            ],
             cmd=[
                 "bash", "-c",
                 """
