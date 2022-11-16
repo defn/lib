@@ -1,9 +1,13 @@
 package main
 
 input: {
-    defn: name: "defn"
     defn: languages: [
         "Go",
         "TypeScript"
     ]
+    defm: languages: [
+        "bash"
+    ]
 }
+
+input: [N=string]: name: N
