@@ -6,17 +6,17 @@ input: {
 		workspace:    "workspaces"
 	}
 
-	_aws_admins: [{
-		name:  "defn"
-		email: "iam@defn.sh"
-	}]
-
-	_full_accounts: ["net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"]
-	_env_accounts: ["net", "lib", "hub"]
-	_ops_accounts: ["ops"]
-
 	organizations: [N=string]: name: N
 	organizations: {
+		_aws_admins: [{
+			name:  "defn"
+			email: "iam@defn.sh"
+		}]
+
+		_full_accounts: ["net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"]
+		_env_accounts: ["net", "lib", "hub"]
+		_ops_accounts: ["ops"]
+
 		gyre: {
 			region:   "us-east-2"
 			prefix:   "aws-"
