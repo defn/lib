@@ -229,12 +229,6 @@ func CueToAwsProps(c cue.Value) *AwsProps {
 			org.accounts[i], _ = o.LookupPath(cue.ParsePath(fmt.Sprintf("accounts[%d]",i))).Value().String()
 		}
 
-		fmt.Printf("%v %d\n", org.accounts, acct_len )
-		fmt.Printf("%v\n", o.LookupPath(cue.ParsePath("accounts")).Value())
-
-		s, e := o.LookupPath(cue.ParsePath("accounts")).Len().Int64()
-		fmt.Printf("%v %v\n", s, e)
-
 		admin_len, _ := o.LookupPath(cue.ParsePath("admins")).Value().Len().Int64()
 		org.admins = make([]AwsAdmin, admin_len)
 		for i := 0; i < int(admin_len); i++ {
@@ -259,8 +253,6 @@ func main() {
 	user_schema.Unify(user_input)
 
 	aws_props := CueToAwsProps(user_input.LookupPath(cue.ParsePath("input")))
-
-	fmt.Printf("%v\n", aws_props)
 
 	// Our app manages the tfc workspaces, aws organizations plus their accounts
 	app := cdktf.NewApp(nil)
