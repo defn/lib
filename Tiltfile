@@ -60,7 +60,6 @@ for app in ("api", "client", "workflow", "infra"):
                 """
                     set -exfu
                     export CDKTF_CONTEXT_JSON="$(jq -n '{excludeStackIdFromLogicalIds: "true", allowSepCharsInLogicalIds: "true"}')"
-                    (set +f; cp cmd/%s/*.cue dist/%s/app/)
                     (cd dist/%s/app && rm -rf cdktf.out && ./bin)
                     mkdir -p cmd/%s/tf
                     (set +f; rsync -ia --no-times --checksum dist/%s/app/cdktf.out/stacks/. cmd/%s/tf/.)
@@ -68,7 +67,7 @@ for app in ("api", "client", "workflow", "infra"):
                     for a in {1..10}; do echo; done
                     git diff cmd/%s/tf || true
                     echo done
-                """ % (app,app,app,app,app,app,app)
+                """ % (app,app,app,app,app,)
             ]
         )
         local_resource("%s-plan" % (app,),
