@@ -25,7 +25,7 @@ local_resource("temporal",
 
 for app in ("defn", "api", "client", "workflow", "infra"):
     local_resource("%s-go" % (app,),
-        "mkdir -p dist/%s/app && go build -o dist/%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app),
+        "cp cmd/%s/*.cue dist/%s/app/; mkdir -p dist/%s/app && go build -o dist/%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app,app,app),
         deps=["cmd/%s/%s.go" % (app,app)])
 
     if app in ("defn","api","workflow"):
@@ -51,14 +51,15 @@ for app in ("defn", "api", "client", "workflow", "infra"):
                 """
                     set -exfu
                     export CDKTF_CONTEXT_JSON="$(jq -n '{excludeStackIdFromLogicalIds: "true", allowSepCharsInLogicalIds: "true"}')"
-                    (cd dist/%s && rm -rf cdktf.out && ./app/bin)
+                    (set +f; cp cmd/%s/*.cue dist/%s/app/)
+                    (cd dist/%s/app && rm -rf cdktf.out && ./bin)
                     mkdir -p cmd/%s/tf
-                    (set +f; rsync -ia dist/%s/cdktf.out/stacks/. cmd/%s/tf/.)
+                    (set +f; rsync -ia dist/%s/app/cdktf.out/stacks/. cmd/%s/tf/.)
                     set +x
                     for a in {1..10}; do echo; done
                     git diff cmd/%s/tf || true
                     echo done
-                """ % (app,app,app,app,app)
+                """ % (app,app,app,app,app,app,app)
             ]
         )
         local_resource("%s-plan" % (app,),

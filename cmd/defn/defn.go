@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	_ "embed"
 
@@ -24,4 +25,6 @@ func main() {
 	valid := user_schema.Unify(user_input)
 
 	fmt.Printf("%v\n", valid)
+
+	time.Sleep(3600 * time.Second)
 }
