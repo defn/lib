@@ -1,7 +1,13 @@
 package main
 
 import (
+	_ "embed"
+
 	"fmt"
+
+	"cuelang.org/go/cue"
+	"cuelang.org/go/cue/cuecontext"
+	"cuelang.org/go/cue/load"
 
 	"github.com/aws/constructs-go/constructs/v10"
 	"github.com/aws/jsii-runtime-go"
@@ -22,18 +28,31 @@ import (
 	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/workspace"
 )
 
-type Admin struct {
+//go:embed schema/aws.cue
+var aws_schema_cue string
+
+type TerraformCloud struct {
+	organization string
+	workspace    string
+}
+
+type AwsAdmin struct {
 	name  string
 	email string
 }
 
-type Account struct {
+type AwsOrganization struct {
 	name     string
 	region   string
 	prefix   string
 	domain   string
 	accounts []string
-	admins   []*Admin
+	admins   []AwsAdmin
+}
+
+type AwsProps struct {
+	terraform     TerraformCloud
+	organizations map[string]AwsOrganization
 }
 
 // alias
@@ -51,7 +70,7 @@ func TfcOrganizationWorkspacesStack(scope constructs.Construct, id string) cdktf
 	return stack
 }
 
-func AwsOrganizationStack(scope constructs.Construct, org *Account) cdktf.TerraformStack {
+func AwsOrganizationStack(scope constructs.Construct, org *AwsOrganization) cdktf.TerraformStack {
 	stack := cdktf.NewTerraformStack(scope, js(org.name))
 
 	aws.NewAwsProvider(stack,
@@ -184,82 +203,80 @@ func AwsOrganizationStack(scope constructs.Construct, org *Account) cdktf.Terraf
 	return stack
 }
 
+func CueToAwsProps(c cue.Value) *AwsProps {
+	var props AwsProps
+
+	props.terraform.organization, _ = c.LookupPath(cue.ParsePath("terraform.organization")).Value().String()
+	props.terraform.workspace, _ = c.LookupPath(cue.ParsePath("terraform.workspace")).Value().String()
+
+	orgs := make(map[string]AwsOrganization)
+	c.LookupPath(cue.ParsePath("organizations")).Value().Decode(&orgs)
+
+	props.organizations = make(map[string]AwsOrganization)
+
+	for name, org := range orgs {
+		o := c.LookupPath(cue.ParsePath("organizations." + name))
+
+		org.name = name
+
+		org.region, _ = o.LookupPath(cue.ParsePath("region")).Value().String()
+		org.prefix, _ = o.LookupPath(cue.ParsePath("prefix")).Value().String()
+		org.domain, _ = o.LookupPath(cue.ParsePath("domain")).Value().String()
+
+		acct_len, _ := o.LookupPath(cue.ParsePath("accounts")).Value().Len().Int64()
+		org.accounts = make([]string, acct_len)
+		for i := 0; i < int(acct_len); i++ {
+			org.accounts[i], _ = o.LookupPath(cue.ParsePath(fmt.Sprintf("accounts[%d]",i))).Value().String()
+		}
+
+		fmt.Printf("%v %d\n", org.accounts, acct_len )
+		fmt.Printf("%v\n", o.LookupPath(cue.ParsePath("accounts")).Value())
+
+		s, e := o.LookupPath(cue.ParsePath("accounts")).Len().Int64()
+		fmt.Printf("%v %v\n", s, e)
+
+		admin_len, _ := o.LookupPath(cue.ParsePath("admins")).Value().Len().Int64()
+		org.admins = make([]AwsAdmin, admin_len)
+		for i := 0; i < int(admin_len); i++ {
+			org.admins[i].name, _ = o.LookupPath(cue.ParsePath(fmt.Sprintf("admins[%d].name",i))).Value().String()
+			org.admins[i].email, _ = o.LookupPath(cue.ParsePath(fmt.Sprintf("admins[%d].email",i))).Value().String()
+		}
+
+		props.organizations[name] = org
+	}
+
+	return &props
+}
+
 func main() {
-	// Workspaces under one tfc organization.  Create manually.
-	tfc_org := "defn"
+	ctx := cuecontext.New()
 
-	// The initial bootstrap workspace.  Create manually under the organization above.
-	tfc_workspace := "workspaces"
+	user_schema := ctx.CompileString(aws_schema_cue)
 
-	// initial aws_admins
-	aws_admins := []*Admin{
-		{name: "defn", email: "iam@defn.sh"},
-	}
+	user_input_instance := load.Instances([]string{"."}, nil)[0]
+	user_input := ctx.BuildInstance(user_input_instance)
 
-	// sets of organization accounts
-	full_accounts := []string{"net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"}
-	env_accounts := []string{"net", "lib", "hub"}
-	ops_accounts := []string{"ops"}
+	user_schema.Unify(user_input)
 
-	// The aws_organizations under management
-	aws_organizations := []Account{
-		{
-			name:     "gyre",
-			region:   "us-east-2",
-			prefix:   "aws-",
-			domain:   "defn.us",
-			accounts: ops_accounts,
-			admins:   aws_admins,
-		},
-		{
-			name:     "curl",
-			region:   "us-west-2",
-			prefix:   "aws-",
-			domain:   "defn.us",
-			accounts: env_accounts,
-			admins:   aws_admins,
-		},
-		{
-			name:     "coil",
-			region:   "us-east-1",
-			prefix:   "aws-",
-			domain:   "defn.us",
-			accounts: env_accounts,
-			admins:   aws_admins,
-		},
-		{
-			name:     "helix",
-			region:   "us-east-2",
-			prefix:   "aws-",
-			domain:   "defn.sh",
-			accounts: full_accounts,
-			admins:   aws_admins,
-		},
-		{
-			name:     "spiral",
-			region:   "us-west-2",
-			prefix:   "aws-",
-			domain:   "defn.us",
-			accounts: full_accounts,
-			admins:   aws_admins,
-		},
-	}
+	aws_props := CueToAwsProps(user_input.LookupPath(cue.ParsePath("input")))
+
+	fmt.Printf("%v\n", aws_props)
 
 	// Our app manages the tfc workspaces, aws organizations plus their accounts
 	app := cdktf.NewApp(nil)
 
-	workspaces := TfcOrganizationWorkspacesStack(app, tfc_workspace)
+	workspaces := TfcOrganizationWorkspacesStack(app, aws_props.terraform.workspace)
 	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
 		Hostname:     js("app.terraform.io"),
-		Organization: js(tfc_org),
+		Organization: js(aws_props.terraform.organization),
 		Workspaces:   cdktf.NewNamedCloudWorkspace(js("workspaces")),
 	})
 
-	for _, org := range aws_organizations {
+	for _, org := range aws_props.organizations {
 		// Create a tfc workspace for each stack
 		workspace.NewWorkspace(workspaces, js(org.name), &workspace.WorkspaceConfig{
 			Name:                js(org.name),
-			Organization:        js(tfc_org),
+			Organization:        js(aws_props.terraform.organization),
 			ExecutionMode:       js("local"),
 			FileTriggersEnabled: false,
 			QueueAllRuns:        false,
@@ -270,7 +287,7 @@ func main() {
 		aws_org_stack := AwsOrganizationStack(app, &org)
 		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendProps{
 			Hostname:     js("app.terraform.io"),
-			Organization: js(tfc_org),
+			Organization: js(aws_props.terraform.organization),
 			Workspaces:   cdktf.NewNamedCloudWorkspace(js(org.name)),
 		})
 	}

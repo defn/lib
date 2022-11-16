@@ -5,6 +5,7 @@
     tilt.url = github:defn/pkg?dir=tilt&ref=v0.0.47;
     earthly.url = github:defn/pkg?dir=earthly&ref=v0.0.47;
     stern.url = github:defn/pkg?dir=stern&ref=v0.0.56;
+    c.url = github:defn/pkg?dir=c&ref=v0.0.56;
     latest.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   };
 
