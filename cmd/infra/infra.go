@@ -203,7 +203,7 @@ func AwsOrganizationStack(scope constructs.Construct, org *AwsOrganization) cdkt
 	return stack
 }
 
-func main() {
+func LoadUserAwsProps() *AwsProps {
 	ctx := cuecontext.New()
 
 	user_schema := ctx.CompileString(aws_schema_cue)
@@ -215,6 +215,12 @@ func main() {
 
 	var aws_props AwsProps
 	user_input.LookupPath(cue.ParsePath("input")).Decode(&aws_props)
+
+	return &aws_props
+}
+
+func main() {
+	aws_props := LoadUserAwsProps()
 
 	// Our app manages the tfc workspaces, aws organizations plus their accounts
 	app := cdktf.NewApp(nil)
