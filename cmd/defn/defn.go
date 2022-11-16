@@ -9,7 +9,7 @@ import (
 	"cuelang.org/go/cue/load"
 )
 
-//go:embed feh.cue
+//go:embed schema/feh.cue
 var user_schema_cue string
 
 func main() {
