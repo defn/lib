@@ -16,8 +16,8 @@ gen:
 	git add main.tf.json
 
 shell:
+	# terraform login
 	env \
-		TF_TOKEN_app_terraform_io="$$(pass TF_TOKEN_app_terraform_io)" \
 		FLY_API_TOKEN="$$(pass FLY_API_TOKEN)" \
 		$(SHELL)
 

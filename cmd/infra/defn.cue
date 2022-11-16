@@ -17,6 +17,13 @@ input: {
 		_env_accounts: ["net", "lib", "hub"]
 		_ops_accounts: ["ops"]
 
+		defn: {
+			region: "us-west-2",
+			prefix:   "aws-"
+			domain:   "defn.us"
+			accounts: _ops_accounts
+			admins:   _aws_admins
+		}
 		gyre: {
 			region:   "us-east-2"
 			prefix:   "aws-"
