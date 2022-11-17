@@ -8,7 +8,9 @@ import (
 	"log"
 	"os"
 	"time"
+
 	"encoding/json"
+	"io/ioutil"
 
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/cuecontext"
@@ -261,9 +263,10 @@ func QueueAwsProps() {
 	}
 	log.Printf("Workflow result:\n%v\n", result)
 
-	var aws_props_result AwsProps
-	err = json.Unmarshal([]byte(result), &aws_props_result)
-	log.Printf("Unmarshal:\n%v\n%v\n", aws_props, err)
+	var synth map[string]string = make(map[string]string)
+
+	err = json.Unmarshal([]byte(result), &synth)
+	fmt.Printf("%v", synth)
 }
 
 func AwsOrganizationsWorker(hostport string) {
@@ -340,8 +343,20 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (string, 
 	// Emit cdk.tf.json
 	app.Synth()
 
+	// Build map of stack and synthesized tf config
+	var synth map[string]string = make(map[string]string)
+
+	files, _ := ioutil.ReadDir("cdktf.out/stacks/")
+
+	for _, file := range files {
+		dat, _ := os.ReadFile(fmt.Sprintf("cdktf.out/stacks/%s/cdk.tf.json", file.Name()))
+		synth[file.Name()] = string(dat)
+		fmt.Print(string(dat))
+		fmt.Println(file.Name(), file.IsDir())
+	}
+
 	// Somehow return the generated tf.json as a response.
-	js, err := json.MarshalIndent(aws_props, "", "  ")
+	js, err := json.MarshalIndent(synth, "", "  ")
 	return string(js), err
 }
 
