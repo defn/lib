@@ -9,8 +9,6 @@ import (
 	"os"
 	"time"
 
-	"encoding/json"
-
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/cuecontext"
 	"cuelang.org/go/cue/load"
@@ -255,17 +253,12 @@ func QueueAwsProps() {
 	log.Println("Started workflow", "WorkflowID", we.GetID(), "RunID", we.GetRunID())
 
 	// Synchronously wait for the workflow completion.
-	var result string
+	var result map[string]string = make(map[string]string)
 	err = we.Get(context.Background(), &result)
 	if err != nil {
 		log.Fatalln("Unable get workflow result", err)
 	}
 	log.Printf("Workflow result:\n%v\n", result)
-
-	var synth map[string]string = make(map[string]string)
-
-	json.Unmarshal([]byte(result), &synth)
-	fmt.Printf("%v", synth)
 }
 
 func AwsOrganizationsWorker(hostport string) {
@@ -286,7 +279,7 @@ func AwsOrganizationsWorker(hostport string) {
 	}
 }
 
-func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (string, error) {
+func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (map[string]string, error) {
 	ao := workflow.ActivityOptions{
 		StartToCloseTimeout: 10 * time.Second,
 	}
@@ -294,17 +287,17 @@ func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (string,
 
 	logger := workflow.GetLogger(ctx)
 
-	var result string
+	var result map[string]string = make(map[string]string)
 	err := workflow.ExecuteActivity(ctx, AwsOrganizationsActivity, &aws_props).Get(ctx, &result)
 	if err != nil {
 		logger.Error("Activity failed.", "Error", err)
-		return "", err
+		return nil, err
 	}
 
 	return result, nil
 }
 
-func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (string, error) {
+func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[string]string, error) {
 	logger := activity.GetLogger(ctx)
 	logger.Info("Activity")
 
@@ -355,8 +348,7 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (string, 
 	}
 
 	// Somehow return the generated tf.json as a response.
-	js, err := json.MarshalIndent(synth, "", "  ")
-	return string(js), err
+	return synth, nil
 }
 
 func main() {
