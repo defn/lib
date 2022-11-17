@@ -23,7 +23,7 @@ local_resource("temporal",
     ]
 )
 
-for app in ("api", "client", "workflow", "infra"):
+for app in ("api", "infra"):
     local_resource("%s-go" % (app,),
         "mkdir -p dist/%s/app; cp cmd/%s/*.cue dist/%s/app/; mkdir -p dist/%s/app && go build -o dist/%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app,app,app,app),
         deps=[
@@ -32,24 +32,23 @@ for app in ("api", "client", "workflow", "infra"):
             "cmd/%s/schema/" % (app,)
         ])
 
-    if app in ("defn","api","workflow"):
-        k8s_yaml("cmd/%s/%s.yaml" % (app,app))
+    k8s_yaml("cmd/%s/%s.yaml" % (app,app))
 
-        custom_build_with_restart(
-            ref=app,
-            command=(
-                "c nix-docker-build %s .#go ${EXPECTED_REF}" % (app,)
-            ),
-            entrypoint="/app/bin",
-            deps=[
-                "dist/%s/app/" % (app,),
-            ],
-            live_update=[
-                sync("dist/%s/app/" % (app,), "/app/"),
-            ],
-        )
+    custom_build_with_restart(
+        ref=app,
+        command=(
+            "c nix-docker-build %s .#go ${EXPECTED_REF}" % (app,)
+        ),
+        entrypoint="/app/bin",
+        deps=[
+            "dist/%s/app/" % (app,),
+        ],
+        live_update=[
+            sync("dist/%s/app/" % (app,), "/app/"),
+        ],
+    )
 
-    if app in ("infra",):
+    if app in ("infrax",):
         local_resource("%s-tf" % (app,),
             deps=[
                 "dist/%s/app/bin" % (app,),
@@ -60,7 +59,7 @@ for app in ("api", "client", "workflow", "infra"):
                 """
                     set -exfu
                     export CDKTF_CONTEXT_JSON="$(jq -n '{excludeStackIdFromLogicalIds: "true", allowSepCharsInLogicalIds: "true"}')"
-                    (cd dist/%s/app && rm -rf cdktf.out && ./bin)
+                    (cd dist/%s/app && rm -rf cdktf.out && echo ./bin)
                     mkdir -p cmd/%s/tf
                     (set +f; rsync -ia --no-times --checksum dist/%s/app/cdktf.out/stacks/. cmd/%s/tf/.)
                     set +x
@@ -91,7 +90,7 @@ cmd_button(
     argv=[
         "bash", "-c",
         """
-            ./dist/client/app/bin
+            ./dist/infra/app/bin queue
         """,
     ],
     location=location.NAV,

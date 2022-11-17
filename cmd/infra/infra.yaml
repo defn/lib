@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: workflow
+  name: infra
   labels:
-    app: workflow
+    app: infra
 spec:
   selector:
     matchLabels:
-      app: workflow
+      app: infra
   template:
     metadata:
       labels:
-        app: workflow
+        app: infra
     spec:
       containers:
-      - name: workflow
-        image: workflow
+      - name: infra
+        image: infra

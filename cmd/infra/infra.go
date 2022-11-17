@@ -4,6 +4,9 @@ import (
 	_ "embed"
 
 	"fmt"
+	"log"
+	"context"
+	"time"
 
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/cuecontext"
@@ -26,6 +29,14 @@ import (
 
 	tfe "github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/provider"
 	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/workspace"
+
+	"go.temporal.io/sdk/client"
+	"go.temporal.io/sdk/worker"
+	"go.temporal.io/sdk/activity"
+	"go.temporal.io/sdk/workflow"
+
+	// TODO(cretz): Remove when tagged
+	_ "go.temporal.io/sdk/contrib/tools/workflowcheck/determinism"
 )
 
 //go:embed schema/aws.cue
@@ -214,13 +225,85 @@ func LoadUserAwsProps() *AwsProps {
 	user_schema.Unify(user_input)
 
 	var aws_props AwsProps
-	user_input.LookupPath(cue.ParsePath("input")).Decode(&aws_props)
+	err := user_input.LookupPath(cue.ParsePath("input")).Decode(&aws_props)
+
+	fmt.Printf("%v\n%v\n", err, aws_props)
 
 	return &aws_props
 }
 
-func main() {
+func SubmitAwsProps() {
+	c, err := client.Dial(client.Options{})
+	if err != nil {
+		log.Fatalln("Unable to create client", err)
+	}
+	defer c.Close()
+
+	workflowOptions := client.StartWorkflowOptions{
+		ID:        fmt.Sprintf("aws_organizations_%d", time.Now().UnixMilli()),
+		TaskQueue: "aws-organizations",
+	}
+
 	aws_props := LoadUserAwsProps()
+
+	we, err := c.ExecuteWorkflow(context.Background(), workflowOptions, AwsOrganizationsWorkflow, aws_props)
+	if err != nil {
+		log.Fatalln("Unable to execute workflow", err)
+	}
+
+	log.Println("Started workflow", "WorkflowID", we.GetID(), "RunID", we.GetRunID())
+
+	// Synchronously wait for the workflow completion.
+	var result AwsProps
+	err = we.Get(context.Background(), &result)
+	if err != nil {
+		log.Fatalln("Unable get workflow result", err)
+	}
+	log.Printf("Workflow result:\n%v\n", result)
+}
+
+func RunTemporalWorkflow(hostport string) {
+	c, err := client.Dial(client.Options{HostPort: hostport})
+	if err != nil {
+		log.Fatalln("Unable to create client", err)
+	}
+	defer c.Close()
+
+	w := worker.New(c, "aws-organizations", worker.Options{})
+
+	w.RegisterWorkflow(AwsOrganizationsWorkflow)
+	w.RegisterActivity(AwsOrganizationsActivity)
+
+	err = w.Run(worker.InterruptCh())
+	if err != nil {
+		log.Fatalln("Unable to start worker", err)
+	}
+}
+
+func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (string, error) {
+	ao := workflow.ActivityOptions{
+		StartToCloseTimeout: 10 * time.Second,
+	}
+	ctx = workflow.WithActivityOptions(ctx, ao)
+
+	logger := workflow.GetLogger(ctx)
+	logger.Info("AwsOrganizations workflow started")
+
+	var result string
+	err := workflow.ExecuteActivity(ctx, AwsOrganizationsActivity, &aws_props).Get(ctx, &result)
+	if err != nil {
+		logger.Error("Activity failed.", "Error", err)
+		return "", err
+	}
+
+	logger.Info("AwsOrganizations workflow completed.", "result", result)
+
+	return result, nil
+}
+
+func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (AwsProps, error) {
+	logger := activity.GetLogger(ctx)
+	logger.Info("Activity")
 
 	// Our app manages the tfc workspaces, aws organizations plus their accounts
 	app := cdktf.NewApp(nil)
@@ -254,4 +337,11 @@ func main() {
 
 	// Emit cdk.tf.json
 	app.Synth()
+
+	// Somehow return the generated tf.json as a response.
+	return aws_props, nil
+}
+
+func main() {
+	RunTemporalWorkflow("control-0.default:7233")
 }
