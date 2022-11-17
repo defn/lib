@@ -60,7 +60,10 @@
 
         packages = {
           go = wrap.nullBuilder {
-            propagatedBuildInputs = with latest; [ bash ];
+            propagatedBuildInputs = with latest; [
+              nodejs-18_x
+              terraform
+            ];
           };
         };
       };

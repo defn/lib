@@ -90,7 +90,7 @@ cmd_button(
     argv=[
         "bash", "-c",
         """
-            ./dist/infra/app/bin queue
+            cd dist/infra/app && ./bin queue
         """,
     ],
     location=location.NAV,

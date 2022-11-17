@@ -3,10 +3,12 @@ package main
 import (
 	_ "embed"
 
+	"context"
 	"fmt"
 	"log"
-	"context"
+	"os"
 	"time"
+	"encoding/json"
 
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/cuecontext"
@@ -30,9 +32,9 @@ import (
 	tfe "github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/provider"
 	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/workspace"
 
+	"go.temporal.io/sdk/activity"
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"
-	"go.temporal.io/sdk/activity"
 	"go.temporal.io/sdk/workflow"
 
 	// TODO(cretz): Remove when tagged
@@ -214,7 +216,7 @@ func AwsOrganizationStack(scope constructs.Construct, org *AwsOrganization) cdkt
 	return stack
 }
 
-func LoadUserAwsProps() *AwsProps {
+func LoadUserAwsProps() AwsProps {
 	ctx := cuecontext.New()
 
 	user_schema := ctx.CompileString(aws_schema_cue)
@@ -225,14 +227,12 @@ func LoadUserAwsProps() *AwsProps {
 	user_schema.Unify(user_input)
 
 	var aws_props AwsProps
-	err := user_input.LookupPath(cue.ParsePath("input")).Decode(&aws_props)
+	user_input.LookupPath(cue.ParsePath("input")).Decode(&aws_props)
 
-	fmt.Printf("%v\n%v\n", err, aws_props)
-
-	return &aws_props
+	return aws_props
 }
 
-func SubmitAwsProps() {
+func QueueAwsProps() {
 	c, err := client.Dial(client.Options{})
 	if err != nil {
 		log.Fatalln("Unable to create client", err)
@@ -246,7 +246,7 @@ func SubmitAwsProps() {
 
 	aws_props := LoadUserAwsProps()
 
-	we, err := c.ExecuteWorkflow(context.Background(), workflowOptions, AwsOrganizationsWorkflow, aws_props)
+	we, err := c.ExecuteWorkflow(context.Background(), workflowOptions, Workflow, aws_props)
 	if err != nil {
 		log.Fatalln("Unable to execute workflow", err)
 	}
@@ -254,7 +254,7 @@ func SubmitAwsProps() {
 	log.Println("Started workflow", "WorkflowID", we.GetID(), "RunID", we.GetRunID())
 
 	// Synchronously wait for the workflow completion.
-	var result AwsProps
+	var result string
 	err = we.Get(context.Background(), &result)
 	if err != nil {
 		log.Fatalln("Unable get workflow result", err)
@@ -262,7 +262,7 @@ func SubmitAwsProps() {
 	log.Printf("Workflow result:\n%v\n", result)
 }
 
-func RunTemporalWorkflow(hostport string) {
+func AwsOrganizationsWorker(hostport string) {
 	c, err := client.Dial(client.Options{HostPort: hostport})
 	if err != nil {
 		log.Fatalln("Unable to create client", err)
@@ -271,7 +271,7 @@ func RunTemporalWorkflow(hostport string) {
 
 	w := worker.New(c, "aws-organizations", worker.Options{})
 
-	w.RegisterWorkflow(AwsOrganizationsWorkflow)
+	w.RegisterWorkflow(Workflow)
 	w.RegisterActivity(AwsOrganizationsActivity)
 
 	err = w.Run(worker.InterruptCh())
@@ -280,14 +280,13 @@ func RunTemporalWorkflow(hostport string) {
 	}
 }
 
-func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (string, error) {
+func Workflow(ctx workflow.Context, aws_props AwsProps) (string, error) {
 	ao := workflow.ActivityOptions{
 		StartToCloseTimeout: 10 * time.Second,
 	}
 	ctx = workflow.WithActivityOptions(ctx, ao)
 
 	logger := workflow.GetLogger(ctx)
-	logger.Info("AwsOrganizations workflow started")
 
 	var result string
 	err := workflow.ExecuteActivity(ctx, AwsOrganizationsActivity, &aws_props).Get(ctx, &result)
@@ -296,12 +295,10 @@ func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (string,
 		return "", err
 	}
 
-	logger.Info("AwsOrganizations workflow completed.", "result", result)
-
 	return result, nil
 }
 
-func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (AwsProps, error) {
+func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (string, error) {
 	logger := activity.GetLogger(ctx)
 	logger.Info("Activity")
 
@@ -309,6 +306,7 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (AwsProps
 	app := cdktf.NewApp(nil)
 
 	workspaces := TfcOrganizationWorkspacesStack(app, aws_props.Terraform.Workspace)
+
 	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
 		Hostname:     js("app.terraform.io"),
 		Organization: js(aws_props.Terraform.Organization),
@@ -339,9 +337,14 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (AwsProps
 	app.Synth()
 
 	// Somehow return the generated tf.json as a response.
-	return aws_props, nil
+	js, err := json.MarshalIndent(aws_props, "", "  ")
+	return string(js), err
 }
 
 func main() {
-	RunTemporalWorkflow("control-0.default:7233")
+	if len(os.Args) > 1 && os.Args[1] == "queue" {
+		QueueAwsProps()
+	} else {
+		AwsOrganizationsWorker("control-0.default:7233")
+	}
 }
