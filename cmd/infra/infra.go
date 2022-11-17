@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"encoding/json"
-	"io/ioutil"
 
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/cuecontext"
@@ -265,7 +264,7 @@ func QueueAwsProps() {
 
 	var synth map[string]string = make(map[string]string)
 
-	err = json.Unmarshal([]byte(result), &synth)
+	json.Unmarshal([]byte(result), &synth)
 	fmt.Printf("%v", synth)
 }
 
@@ -346,8 +345,8 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (string, 
 	// Build map of stack and synthesized tf config
 	var synth map[string]string = make(map[string]string)
 
-	files, _ := ioutil.ReadDir("cdktf.out/stacks/")
-
+	f, _ := os.Open("cdktf.out/stacks/")
+	files, _ := f.Readdir(0)
 	for _, file := range files {
 		dat, _ := os.ReadFile(fmt.Sprintf("cdktf.out/stacks/%s/cdk.tf.json", file.Name()))
 		synth[file.Name()] = string(dat)
