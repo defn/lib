@@ -260,6 +260,10 @@ func QueueAwsProps() {
 		log.Fatalln("Unable get workflow result", err)
 	}
 	log.Printf("Workflow result:\n%v\n", result)
+
+	var aws_props_result AwsProps
+	err = json.Unmarshal([]byte(result), &aws_props_result)
+	log.Printf("Unmarshal:\n%v\n%v\n", aws_props, err)
 }
 
 func AwsOrganizationsWorker(hostport string) {
