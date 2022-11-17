@@ -246,7 +246,7 @@ func QueueAwsProps() {
 
 	aws_props := LoadUserAwsProps()
 
-	we, err := c.ExecuteWorkflow(context.Background(), workflowOptions, Workflow, aws_props)
+	we, err := c.ExecuteWorkflow(context.Background(), workflowOptions, AwsOrganizationsWorkflow, aws_props)
 	if err != nil {
 		log.Fatalln("Unable to execute workflow", err)
 	}
@@ -271,7 +271,7 @@ func AwsOrganizationsWorker(hostport string) {
 
 	w := worker.New(c, "aws-organizations", worker.Options{})
 
-	w.RegisterWorkflow(Workflow)
+	w.RegisterWorkflow(AwsOrganizationsWorkflow)
 	w.RegisterActivity(AwsOrganizationsActivity)
 
 	err = w.Run(worker.InterruptCh())
@@ -280,7 +280,7 @@ func AwsOrganizationsWorker(hostport string) {
 	}
 }
 
-func Workflow(ctx workflow.Context, aws_props AwsProps) (string, error) {
+func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (string, error) {
 	ao := workflow.ActivityOptions{
 		StartToCloseTimeout: 10 * time.Second,
 	}
