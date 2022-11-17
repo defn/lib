@@ -347,7 +347,6 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 		fmt.Println(file.Name(), file.IsDir())
 	}
 
-	// Somehow return the generated tf.json as a response.
 	return synth, nil
 }
 
