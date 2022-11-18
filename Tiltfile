@@ -10,11 +10,8 @@ local_resource("vite",
     serve_cmd=[
         "bash", "-c",
         """
-            while true; do
-                pnpm install
-                turbo dev
-                sleep 1
-            done
+            pnpm install
+            exec turbo dev
         """
     ],
     deps=[".vite-mode"]
@@ -24,13 +21,9 @@ local_resource("temporal",
     serve_cmd=[
         "bash", "-c",
         """
-            set -x;
-            while true; do
-                pkill -9 temporalit[e]
-                rm -f ~/.config/temporalite/db/default.db
-                temporalite start --namespace default --ip 0.0.0.0
-                sleep 10
-            done
+            pkill -9 temporalit[e] || true
+            rm -f ~/.config/temporalite/db/default.db
+            exec temporalite start --namespace default --ip 0.0.0.0
         """
     ]
 )
