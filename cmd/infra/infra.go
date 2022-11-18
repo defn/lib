@@ -245,6 +245,8 @@ func QueueAwsProps(hostport string) {
 
 	aws_props := LoadUserAwsProps()
 
+	fmt.Printf("%v\n", aws_props)
+
 	we, err := c.ExecuteWorkflow(context.Background(), workflowOptions, AwsOrganizationsWorkflow, aws_props)
 	if err != nil {
 		log.Fatalln("Unable to execute workflow", err)
