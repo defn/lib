@@ -1,4 +1,4 @@
-module github.com/defn/cloud
+module github.com/defn/lib
 
 go 1.19
 
