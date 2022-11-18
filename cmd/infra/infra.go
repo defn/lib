@@ -348,9 +348,6 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 		stack := make(map[string]any)
 		json.Unmarshal([]byte(dat), &stack)
 		synth[file.Name()] = stack
-		fmt.Print(string(dat))
-		fmt.Printf("%v\n", stack)
-		fmt.Println(file.Name(), file.IsDir())
 	}
 
 	return synth, nil
