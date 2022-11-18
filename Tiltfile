@@ -6,7 +6,19 @@ load("ext://restart_process", "custom_build_with_restart")
 
 default_registry("169.254.32.1:5000")
 
-local_resource("vite", serve_cmd="pnpm install; while true; do turbo dev; sleep 1; done", deps=[".vite-mode"])
+local_resource("vite",
+    serve_cmd=[
+        "bash", "-c",
+        """
+            while true; do
+                pnpm install
+                turbo dev
+                sleep 1
+            done
+        """
+    ],
+    deps=[".vite-mode"]
+)
 
 local_resource("temporal",
     serve_cmd=[
@@ -23,12 +35,37 @@ local_resource("temporal",
     ]
 )
 
+cmd_button(
+    name="client",
+    text="Client",
+    icon_name="login",
+    argv=[
+        "bash", "-c",
+        """
+            cd dist/infra/app && ./bin queue
+        """,
+    ],
+    location=location.NAV,
+)
+
+# TODO when infra resource is updated, run infra-test
+local_resource("infra-test",
+    deps=[
+            "cmd/%s/main.cue" % ("infra",),
+        ],
+    cmd=[
+        "bash", "-c",
+        """
+            cd cmd/%s && ../../dist/%s/app/bin queue
+        """ % ("infra","infra")
+    ]
+)
+
 for app in ("api", "infra"):
     local_resource("%s-go" % (app,),
         "mkdir -p dist/%s/app; cp cmd/%s/*.cue dist/%s/app/; mkdir -p dist/%s/app && go build -o dist/%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app,app,app,app),
         deps=[
             "cmd/%s/%s.go" % (app,app),
-            "cmd/%s/main.cue" % (app,),
             "cmd/%s/schema/" % (app,)
         ])
 
@@ -41,10 +78,10 @@ for app in ("api", "infra"):
         ),
         entrypoint="/app/bin",
         deps=[
-            "dist/%s/app/" % (app,),
+            "dist/%s/app/bin" % (app,),
         ],
         live_update=[
-            sync("dist/%s/app/" % (app,), "/app/"),
+            sync("dist/%s/app/bin" % (app,), "/app/"),
         ],
     )
 
@@ -81,17 +118,3 @@ for app in ("api", "infra"):
                 """ % (app,)
             ]
         )
-
-
-cmd_button(
-    name="client",
-    text="Client",
-    icon_name="login",
-    argv=[
-        "bash", "-c",
-        """
-            cd dist/infra/app && ./bin queue
-        """,
-    ],
-    location=location.NAV,
-)

@@ -231,8 +231,8 @@ func LoadUserAwsProps() AwsProps {
 	return aws_props
 }
 
-func QueueAwsProps() {
-	c, err := client.Dial(client.Options{})
+func QueueAwsProps(hostport string) {
+	c, err := client.Dial(client.Options{HostPort: hostport})
 	if err != nil {
 		log.Fatalln("Unable to create client", err)
 	}
@@ -351,9 +351,11 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 }
 
 func main() {
+	hostport := "control-0.default:7233"
+
 	if len(os.Args) > 1 && os.Args[1] == "queue" {
-		QueueAwsProps()
+		QueueAwsProps(hostport)
 	} else {
-		AwsOrganizationsWorker("control-0.default:7233")
+		AwsOrganizationsWorker(hostport)
 	}
 }
