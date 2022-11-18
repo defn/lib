@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "embed"
+	"encoding/json"
 
 	"context"
 	"fmt"
@@ -255,7 +256,7 @@ func QueueAwsProps(hostport string) {
 	log.Println("Started workflow", "WorkflowID", we.GetID(), "RunID", we.GetRunID())
 
 	// Synchronously wait for the workflow completion.
-	var result map[string]string = make(map[string]string)
+	var result map[string]any= make(map[string]any)
 	err = we.Get(context.Background(), &result)
 	if err != nil {
 		log.Fatalln("Unable get workflow result", err)
@@ -281,7 +282,7 @@ func AwsOrganizationsWorker(hostport string) {
 	}
 }
 
-func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (map[string]string, error) {
+func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (map[string]any, error) {
 	ao := workflow.ActivityOptions{
 		StartToCloseTimeout: 10 * time.Second,
 	}
@@ -289,7 +290,7 @@ func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (map[str
 
 	logger := workflow.GetLogger(ctx)
 
-	var result map[string]string = make(map[string]string)
+	var result map[string]any= make(map[string]any)
 	err := workflow.ExecuteActivity(ctx, AwsOrganizationsActivity, &aws_props).Get(ctx, &result)
 	if err != nil {
 		logger.Error("Activity failed.", "Error", err)
@@ -299,7 +300,7 @@ func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (map[str
 	return result, nil
 }
 
-func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[string]string, error) {
+func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[string]any, error) {
 	logger := activity.GetLogger(ctx)
 	logger.Info("Activity")
 
@@ -338,14 +339,17 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 	app.Synth()
 
 	// Build map of stack and synthesized tf config
-	var synth map[string]string = make(map[string]string)
+	var synth map[string]any= make(map[string]any)
 
 	f, _ := os.Open("cdktf.out/stacks/")
 	files, _ := f.Readdir(0)
 	for _, file := range files {
 		dat, _ := os.ReadFile(fmt.Sprintf("cdktf.out/stacks/%s/cdk.tf.json", file.Name()))
-		synth[file.Name()] = string(dat)
+		stack := make(map[string]any)
+		json.Unmarshal([]byte(dat), &stack)
+		synth[file.Name()] = stack
 		fmt.Print(string(dat))
+		fmt.Printf("%v\n", stack)
 		fmt.Println(file.Name(), file.IsDir())
 	}
 
