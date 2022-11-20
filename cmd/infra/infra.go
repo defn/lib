@@ -256,7 +256,7 @@ func QueueAwsProps(hostport string) {
 	log.Println("Started workflow", "WorkflowID", we.GetID(), "RunID", we.GetRunID())
 
 	// Synchronously wait for the workflow completion.
-	var result map[string]any= make(map[string]any)
+	var result = make(map[string]any)
 	err = we.Get(context.Background(), &result)
 	if err != nil {
 		log.Fatalln("Unable get workflow result", err)
@@ -290,7 +290,7 @@ func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (map[str
 
 	logger := workflow.GetLogger(ctx)
 
-	var result map[string]any= make(map[string]any)
+	var result = make(map[string]any)
 	err := workflow.ExecuteActivity(ctx, AwsOrganizationsActivity, &aws_props).Get(ctx, &result)
 	if err != nil {
 		logger.Error("Activity failed.", "Error", err)
@@ -339,7 +339,7 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 	app.Synth()
 
 	// Build map of stack and synthesized tf config
-	var synth map[string]any= make(map[string]any)
+	var synth = make(map[string]any)
 
 	f, _ := os.Open("cdktf.out/stacks/")
 	files, _ := f.Readdir(0)
@@ -354,9 +354,9 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 }
 
 func main() {
-	hostport := "control-0.default:7233"
+	hostport := os.Args[1]
 
-	if len(os.Args) > 1 && os.Args[1] == "queue" {
+	if len(os.Args) > 2 && os.Args[2] == "queue" {
 		QueueAwsProps(hostport)
 	} else {
 		AwsOrganizationsWorker(hostport)
