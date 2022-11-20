@@ -62,6 +62,18 @@ local_resource("infra-workflow",
     ]
 )
 
+local_resource("api-server",
+    deps=[
+            "dist/%s/app/bin" % ("api",),
+        ],
+    serve_cmd=[
+        "bash", "-c",
+        """
+            cd dist/%s/app && exec ./bin
+        """ % ("api",)
+    ]
+)
+
 for app in ("api", "infra"):
     local_resource("%s-build" % (app,),
         "mkdir -p dist/%s/app; cp cmd/%s/*.cue dist/%s/app/; mkdir -p dist/%s/app && go build -o dist/%s/app/bin cmd/%s/%s.go; echo done" % (app,app,app,app,app,app,app),
