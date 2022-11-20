@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"time"
+	"sync"
 
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/cuecontext"
@@ -43,6 +44,8 @@ import (
 
 //go:embed schema/aws.cue
 var aws_schema_cue string
+
+var synth_lock sync.Mutex
 
 type TerraformCloud struct {
 	Organization string `json:"organization"`
@@ -336,6 +339,8 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 	}
 
 	// Emit cdk.tf.json
+	synth_lock.Lock()
+    defer synth_lock.Unlock()
 	app.Synth()
 
 	// Build map of stack and synthesized tf config
