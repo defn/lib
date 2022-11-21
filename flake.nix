@@ -6,6 +6,7 @@
     earthly.url = github:defn/pkg?dir=earthly&ref=v0.0.47;
     stern.url = github:defn/pkg?dir=stern&ref=v0.0.56;
     c.url = github:defn/pkg?dir=c&ref=v0.0.56;
+    yaegi.url = github:defn/pkg?dir=yaegi&ref=v0.0.56;
     latest.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   };
 
