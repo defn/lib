@@ -2,11 +2,6 @@
   inputs = {
     dev.url = github:defn/pkg?dir=dev&ref=v0.0.57;
     temporalite.url = github:defn/pkg?dir=temporalite&ref=v0.0.47;
-    tilt.url = github:defn/pkg?dir=tilt&ref=v0.0.47;
-    earthly.url = github:defn/pkg?dir=earthly&ref=v0.0.47;
-    stern.url = github:defn/pkg?dir=stern&ref=v0.0.56;
-    c.url = github:defn/pkg?dir=c&ref=v0.0.56;
-    yaegi.url = github:defn/pkg?dir=yaegi&ref=v0.0.56;
     latest.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   };
 
@@ -43,20 +38,6 @@
               chmod 755 $out/bin/$dst
             done
           '';
-
-          propagatedBuildInputs = with latest; [
-            rsync
-            go
-            gotools
-            go-tools
-            golangci-lint
-            gopls
-            go-outline
-            gopkgs
-            nodejs-18_x
-            terraform
-            aws-vault
-          ];
         };
 
         packages = {
