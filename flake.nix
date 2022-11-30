@@ -1,6 +1,6 @@
 {
   inputs = {
-    dev.url = github:defn/pkg?dir=dev&ref=v0.0.57;
+    dev.url = github:defn/pkg?dir=dev&ref=dev-0.0.1;
     temporalite.url = github:defn/pkg?dir=temporalite&ref=v0.0.47;
     latest.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   };
@@ -9,10 +9,10 @@
     inherit inputs;
 
     config = rec {
-      slug = "cloud";
+      slug = "lib";
       version = "0.0.1";
       homepage = "https://github.com/defn/${slug}";
-      description = "cloud infra and services";
+      description = "cloud ibrary";
     };
 
     handler = { pkgs, wrap, system }:
@@ -21,6 +21,11 @@
       in
       rec {
         devShell = wrap.devShell;
+
+        apps.hello = {
+          type = "app";
+          program = "${defaultPackage}/bin/hello";
+        };
 
         defaultPackage = wrap.bashBuilder {
           src = ./.;
