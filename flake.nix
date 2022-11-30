@@ -22,7 +22,7 @@
       rec {
         devShell = wrap.devShell;
 
-        apps.hello = {
+        apps.default = {
           type = "app";
           program = "${defaultPackage}/bin/hello";
         };
