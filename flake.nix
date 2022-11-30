@@ -1,7 +1,7 @@
 {
   inputs = {
-    dev.url = github:defn/pkg?dir=dev&ref=dev-0.0.1;
-    temporalite.url = github:defn/pkg?dir=temporalite&ref=v0.0.47;
+    dev.url = github:defn/pkg/dev-0.0.2?dir=dev;
+    temporalite.url = github:defn/pkg/v0.0.47?dir=temporalite;
     latest.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   };
 
