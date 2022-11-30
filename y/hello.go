@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 func main() {
-	fmt.Println("pants 100")
+	fmt.Printf("%v\n", os.Args)
 }
