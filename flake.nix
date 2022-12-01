@@ -1,8 +1,7 @@
 {
   inputs = {
-    dev.url = github:defn/pkg/dev-0.0.2?dir=dev;
+    dev.url = github:defn/pkg/dev-0.0.4?dir=dev;
     temporalite.url = github:defn/pkg/v0.0.47?dir=temporalite;
-    latest.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   };
 
   outputs = inputs: inputs.dev.main {
@@ -10,15 +9,11 @@
 
     config = rec {
       slug = "lib";
-      version = "0.0.1";
-      homepage = "https://github.com/defn/${slug}";
-      description = "cloud ibrary";
+      version_src = ./VERSION;
+      version = builtins.readFile version_src;
     };
 
     handler = { pkgs, wrap, system }:
-      let
-        latest = import inputs.latest { inherit system; };
-      in
       rec {
         devShell = wrap.devShell;
 
@@ -47,7 +42,7 @@
 
         packages = {
           go = wrap.nullBuilder {
-            propagatedBuildInputs = with latest; [
+            propagatedBuildInputs = with pkgs; [
               nodejs-18_x
               terraform
             ];
