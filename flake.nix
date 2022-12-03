@@ -1,7 +1,7 @@
 {
   inputs = {
     dev.url = github:defn/pkg/dev-0.0.4?dir=dev;
-    temporalite.url = github:defn/pkg/v0.0.47?dir=temporalite;
+    temporalite.url = github:defn/pkg/temporalite-0.2.0-1?dir=temporalite;
   };
 
   outputs = inputs: inputs.dev.main {
