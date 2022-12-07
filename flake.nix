@@ -1,6 +1,6 @@
 {
   inputs = {
-    dev.url = github:defn/pkg/dev-0.0.4?dir=dev;
+    dev.url = github:defn/pkg/dev-0.0.8?dir=dev;
     temporalite.url = github:defn/pkg/temporalite-0.2.0-1?dir=temporalite;
   };
 
@@ -13,41 +13,44 @@
       version = builtins.readFile version_src;
     };
 
-    handler = { pkgs, wrap, system }:
-      rec {
-        devShell = wrap.devShell;
+    handler = { pkgs, wrap, system }: rec {
+      devShell = wrap.devShell { };
 
-        apps.default = {
-          type = "app";
-          program = "${defaultPackage}/bin/hello";
-        };
+      apps.default = {
+        type = "app";
+        program = "${defaultPackage}/bin/hello";
+      };
 
-        defaultPackage = wrap.bashBuilder {
-          src = ./.;
+      defaultPackage = wrap.bashBuilder {
+        buildInputs = with pkgs; [
+          perl
+        ];
 
-          installPhase = ''
-            set -exu
-            mkdir -p $out/bin
-            for a in $src/y/*.go; do
-              dst="$(basename "''${a%.go}")"
-              (
-                echo "#!/usr/bin/env yaegi"
-                echo
-                cat $a
-              ) > $out/bin/$dst
-              chmod 755 $out/bin/$dst
-            done
-          '';
-        };
+        src = ./.;
 
-        packages = {
-          go = wrap.nullBuilder {
-            propagatedBuildInputs = with pkgs; [
-              nodejs-18_x
-              terraform
-            ];
-          };
+        installPhase = ''
+          set -exu
+          mkdir -p $out/bin
+          for a in $src/y/*.go; do
+            dst="$(basename "''${a%.go}")"
+            (
+              echo "#!/usr/bin/env yaegi"
+              echo
+              cat $a
+            ) > $out/bin/$dst
+            chmod 755 $out/bin/$dst
+          done
+        '';
+      };
+
+      packages = {
+        go = wrap.nullBuilder {
+          propagatedBuildInputs = with pkgs; [
+            nodejs-18_x
+            terraform
+          ];
         };
       };
+    };
   };
 }
