@@ -1,7 +1,8 @@
 {
   inputs = {
-    dev.url = github:defn/pkg/dev-0.0.8?dir=dev;
-    temporalite.url = github:defn/pkg/temporalite-0.2.0-1?dir=temporalite;
+    dev.url = github:defn/pkg/dev-0.0.10?dir=dev;
+    temporalite.url = github:defn/pkg/temporalite-0.3.0-1?dir=temporalite;
+    yaegi.url = github:defn/pkg/yaegi-0.14.3-1?dir=yaegi;
   };
 
   outputs = inputs: inputs.dev.main {
@@ -14,8 +15,6 @@
     };
 
     handler = { pkgs, wrap, system }: rec {
-      devShell = wrap.devShell { };
-
       apps.default = {
         type = "app";
         program = "${defaultPackage}/bin/hello";
