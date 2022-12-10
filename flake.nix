@@ -33,7 +33,7 @@
           for a in $src/y/*.go; do
             dst="$(basename "''${a%.go}")"
             (
-              echo "#!/usr/bin/env yaegi"
+              echo "#!${inputs.yaegi.defaultPackage.${system}}/bin/yaegi"
               echo
               cat $a
             ) > $out/bin/$dst
