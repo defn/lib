@@ -1,6 +1,6 @@
 {
   inputs = {
-    dev.url = github:defn/pkg/dev-0.0.11-rc15?dir=dev;
+    dev.url = github:defn/pkg/dev-0.0.11-rc19?dir=dev;
     temporalite.url = github:defn/pkg/temporalite-0.3.0-1?dir=temporalite;
     yaegi.url = github:defn/pkg/yaegi-0.14.3-1?dir=yaegi;
   };
@@ -23,6 +23,8 @@
         let
           goHello = builders.go { cmd = "cmd/hello"; };
           goBye = builders.go { cmd = "cmd/bye"; };
+          goInfra = builders.go { cmd = "cmd/infra"; };
+          goApi = builders.go { cmd = "cmd/api"; };
         in
         rec {
           apps.default = {
@@ -37,6 +39,8 @@
               mkdir -p $out/bin
               cp ${goHello} $out/bin/hello
               cp ${goBye} $out/bin/bye
+              cp ${goInfra} $out/bin/infra
+              cp ${goApi} $out/bin/api
             '';
 
             propagatedBuildInputs = [
