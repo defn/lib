@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"time"
 	"sync"
+	"time"
 
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/cuecontext"
@@ -340,7 +340,7 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 
 	// Emit cdk.tf.json
 	synth_lock.Lock()
-    defer synth_lock.Unlock()
+	defer synth_lock.Unlock()
 	app.Synth()
 
 	// Build map of stack and synthesized tf config
@@ -359,11 +359,13 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 }
 
 func main() {
-	hostport := os.Args[1]
+	if len(os.Args) > 1 {
+		hostport := os.Args[1]
 
-	if len(os.Args) > 2 && os.Args[2] == "queue" {
-		QueueAwsProps(hostport)
-	} else {
-		AwsOrganizationsWorker(hostport)
+		if len(os.Args) > 2 && os.Args[2] == "queue" {
+			QueueAwsProps(hostport)
+		} else {
+			AwsOrganizationsWorker(hostport)
+		}
 	}
 }
