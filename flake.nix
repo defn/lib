@@ -1,6 +1,6 @@
 {
   inputs = {
-    dev.url = github:defn/pkg/dev-0.0.11-rc22?dir=dev;
+    dev.url = github:defn/pkg/dev-0.0.11?dir=dev;
     yaegi.url = github:defn/pkg/yaegi-0.14.3-1?dir=yaegi;
   };
 
@@ -19,8 +19,8 @@
 
       handler = { pkgs, wrap, system, builders }:
         let
-          pwd = ./.;
-          src = pwd;
+          src = ./.;
+          pwd = src;
           version = builtins.readFile ./VERSION;
           apps = [ "hello" "bye" "api" "infra" ];
 
