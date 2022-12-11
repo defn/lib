@@ -21,7 +21,6 @@
 
       handler = ele@{ pkgs, wrap, system, builders }:
         let
-          pwd = ./.;
           modules = ./gomod2nix.toml;
 
           goEnv = pkgs.mkGoEnv {
@@ -32,22 +31,22 @@
             pname = "hello";
             version = "0.1";
             inherit modules;
-            inherit pwd;
-            src = ./cmd/hello;
+            inherit src;
+            pwd = ./cmd/hello;
           };
           goBye = pkgs.buildGoApplication {
             pname = "bye";
             version = "0.1";
             inherit modules;
-            inherit pwd;
-            src = ./cmd/bye;
+            inherit src;
+            pwd = ./cmd/bye;
           };
           goApi = pkgs.buildGoApplication {
             pname = "api";
             version = "0.1";
             inherit modules;
-            inherit pwd;
-            src = ./cmd/api;
+            inherit src;
+            pwd = ./cmd/api;
           };
           #goHello = builders.go { cmd = "cmd/hello"; };
           #goBye = builders.go { cmd = "cmd/bye"; };
@@ -58,9 +57,9 @@
 
             installPhase = ''
               mkdir -p $out/bin
-              cp ${goHello}/bin/lib $out/bin/hello
-              cp ${goBye}/bin/lib $out/bin/bye
-              cp ${goApi}/bin/lib $out/bin/api
+              cp ${goHello}/bin/hello $out/bin/hello
+              cp ${goBye}/bin/bye $out/bin/bye
+              cp ${goApi}/bin/api $out/bin/api
             '';
 
             propagatedBuildInputs = [
