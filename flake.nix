@@ -1,6 +1,6 @@
 {
   inputs = {
-    dev.url = github:defn/pkg/dev-0.0.11?dir=dev;
+    dev.url = github:defn/pkg/dev-0.0.12?dir=dev;
     yaegi.url = github:defn/pkg/yaegi-0.14.3-1?dir=yaegi;
   };
 
