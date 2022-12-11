@@ -21,32 +21,33 @@
 
       handler = ele@{ pkgs, wrap, system, builders }:
         let
-          modules = ./gomod2nix.toml;
+          pwd = ./.;
+          src = ./.;
 
           goEnv = pkgs.mkGoEnv {
-            pwd = ./.;
+            inherit pwd;
           };
 
           goHello = pkgs.buildGoApplication {
+            inherit pwd;
+            inherit src;
             pname = "hello";
             version = "0.1";
-            inherit modules;
-            inherit src;
-            pwd = ./cmd/hello;
+            subPackages = [ "cmd/hello" ];
           };
           goBye = pkgs.buildGoApplication {
+            inherit pwd;
+            inherit src;
             pname = "bye";
             version = "0.1";
-            inherit modules;
-            inherit src;
-            pwd = ./cmd/bye;
+            subPackages = [ "cmd/bye" ];
           };
           goApi = pkgs.buildGoApplication {
+            inherit pwd;
+            inherit src;
             pname = "api";
             version = "0.1";
-            inherit modules;
-            inherit src;
-            pwd = ./cmd/api;
+            subPackages = [ "cmd/api" ];
           };
           #goHello = builders.go { cmd = "cmd/hello"; };
           #goBye = builders.go { cmd = "cmd/bye"; };
