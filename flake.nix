@@ -22,7 +22,7 @@
           pwd = ./.;
           src = pwd;
           version = builtins.readFile ./VERSION;
-          apps = [ "hello" "bye" "api" ];
+          apps = [ "hello" "bye" "api" "infra" ];
 
           goEnv = pkgs.mkGoEnv {
             inherit pwd;
@@ -51,7 +51,7 @@
 
               installPhase = ''
                 mkdir -p $out/bin
-                cp ${go.${name}}/bin/hello $out/bin/lib
+                cp ${go.${name}}/bin/${name} $out/bin/lib
               '';
             });
         };
