@@ -1,7 +1,6 @@
 {
   inputs = {
     dev.url = github:defn/pkg/dev-0.0.11-rc22?dir=dev;
-    temporalite.url = github:defn/pkg/temporalite-0.3.0-1?dir=temporalite;
     yaegi.url = github:defn/pkg/yaegi-0.14.3-1?dir=yaegi;
   };
 
@@ -53,7 +52,14 @@
           #goBye = builders.go { cmd = "cmd/bye"; };
         in
         rec {
-          defaultPackage = wrap.bashBuilder {
+          defaultPackage = wrap.nullBuilder {
+            propagatedBuildInputs = [
+              builders.yaegi
+              goEnv
+            ];
+          };
+
+          packages.bins = wrap.bashBuilder {
             src = ./.;
 
             installPhase = ''
@@ -65,7 +71,6 @@
 
             propagatedBuildInputs = [
               builders.yaegi
-              goEnv
             ];
           };
         };
