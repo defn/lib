@@ -1,0 +1,121 @@
+{
+  "//": {
+    "metadata": {
+      "backend": "cloud",
+      "stackName": "workspaces",
+      "version": "0.13.3"
+    },
+    "outputs": {
+    }
+  },
+  "provider": {
+    "tfe": [
+      {
+        "hostname": "app.terraform.io"
+      }
+    ]
+  },
+  "resource": {
+    "tfe_workspace": {
+      "coil": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/coil",
+            "uniqueId": "coil"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "coil",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
+      "curl": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/curl",
+            "uniqueId": "curl"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "curl",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
+      "defn": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/defn",
+            "uniqueId": "defn"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "defn",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
+      "gyre": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/gyre",
+            "uniqueId": "gyre"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "gyre",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
+      "helix": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/helix",
+            "uniqueId": "helix"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "helix",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
+      "spiral": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/spiral",
+            "uniqueId": "spiral"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "spiral",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      }
+    }
+  },
+  "terraform": {
+    "cloud": {
+      "hostname": "app.terraform.io",
+      "organization": "defn",
+      "workspaces": {
+        "name": "workspaces"
+      }
+    },
+    "required_providers": {
+      "tfe": {
+        "source": "hashicorp/tfe",
+        "version": "0.38.0"
+      }
+    }
+  }
+}
