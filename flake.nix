@@ -59,19 +59,31 @@
             ];
           };
 
-          packages.bins = wrap.bashBuilder {
+          packages.hello = wrap.bashBuilder {
             src = ./.;
 
             installPhase = ''
               mkdir -p $out/bin
-              cp ${goHello}/bin/hello $out/bin/hello
-              cp ${goBye}/bin/bye $out/bin/bye
-              cp ${goApi}/bin/api $out/bin/api
+              cp ${goHello}/bin/hello $out/bin/lib
             '';
+          };
 
-            propagatedBuildInputs = [
-              builders.yaegi
-            ];
+          packages.bye = wrap.bashBuilder {
+            src = ./.;
+
+            installPhase = ''
+              mkdir -p $out/bin
+              cp ${goBye}/bin/bye $out/bin/lib
+            '';
+          };
+
+          packages.api = wrap.bashBuilder {
+            src = ./.;
+
+            installPhase = ''
+              mkdir -p $out/bin
+              cp ${goApi}/bin/api $out/bin/lib
+            '';
           };
         };
     };
