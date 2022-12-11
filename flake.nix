@@ -21,6 +21,14 @@
 
       handler = ele@{ pkgs, wrap, system, builders }:
         let
+          goEnv = pkgs.mkGoEnv { pwd = ./.; };
+          goApp = pkgs.buildGoApplication {
+            pname = "bleh";
+            version = "0.1";
+            pwd = ./.;
+            src = ./.;
+            modules = ./gomod2nix.toml;
+          };
           goHello = builders.go { cmd = "cmd/hello"; };
           goBye = builders.go { cmd = "cmd/bye"; };
         in
@@ -42,16 +50,8 @@
             propagatedBuildInputs = [
               builders.yaegi
               pkgs.gomod2nix
+              goEnv
             ];
-          };
-
-          packages = rec {
-            go = wrap.nullBuilder {
-              propagatedBuildInputs = with pkgs; [
-                nodejs-18_x
-                terraform
-              ];
-            };
           };
         };
     };
