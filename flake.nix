@@ -1,6 +1,6 @@
 {
   inputs = {
-    dev.url = github:defn/pkg/dev-0.0.11-rc14?dir=dev;
+    dev.url = github:defn/pkg/dev-0.0.11-rc15?dir=dev;
     temporalite.url = github:defn/pkg/temporalite-0.3.0-1?dir=temporalite;
     yaegi.url = github:defn/pkg/yaegi-0.14.3-1?dir=yaegi;
   };
@@ -20,7 +20,11 @@
       };
 
       handler = { pkgs, wrap, system, builders }:
-        let goHello = builders.go { src = ./.; cmd = "cmd/hello"; buildInputs = [ pkgs.go ]; }; in rec {
+        let
+          goHello = builders.go { cmd = "cmd/hello"; };
+          goBye = builders.go { cmd = "cmd/bye"; };
+        in
+        rec {
           apps.default = {
             type = "app";
             program = "${defaultPackage}/bin/hello";
@@ -32,6 +36,7 @@
             installPhase = ''
               mkdir -p $out/bin
               cp ${goHello} $out/bin/hello
+              cp ${goBye} $out/bin/bye
             '';
 
             propagatedBuildInputs = [
