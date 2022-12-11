@@ -14,42 +14,28 @@
 
       config = rec {
         slug = "lib";
-        version_src = ./VERSION;
-        version = builtins.readFile version_src;
+        version = builtins.readFile ./VERSION;
       };
 
-      handler = ele@{ pkgs, wrap, system, builders }:
+      handler = { pkgs, wrap, system, builders }:
         let
           pwd = ./.;
-          src = ./.;
+          src = pwd;
+          version = builtins.readFile ./VERSION;
+          apps = [ "hello" "bye" "api" ];
 
           goEnv = pkgs.mkGoEnv {
             inherit pwd;
           };
 
-          goHello = pkgs.buildGoApplication {
-            inherit pwd;
-            inherit src;
-            pname = "hello";
-            version = "0.1";
-            subPackages = [ "cmd/hello" ];
-          };
-          goBye = pkgs.buildGoApplication {
-            inherit pwd;
-            inherit src;
-            pname = "bye";
-            version = "0.1";
-            subPackages = [ "cmd/bye" ];
-          };
-          goApi = pkgs.buildGoApplication {
-            inherit pwd;
-            inherit src;
-            pname = "api";
-            version = "0.1";
-            subPackages = [ "cmd/api" ];
-          };
-          #goHello = builders.go { cmd = "cmd/hello"; };
-          #goBye = builders.go { cmd = "cmd/bye"; };
+          go = pkgs.lib.genAttrs apps
+            (name: pkgs.buildGoApplication {
+              inherit pwd;
+              inherit src;
+              inherit version;
+              pname = name;
+              subPackages = [ "cmd/${name}" ];
+            });
         in
         rec {
           defaultPackage = wrap.nullBuilder {
@@ -59,32 +45,15 @@
             ];
           };
 
-          packages.hello = wrap.bashBuilder {
-            src = ./.;
+          packages = pkgs.lib.genAttrs apps
+            (name: wrap.bashBuilder {
+              inherit src;
 
-            installPhase = ''
-              mkdir -p $out/bin
-              cp ${goHello}/bin/hello $out/bin/lib
-            '';
-          };
-
-          packages.bye = wrap.bashBuilder {
-            src = ./.;
-
-            installPhase = ''
-              mkdir -p $out/bin
-              cp ${goBye}/bin/bye $out/bin/lib
-            '';
-          };
-
-          packages.api = wrap.bashBuilder {
-            src = ./.;
-
-            installPhase = ''
-              mkdir -p $out/bin
-              cp ${goApi}/bin/api $out/bin/lib
-            '';
-          };
+              installPhase = ''
+                mkdir -p $out/bin
+                cp ${go.${name}}/bin/hello $out/bin/lib
+              '';
+            });
         };
     };
 }
