@@ -1,3 +1,16 @@
 {
-    "image": "ghcr.io/defn/dev:latest-devcontainer"
+	"image": "ghcr.io/defn/dev:latest-devcontainer",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"svelte.svelte-vscode",
+				"vscodevim.vim",
+				"jnoortheen.nix-ide",
+				"matthewpi.caddyfile-support",
+				"tamasfe.even-better-toml",
+				"golang.go",
+				"runem.lit-plugin"
+			]
+		}
+	}
 }
