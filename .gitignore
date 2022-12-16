@@ -22,3 +22,4 @@ nix
 .direnv
 result
 node_modules
+.devcontainer/.*CommandMarker
