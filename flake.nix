@@ -11,24 +11,20 @@
     config = rec {
       slug = builtins.readFile ./SLUG;
       version = builtins.readFile ./VERSION;
+      apps = [ "hello" "bye" "api" "infra" ];
     };
 
     handler = { pkgs, wrap, system, builders }:
       let
-        inherit src;
-        pwd = src;
-        version = builtins.readFile ./VERSION;
-        apps = [ "hello" "bye" "api" "infra" ];
-
         goEnv = pkgs.mkGoEnv {
-          inherit pwd;
+          pwd = src;
         };
 
-        go = pkgs.lib.genAttrs apps
+        go = pkgs.lib.genAttrs config.apps
           (name: pkgs.buildGoApplication {
-            inherit pwd;
             inherit src;
-            inherit version;
+            pwd = src;
+            version = config.version;
             pname = name;
             subPackages = [ "cmd/${name}" ];
           });
@@ -41,7 +37,7 @@
           ];
         };
 
-        packages = pkgs.lib.genAttrs apps
+        packages = pkgs.lib.genAttrs config.apps
           (name: wrap.bashBuilder {
             inherit src;
 
