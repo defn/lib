@@ -2,8 +2,9 @@
   "//": {
     "metadata": {
       "backend": "cloud",
-      "stackName": "curl",
-      "version": "0.13.3"
+      "cloud": "tfc",
+      "stackName": "coil",
+      "version": "0.14.3"
     },
     "outputs": {
     }
@@ -13,7 +14,7 @@
       "sso_instance": {
         "//": {
           "metadata": {
-            "path": "curl/sso_instance",
+            "path": "coil/sso_instance",
             "uniqueId": "sso_instance"
           }
         }
@@ -27,7 +28,7 @@
   "provider": {
     "aws": [
       {
-        "region": "us-west-2"
+        "region": "us-east-1"
       }
     ]
   },
@@ -36,7 +37,7 @@
       "administrators_sso_group": {
         "//": {
           "metadata": {
-            "path": "curl/administrators_sso_group",
+            "path": "coil/administrators_sso_group",
             "uniqueId": "administrators_sso_group"
           }
         },
@@ -48,7 +49,7 @@
       "admin_sso_user_defn_membership": {
         "//": {
           "metadata": {
-            "path": "curl/admin_sso_user_defn_membership",
+            "path": "coil/admin_sso_user_defn_membership",
             "uniqueId": "admin_sso_user_defn_membership"
           }
         },
@@ -61,7 +62,7 @@
       "admin_sso_user_defn": {
         "//": {
           "metadata": {
-            "path": "curl/admin_sso_user_defn",
+            "path": "coil/admin_sso_user_defn",
             "uniqueId": "admin_sso_user_defn"
           }
         },
@@ -80,15 +81,15 @@
       }
     },
     "aws_organizations_account": {
-      "curl": {
+      "coil": {
         "//": {
           "metadata": {
-            "path": "curl/curl",
-            "uniqueId": "curl"
+            "path": "coil/coil",
+            "uniqueId": "coil"
           }
         },
-        "email": "aws-curl@defn.us",
-        "name": "curl",
+        "email": "aws-coil@defn.us",
+        "name": "coil",
         "tags": {
           "ManagedBy": "Terraform"
         }
@@ -96,11 +97,11 @@
       "hub": {
         "//": {
           "metadata": {
-            "path": "curl/hub",
+            "path": "coil/hub",
             "uniqueId": "hub"
           }
         },
-        "email": "aws-curl+hub@defn.us",
+        "email": "aws-coil+hub@defn.us",
         "iam_user_access_to_billing": "ALLOW",
         "name": "hub",
         "role_name": "OrganizationAccountAccessRole",
@@ -111,11 +112,11 @@
       "lib": {
         "//": {
           "metadata": {
-            "path": "curl/lib",
+            "path": "coil/lib",
             "uniqueId": "lib"
           }
         },
-        "email": "aws-curl+lib@defn.us",
+        "email": "aws-coil+lib@defn.us",
         "iam_user_access_to_billing": "ALLOW",
         "name": "lib",
         "role_name": "OrganizationAccountAccessRole",
@@ -126,11 +127,11 @@
       "net": {
         "//": {
           "metadata": {
-            "path": "curl/net",
+            "path": "coil/net",
             "uniqueId": "net"
           }
         },
-        "email": "aws-curl+net@defn.us",
+        "email": "aws-coil+net@defn.us",
         "iam_user_access_to_billing": "ALLOW",
         "name": "net",
         "role_name": "OrganizationAccountAccessRole",
@@ -143,7 +144,7 @@
       "organization": {
         "//": {
           "metadata": {
-            "path": "curl/organization",
+            "path": "coil/organization",
             "uniqueId": "organization"
           }
         },
@@ -163,24 +164,24 @@
       }
     },
     "aws_ssoadmin_account_assignment": {
-      "curl_admin_sso_account_assignment": {
+      "coil_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "curl/curl_admin_sso_account_assignment",
-            "uniqueId": "curl_admin_sso_account_assignment"
+            "path": "coil/coil_admin_sso_account_assignment",
+            "uniqueId": "coil_admin_sso_account_assignment"
           }
         },
         "instance_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.instance_arn}",
         "permission_set_arn": "${aws_ssoadmin_managed_policy_attachment.admin_sso_managed_policy_attachment.permission_set_arn}",
         "principal_id": "${aws_identitystore_group.administrators_sso_group.group_id}",
         "principal_type": "GROUP",
-        "target_id": "${aws_organizations_account.curl.id}",
+        "target_id": "${aws_organizations_account.coil.id}",
         "target_type": "AWS_ACCOUNT"
       },
       "hub_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "curl/hub_admin_sso_account_assignment",
+            "path": "coil/hub_admin_sso_account_assignment",
             "uniqueId": "hub_admin_sso_account_assignment"
           }
         },
@@ -194,7 +195,7 @@
       "lib_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "curl/lib_admin_sso_account_assignment",
+            "path": "coil/lib_admin_sso_account_assignment",
             "uniqueId": "lib_admin_sso_account_assignment"
           }
         },
@@ -208,7 +209,7 @@
       "net_admin_sso_account_assignment": {
         "//": {
           "metadata": {
-            "path": "curl/net_admin_sso_account_assignment",
+            "path": "coil/net_admin_sso_account_assignment",
             "uniqueId": "net_admin_sso_account_assignment"
           }
         },
@@ -224,7 +225,7 @@
       "admin_sso_managed_policy_attachment": {
         "//": {
           "metadata": {
-            "path": "curl/admin_sso_managed_policy_attachment",
+            "path": "coil/admin_sso_managed_policy_attachment",
             "uniqueId": "admin_sso_managed_policy_attachment"
           }
         },
@@ -237,7 +238,7 @@
       "admin_sso_permission_set": {
         "//": {
           "metadata": {
-            "path": "curl/admin_sso_permission_set",
+            "path": "coil/admin_sso_permission_set",
             "uniqueId": "admin_sso_permission_set"
           }
         },
@@ -255,13 +256,13 @@
       "hostname": "app.terraform.io",
       "organization": "defn",
       "workspaces": {
-        "name": "curl"
+        "name": "coil"
       }
     },
     "required_providers": {
       "aws": {
         "source": "aws",
-        "version": "4.36.1"
+        "version": "4.39.0"
       }
     }
   }

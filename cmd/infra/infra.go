@@ -359,6 +359,46 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 }
 
 func main() {
+	aws_props := LoadUserAwsProps()
+
+	fmt.Printf("%v\n", aws_props)
+
+	app := cdktf.NewApp(nil)
+
+	workspaces := TfcOrganizationWorkspacesStack(app, aws_props.Terraform.Workspace)
+
+	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
+		Hostname:     js("app.terraform.io"),
+		Organization: js(aws_props.Terraform.Organization),
+		Workspaces:   cdktf.NewNamedCloudWorkspace(js("workspaces")),
+	})
+
+	for _, org := range aws_props.Organizations {
+		// Create a tfc workspace for each stack
+		workspace.NewWorkspace(workspaces, js(org.Name), &workspace.WorkspaceConfig{
+			Name:                js(org.Name),
+			Organization:        js(aws_props.Terraform.Organization),
+			ExecutionMode:       js("local"),
+			FileTriggersEnabled: false,
+			QueueAllRuns:        false,
+			SpeculativeEnabled:  false,
+		})
+
+		// Create the aws organization + accounts stack
+		aws_org_stack := AwsOrganizationStack(app, &org)
+		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendProps{
+			Hostname:     js("app.terraform.io"),
+			Organization: js(aws_props.Terraform.Organization),
+			Workspaces:   cdktf.NewNamedCloudWorkspace(js(org.Name)),
+		})
+	}
+
+	// Emit cdk.tf.json
+	app.Synth()
+
+}
+
+func temporal_main() {
 	hostport := os.Args[1]
 
 	if len(os.Args) > 2 && os.Args[2] == "queue" {
