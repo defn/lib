@@ -1,7 +1,0 @@
-{
-  "name": "@defn/infra",
-  "version": "1.0.0",
-  "dependencies": {
-    "cdktf-cli": "^0.13.3"
-  }
-}

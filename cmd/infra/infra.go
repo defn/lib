@@ -19,19 +19,19 @@ import (
 	"github.com/aws/jsii-runtime-go"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 
-	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/dataawsssoadmininstances"
-	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/identitystoregroup"
-	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/identitystoregroupmembership"
-	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/identitystoreuser"
-	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/organizationsaccount"
-	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/organizationsorganization"
-	aws "github.com/cdktf/cdktf-provider-aws-go/aws/v10/provider"
-	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/ssoadminaccountassignment"
-	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/ssoadminmanagedpolicyattachment"
-	"github.com/cdktf/cdktf-provider-aws-go/aws/v10/ssoadminpermissionset"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v12/dataawsssoadmininstances"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v12/identitystoregroup"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v12/identitystoregroupmembership"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v12/identitystoreuser"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v12/organizationsaccount"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v12/organizationsorganization"
+	aws "github.com/cdktf/cdktf-provider-aws-go/aws/v12/provider"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v12/ssoadminaccountassignment"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v12/ssoadminmanagedpolicyattachment"
+	"github.com/cdktf/cdktf-provider-aws-go/aws/v12/ssoadminpermissionset"
 
-	tfe "github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/provider"
-	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v3/workspace"
+	tfe "github.com/cdktf/cdktf-provider-tfe-go/tfe/v5/provider"
+	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v5/workspace"
 
 	"go.temporal.io/sdk/activity"
 	"go.temporal.io/sdk/client"
@@ -312,7 +312,7 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 
 	workspaces := TfcOrganizationWorkspacesStack(app, aws_props.Terraform.Workspace)
 
-	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
+	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendConfig{
 		Hostname:     js("app.terraform.io"),
 		Organization: js(aws_props.Terraform.Organization),
 		Workspaces:   cdktf.NewNamedCloudWorkspace(js("workspaces")),
@@ -331,7 +331,7 @@ func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[stri
 
 		// Create the aws organization + accounts stack
 		aws_org_stack := AwsOrganizationStack(app, &org)
-		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendProps{
+		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendConfig{
 			Hostname:     js("app.terraform.io"),
 			Organization: js(aws_props.Terraform.Organization),
 			Workspaces:   cdktf.NewNamedCloudWorkspace(js(org.Name)),
@@ -366,7 +366,7 @@ func main() {
 	app := cdktf.NewApp(nil)
 
 	workspaces := TfcOrganizationWorkspacesStack(app, aws_props.Terraform.Workspace)
-	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
+	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendConfig{
 		Hostname:     js("app.terraform.io"),
 		Organization: js(aws_props.Terraform.Organization),
 		Workspaces:   cdktf.NewNamedCloudWorkspace(js("workspaces")),
@@ -385,7 +385,7 @@ func main() {
 
 		// Create the aws organization + accounts stack
 		aws_org_stack := AwsOrganizationStack(app, &org)
-		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendProps{
+		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendConfig{
 			Hostname:     js("app.terraform.io"),
 			Organization: js(aws_props.Terraform.Organization),
 			Workspaces:   cdktf.NewNamedCloudWorkspace(js(org.Name)),
