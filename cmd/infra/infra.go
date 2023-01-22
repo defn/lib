@@ -366,7 +366,6 @@ func main() {
 	app := cdktf.NewApp(nil)
 
 	workspaces := TfcOrganizationWorkspacesStack(app, aws_props.Terraform.Workspace)
-
 	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendProps{
 		Hostname:     js("app.terraform.io"),
 		Organization: js(aws_props.Terraform.Organization),
@@ -395,7 +394,6 @@ func main() {
 
 	// Emit cdk.tf.json
 	app.Synth()
-
 }
 
 func temporal_main() {
