@@ -15,30 +15,11 @@
     };
 
     handler = { pkgs, wrap, system, builders }: rec {
-      devShell = wrap.devShell {
-        devInputs = (
-          [
-            defaultPackage
-          ] ++
-          pkgs.lib.attrsets.mapAttrsToList (name: value: value) commands
-        );
-      };
-
       defaultPackage = wrap.nullBuilder {
         propagatedBuildInputs = with pkgs; [
           bashInteractive
           inputs.defn-lib.packages.${system}.infra
         ];
-      };
-
-      commands = pkgs.lib.attrsets.mapAttrs
-        (name: value: (pkgs.writeShellScriptBin "this-${name}" value))
-        scripts;
-
-      scripts = {
-        hello = ''
-          echo hello
-        '';
       };
     };
   };
