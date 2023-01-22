@@ -14,8 +14,8 @@ input: {
 		email: "david@defn.sh"
 	}]
 
-	_full_accounts: ["net", "lib", "hub", "log", "ops", "sec", "pub", "dev", "dmz"]
-	_env_accounts: ["net", "lib", "hub"]
+	_full_accounts: ["ops", "net", "lib", "hub", "log", "sec", "pub", "dev", "dmz"]
+	_env_accounts: ["ops", "net", "lib", "hub"]
 	_ops_accounts: ["ops"]
 
 	organizations: [N=string]: name: N
