@@ -9,6 +9,9 @@ input: {
 	_aws_admins: [{
 		name:  "defn"
 		email: "iam@defn.sh"
+	}, {
+		name:  "dgwyn"
+		email: "david@defn.sh"
 	}]
 
 	_full_accounts: ["net", "lib", "hub", "log", "ops", "sec", "pub", "dev", "dmz"]
