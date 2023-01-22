@@ -2,13 +2,7 @@ package main
 
 import (
 	_ "embed"
-	"encoding/json"
-
-	"context"
 	"fmt"
-	"log"
-	"os"
-	"time"
 	"sync"
 
 	"cuelang.org/go/cue"
@@ -32,14 +26,6 @@ import (
 
 	tfe "github.com/cdktf/cdktf-provider-tfe-go/tfe/v5/provider"
 	"github.com/cdktf/cdktf-provider-tfe-go/tfe/v5/workspace"
-
-	"go.temporal.io/sdk/activity"
-	"go.temporal.io/sdk/client"
-	"go.temporal.io/sdk/worker"
-	"go.temporal.io/sdk/workflow"
-
-	// TODO(cretz): Remove when tagged
-	_ "go.temporal.io/sdk/contrib/tools/workflowcheck/determinism"
 )
 
 //go:embed schema/aws.cue
@@ -235,129 +221,7 @@ func LoadUserAwsProps() AwsProps {
 	return aws_props
 }
 
-func QueueAwsProps(hostport string) {
-	c, err := client.Dial(client.Options{HostPort: hostport})
-	if err != nil {
-		log.Fatalln("Unable to create client", err)
-	}
-	defer c.Close()
-
-	workflowOptions := client.StartWorkflowOptions{
-		ID:        fmt.Sprintf("aws_organizations_%d", time.Now().UnixMilli()),
-		TaskQueue: "aws-organizations",
-	}
-
-	aws_props := LoadUserAwsProps()
-
-	fmt.Printf("%v\n", aws_props)
-
-	we, err := c.ExecuteWorkflow(context.Background(), workflowOptions, AwsOrganizationsWorkflow, aws_props)
-	if err != nil {
-		log.Fatalln("Unable to execute workflow", err)
-	}
-
-	log.Println("Started workflow", "WorkflowID", we.GetID(), "RunID", we.GetRunID())
-
-	// Synchronously wait for the workflow completion.
-	var result = make(map[string]any)
-	err = we.Get(context.Background(), &result)
-	if err != nil {
-		log.Fatalln("Unable get workflow result", err)
-	}
-	log.Printf("Workflow result:\n%v\n", result)
-}
-
-func AwsOrganizationsWorker(hostport string) {
-	c, err := client.Dial(client.Options{HostPort: hostport})
-	if err != nil {
-		log.Fatalln("Unable to create client", err)
-	}
-	defer c.Close()
-
-	w := worker.New(c, "aws-organizations", worker.Options{})
-
-	w.RegisterWorkflow(AwsOrganizationsWorkflow)
-	w.RegisterActivity(AwsOrganizationsActivity)
-
-	err = w.Run(worker.InterruptCh())
-	if err != nil {
-		log.Fatalln("Unable to start worker", err)
-	}
-}
-
-func AwsOrganizationsWorkflow(ctx workflow.Context, aws_props AwsProps) (map[string]any, error) {
-	ao := workflow.ActivityOptions{
-		StartToCloseTimeout: 10 * time.Second,
-	}
-	ctx = workflow.WithActivityOptions(ctx, ao)
-
-	logger := workflow.GetLogger(ctx)
-
-	var result = make(map[string]any)
-	err := workflow.ExecuteActivity(ctx, AwsOrganizationsActivity, &aws_props).Get(ctx, &result)
-	if err != nil {
-		logger.Error("Activity failed.", "Error", err)
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func AwsOrganizationsActivity(ctx context.Context, aws_props AwsProps) (map[string]any, error) {
-	logger := activity.GetLogger(ctx)
-	logger.Info("Activity")
-
-	// Our app manages the tfc workspaces, aws organizations plus their accounts
-	app := cdktf.NewApp(nil)
-
-	workspaces := TfcOrganizationWorkspacesStack(app, aws_props.Terraform.Workspace)
-
-	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendConfig{
-		Hostname:     js("app.terraform.io"),
-		Organization: js(aws_props.Terraform.Organization),
-		Workspaces:   cdktf.NewNamedCloudWorkspace(js("workspaces")),
-	})
-
-	for _, org := range aws_props.Organizations {
-		// Create a tfc workspace for each stack
-		workspace.NewWorkspace(workspaces, js(org.Name), &workspace.WorkspaceConfig{
-			Name:                js(org.Name),
-			Organization:        js(aws_props.Terraform.Organization),
-			ExecutionMode:       js("local"),
-			FileTriggersEnabled: false,
-			QueueAllRuns:        false,
-			SpeculativeEnabled:  false,
-		})
-
-		// Create the aws organization + accounts stack
-		aws_org_stack := AwsOrganizationStack(app, &org)
-		cdktf.NewCloudBackend(aws_org_stack, &cdktf.CloudBackendConfig{
-			Hostname:     js("app.terraform.io"),
-			Organization: js(aws_props.Terraform.Organization),
-			Workspaces:   cdktf.NewNamedCloudWorkspace(js(org.Name)),
-		})
-	}
-
-	// Emit cdk.tf.json
-	synth_lock.Lock()
-    defer synth_lock.Unlock()
-	app.Synth()
-
-	// Build map of stack and synthesized tf config
-	var synth = make(map[string]any)
-
-	f, _ := os.Open("cdktf.out/stacks/")
-	files, _ := f.Readdir(0)
-	for _, file := range files {
-		dat, _ := os.ReadFile(fmt.Sprintf("cdktf.out/stacks/%s/cdk.tf.json", file.Name()))
-		stack := make(map[string]any)
-		json.Unmarshal([]byte(dat), &stack)
-		synth[file.Name()] = stack
-	}
-
-	return synth, nil
-}
-
+ 
 func main() {
 	aws_props := LoadUserAwsProps()
 
@@ -394,14 +258,4 @@ func main() {
 
 	// Emit cdk.tf.json
 	app.Synth()
-}
-
-func temporal_main() {
-	hostport := os.Args[1]
-
-	if len(os.Args) > 2 && os.Args[2] == "queue" {
-		QueueAwsProps(hostport)
-	} else {
-		AwsOrganizationsWorker(hostport)
-	}
 }
