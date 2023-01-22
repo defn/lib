@@ -1,7 +1,7 @@
 {
   inputs = {
     dev.url = github:defn/pkg/dev-0.0.22?dir=dev;
-    defn-lib.url = github:defn/lib/0.0.9;
+    defn-lib.url = github:defn/lib/0.0.11;
   };
 
   outputs = inputs: { main = inputs.dev.main; } // inputs.dev.main rec {
@@ -21,13 +21,12 @@
             defaultPackage
             inputs.defn-lib.packages.${system}.infra
           ] ++
-          wrap.flakeInputs ++
           pkgs.lib.attrsets.mapAttrsToList (name: value: value) commands
         );
       };
 
       defaultPackage = wrap.nullBuilder {
-        propagatedBuildInputs = with pkgs; wrap.flakeInputs ++ [
+        propagatedBuildInputs = with pkgs; [
           bashInteractive
         ];
       };
