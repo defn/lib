@@ -44,7 +44,7 @@
 
             installPhase = ''
               mkdir -p $out/bin
-              cp ${go.${name}}/bin/${name} $out/bin/${config.slug}
+              cp ${go.${name}}/bin/${name} $out/bin/${name}
             '';
           });
       };
