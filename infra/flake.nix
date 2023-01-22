@@ -4,7 +4,7 @@
     defn-lib.url = github:defn/lib/0.0.11;
   };
 
-  outputs = inputs: { main = inputs.dev.main; } // inputs.dev.main rec {
+  outputs = inputs: inputs.dev.main rec {
     inherit inputs;
 
     src = builtins.path { path = ./.; name = config.slug; };
