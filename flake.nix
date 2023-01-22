@@ -34,6 +34,7 @@
           propagatedBuildInputs = [
             builders.yaegi
             goEnv
+            pkgs.gomod2nix
           ];
         };
 
