@@ -19,7 +19,6 @@
         devInputs = (
           [
             defaultPackage
-            inputs.defn-lib.packages.${system}.infra
           ] ++
           pkgs.lib.attrsets.mapAttrsToList (name: value: value) commands
         );
@@ -28,6 +27,7 @@
       defaultPackage = wrap.nullBuilder {
         propagatedBuildInputs = with pkgs; [
           bashInteractive
+          inputs.defn-lib.packages.${system}.infra
         ];
       };
 
