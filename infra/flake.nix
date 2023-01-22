@@ -1,7 +1,7 @@
 {
   inputs = {
     dev.url = github:defn/pkg/dev-0.0.22?dir=dev;
-    defn-lib.url = github:defn/lib/0.0.11;
+    defn-lib.url = github:defn/lib/0.0.12;
   };
 
   outputs = inputs: inputs.dev.main rec {
