@@ -11,19 +11,12 @@ input: {
 		email: "iam@defn.sh"
 	}]
 
-	_full_accounts: ["net", "log", "lib", "ops", "sec", "hub", "pub", "dev", "dmz"]
+	_full_accounts: ["net", "lib", "hub", "log", "ops", "sec", "pub", "dev", "dmz"]
 	_env_accounts: ["net", "lib", "hub"]
 	_ops_accounts: ["ops"]
 
 	organizations: [N=string]: name: N
 	organizations: {
-		defn: {
-			region: "us-west-2",
-			prefix:   "aws-"
-			domain:   "defn.us"
-			accounts: _ops_accounts
-			admins:   _aws_admins
-		}
 		gyre: {
 			region:   "us-east-2"
 			prefix:   "aws-"

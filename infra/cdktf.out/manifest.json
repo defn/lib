@@ -9,30 +9,6 @@
       "annotations": [],
       "dependencies": []
     },
-    "defn": {
-      "name": "defn",
-      "constructPath": "defn",
-      "workingDirectory": "stacks/defn",
-      "synthesizedStackPath": "stacks/defn/cdk.tf.json",
-      "annotations": [],
-      "dependencies": []
-    },
-    "gyre": {
-      "name": "gyre",
-      "constructPath": "gyre",
-      "workingDirectory": "stacks/gyre",
-      "synthesizedStackPath": "stacks/gyre/cdk.tf.json",
-      "annotations": [],
-      "dependencies": []
-    },
-    "curl": {
-      "name": "curl",
-      "constructPath": "curl",
-      "workingDirectory": "stacks/curl",
-      "synthesizedStackPath": "stacks/curl/cdk.tf.json",
-      "annotations": [],
-      "dependencies": []
-    },
     "coil": {
       "name": "coil",
       "constructPath": "coil",
@@ -54,6 +30,22 @@
       "constructPath": "spiral",
       "workingDirectory": "stacks/spiral",
       "synthesizedStackPath": "stacks/spiral/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
+    },
+    "gyre": {
+      "name": "gyre",
+      "constructPath": "gyre",
+      "workingDirectory": "stacks/gyre",
+      "synthesizedStackPath": "stacks/gyre/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
+    },
+    "curl": {
+      "name": "curl",
+      "constructPath": "curl",
+      "workingDirectory": "stacks/curl",
+      "synthesizedStackPath": "stacks/curl/cdk.tf.json",
       "annotations": [],
       "dependencies": []
     }

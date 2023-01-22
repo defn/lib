@@ -46,20 +46,6 @@
         "queue_all_runs": false,
         "speculative_enabled": false
       },
-      "defn": {
-        "//": {
-          "metadata": {
-            "path": "workspaces/defn",
-            "uniqueId": "defn"
-          }
-        },
-        "execution_mode": "local",
-        "file_triggers_enabled": false,
-        "name": "defn",
-        "organization": "defn",
-        "queue_all_runs": false,
-        "speculative_enabled": false
-      },
       "gyre": {
         "//": {
           "metadata": {
