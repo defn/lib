@@ -1,20 +1,18 @@
 {
   inputs = {
-    dev.url = github:defn/pkg/dev-0.0.22?dir=dev;
+    dev.url = github:defn/pkg/dev-0.0.23-rc8?dir=dev;
   };
 
   outputs = inputs: inputs.dev.main rec {
     inherit inputs;
 
-    src = builtins.path { path = ./.; name = config.slug; };
+    src = builtins.path { path = ./.; name = builtins.readFile ./SLUG; };
 
     config = rec {
-      slug = builtins.readFile ./SLUG;
-      version = builtins.readFile ./VERSION;
       apps = [ "hello" "bye" "api" "infra" ];
     };
 
-    handler = { pkgs, wrap, system, builders }:
+    handler = { pkgs, wrap, system, builders, commands, config }:
       let
         goEnv = pkgs.mkGoEnv {
           pwd = src;
@@ -32,9 +30,9 @@
       rec {
         defaultPackage = wrap.nullBuilder {
           propagatedBuildInputs = [
-            builders.yaegi
             goEnv
             pkgs.gomod2nix
+            builders.yaegi
           ];
         };
 
