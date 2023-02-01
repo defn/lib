@@ -18,6 +18,34 @@
   },
   "resource": {
     "tfe_workspace": {
+      "chamber": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/chamber",
+            "uniqueId": "chamber"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "chamber",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
+      "circus": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/circus",
+            "uniqueId": "circus"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "circus",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
       "coil": {
         "//": {
           "metadata": {
@@ -42,6 +70,20 @@
         "execution_mode": "local",
         "file_triggers_enabled": false,
         "name": "curl",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
+      "fogg": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/fogg",
+            "uniqueId": "fogg"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "fogg",
         "organization": "defn",
         "queue_all_runs": false,
         "speculative_enabled": false
@@ -74,6 +116,48 @@
         "queue_all_runs": false,
         "speculative_enabled": false
       },
+      "imma": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/imma",
+            "uniqueId": "imma"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "imma",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
+      "immanent": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/immanent",
+            "uniqueId": "immanent"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "immanent",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
+      "jianghu": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/jianghu",
+            "uniqueId": "jianghu"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "jianghu",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
       "spiral": {
         "//": {
           "metadata": {
@@ -84,6 +168,34 @@
         "execution_mode": "local",
         "file_triggers_enabled": false,
         "name": "spiral",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
+      "vault": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/vault",
+            "uniqueId": "vault"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "vault",
+        "organization": "defn",
+        "queue_all_runs": false,
+        "speculative_enabled": false
+      },
+      "whoa": {
+        "//": {
+          "metadata": {
+            "path": "workspaces/whoa",
+            "uniqueId": "whoa"
+          }
+        },
+        "execution_mode": "local",
+        "file_triggers_enabled": false,
+        "name": "whoa",
         "organization": "defn",
         "queue_all_runs": false,
         "speculative_enabled": false

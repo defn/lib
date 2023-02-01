@@ -11,6 +11,7 @@ aws_admins: [{
 full_accounts: ["ops", "net", "lib", "hub", "log", "sec", "pub", "dev", "dmz"]
 env_accounts: ["ops", "net", "lib", "hub"]
 ops_accounts: ["ops"]
+no_accounts: []
 
 input: {
 	terraform: {
@@ -18,42 +19,59 @@ input: {
 		workspace:    "workspaces"
 	}
 
-	organizations: [N=string]: name: N
+	organizations: [N=string]: {
+		name:     N
+		prefix:   string | *"aws-"
+		domain:   string | *"defn.us"
+		admins:   [... {...}] | *aws_admins
+		accounts: [...string] | *no_accounts
+	}
+
 	organizations: {
 		gyre: {
 			region:   "us-east-2"
-			prefix:   "aws-"
-			domain:   "defn.us"
 			accounts: ops_accounts
-			admins:   aws_admins
 		}
 		curl: {
 			region:   "us-west-2"
-			prefix:   "aws-"
-			domain:   "defn.us"
 			accounts: env_accounts
-			admins:   aws_admins
 		}
 		coil: {
 			region:   "us-east-1"
-			prefix:   "aws-"
-			domain:   "defn.us"
 			accounts: env_accounts
-			admins:   aws_admins
 		}
 		helix: {
 			region:   "us-east-2"
-			prefix:   "aws-"
 			domain:   "defn.sh"
 			accounts: full_accounts
-			admins:   aws_admins
 		}
 		spiral: {
 			region:   "us-west-2"
-			prefix:   "aws-"
-			domain:   "defn.us"
 			accounts: full_accounts
-			admins:   aws_admins
+		}
+		vault: {
+			region: "us-east-2"
+		}
+		circus: {
+			region: "us-west-2"
+		}
+		chamber: {
+			region: "us-west-2"
+		}
+		whoa: {
+			region: "us-west-2"
+		}
+		imma: {
+			region: "us-west-2"
+		}
+		immanent: {
+			region: "us-west-2"
+		}
+		jianghu: {
+			region: "us-west-2"
+		}
+		fogg: {
+			region: "us-west-2"
 		}
 	}
 }
