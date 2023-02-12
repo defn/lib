@@ -16,6 +16,3 @@ dev:
 go-update:
 	go get -u ./cmd/...
 	go mod tidy
-
-release:
-	 git tag $$(cat VERSION ); git push origin $$(cat VERSION )
