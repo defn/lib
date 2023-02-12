@@ -26,17 +26,28 @@
             pname = name;
             subPackages = [ "cmd/${name}" ];
           });
+
+        deploy = {
+          deploy = wrap.bashBuilder {
+            inherit src;
+
+            installPhase = ''
+              mkdir -p $out/bin
+              cp nix-entrypoint $out/bin/
+            '';
+          };
+        };
       in
       rec {
         defaultPackage = wrap.nullBuilder {
           propagatedBuildInputs = [
             goEnv
             pkgs.gomod2nix
-            builders.yaegi
+            deploy.deploy
           ];
         };
 
-        packages = pkgs.lib.genAttrs config.apps
+        packages = deploy // pkgs.lib.genAttrs config.apps
           (name: wrap.bashBuilder {
             inherit src;
 

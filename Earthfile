@@ -17,10 +17,10 @@ image:
 
 build:
     FROM ghcr.io/defn/dev:latest-nix-empty
-    COPY +nix/store /nix/store
-    COPY +nix/app /app
+    COPY +nix-build/store /nix/store
+    COPY +nix-build/app /app
 
-nix:
+nix-build:
     DO dev+NIX_DIRENV
     SAVE ARTIFACT /nix/store store
     SAVE ARTIFACT /app app
