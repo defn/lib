@@ -1,6 +1,6 @@
 {
   inputs = {
-    dev.url = github:defn/pkg/dev-0.0.23-rc8?dir=dev;
+    dev.url = github:defn/pkg/dev-0.0.23?dir=dev;
   };
 
   outputs = inputs: inputs.dev.main rec {
@@ -18,7 +18,7 @@
           pwd = src;
         };
 
-        go = pkgs.lib.genAttrs config.apps
+        goCmd = pkgs.lib.genAttrs config.apps
           (name: pkgs.buildGoApplication {
             inherit src;
             pwd = src;
@@ -42,8 +42,14 @@
 
             installPhase = ''
               mkdir -p $out/bin
-              cp ${go.${name}}/bin/${name} $out/bin/${name}
+              cp ${goCmd.${name}}/bin/${name} $out/bin/${name}
             '';
+          });
+
+        apps = pkgs.lib.genAttrs config.apps
+          (name: {
+            type = "app";
+            program = "${packages.${name}}/bin/${name}";
           });
       };
   };
