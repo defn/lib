@@ -1,4 +1,4 @@
 {
-  inputs.lib.url = github:defn/lib/0.0.28;
+  inputs.lib.url = github:defn/lib/0.0.29;
   outputs = inputs: inputs.lib.main rec { src = ./.; };
 }
