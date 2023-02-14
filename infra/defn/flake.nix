@@ -2,6 +2,6 @@
   inputs.lib.url = github:defn/lib/0.0.25;
 
   outputs = inputs: inputs.lib.main rec {
-    src = builtins.path { path = ./.; name = builtins.readFile ./SLUG; };
+    src = builtins.path { path = ./.; name = (builtins.fromJSON(builtins.readFile ./flake.json)).slug; };
   };
 }
