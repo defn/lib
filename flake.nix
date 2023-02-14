@@ -18,7 +18,7 @@
         '';
       };
     in
-    inputs.dev.main rec {
+    { inherit cdktf; } // inputs.dev.main rec {
       inherit inputs;
 
       src = builtins.path { path = ./.; name = builtins.readFile ./SLUG; };
