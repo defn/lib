@@ -4,16 +4,16 @@
     terraform.url = github:defn/pkg/terraform-1.3.8-0?dir=terraform;
   };
 
-  outputs = inputs:
+  outputs = { self, ... }@inputs:
     let
-      cdktf = { src, wrap }: wrap.bashBuilder {
+      cdktf = { system, src, wrap }: wrap.bashBuilder {
         buildInputs = wrap.flakeInputs;
 
         inherit src;
 
         installPhase = ''
           mkdir -p $out
-          infra
+          ${self.packages.${system}.infra}/bin/infra
           cp -a cdktf.out/. $out/.
         '';
       };
@@ -28,7 +28,7 @@
           src = builtins.path { path = s; name = (builtins.fromJSON (builtins.readFile "${s}/flake.json")).slug; };
 
           handler = { pkgs, wrap, system, builders, commands, config }: rec {
-            defaultPackage = cdktf { inherit src; inherit wrap; };
+            defaultPackage = cdktf { inherit system; inherit src; inherit wrap; };
           };
         };
     in
@@ -69,17 +69,6 @@
               '';
             };
           };
-        in
-        rec {
-          defaultPackage = wrap.nullBuilder {
-            propagatedBuildInputs = with pkgs; wrap.flakeInputs ++ [
-              goEnv
-              deploy.deploy
-              gomod2nix
-              nodejs-18_x
-              packages.infra
-            ];
-          };
 
           packages = deploy // pkgs.lib.genAttrs config.apps
             (name: wrap.bashBuilder {
@@ -96,6 +85,19 @@
               type = "app";
               program = "${packages.${name}}/bin/${name}";
             });
+        in
+        rec {
+          inherit apps;
+          inherit packages;
+
+          defaultPackage = wrap.nullBuilder {
+            propagatedBuildInputs = with pkgs; wrap.flakeInputs ++ [
+              goEnv
+              deploy.deploy
+              gomod2nix
+              nodejs-18_x
+            ];
+          };
         };
     };
 }
