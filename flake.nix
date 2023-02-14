@@ -6,11 +6,11 @@
 
   outputs = { self, ... }@inputs:
     let
-      cdktfMain = { src, cdktfInputs }:
+      cdktfMain = { src, infra }:
         let
           s = src;
           cdktf = { system, src, wrap }: wrap.bashBuilder {
-            buildInputs = wrap.flakeInputs ++ cdktfInputs;
+            buildInputs = wrap.flakeInputs ++ [ infra.defaultPackage.{system} ];
 
             inherit src;
 
