@@ -1,24 +1,5 @@
 {
   "nodes": {
-    "defn-lib": {
-      "inputs": {
-        "dev": "dev"
-      },
-      "locked": {
-        "lastModified": 1676342473,
-        "narHash": "sha256-KDwBZMILunGnoEmb/0keRuiM3lGZiKyD3cRb90LvI0g=",
-        "owner": "defn",
-        "repo": "lib",
-        "rev": "9995ff0402651e9473d80fc132d7e3bce118c79f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "defn",
-        "ref": "0.0.15",
-        "repo": "lib",
-        "type": "github"
-      }
-    },
     "dev": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -172,12 +153,10 @@
     "gomod2nix": {
       "inputs": {
         "nixpkgs": [
-          "defn-lib",
           "dev",
           "nixpkgs"
         ],
         "utils": [
-          "defn-lib",
           "dev",
           "flake-utils"
         ]
@@ -200,10 +179,12 @@
     "gomod2nix_2": {
       "inputs": {
         "nixpkgs": [
+          "lib",
           "dev",
           "nixpkgs"
         ],
         "utils": [
+          "lib",
           "dev",
           "flake-utils"
         ]
@@ -220,6 +201,26 @@
         "owner": "defn",
         "ref": "1.5.0-4",
         "repo": "gomod2nix",
+        "type": "github"
+      }
+    },
+    "lib": {
+      "inputs": {
+        "dev": "dev_2",
+        "terraform": "terraform"
+      },
+      "locked": {
+        "lastModified": 1676343991,
+        "narHash": "sha256-RJy4wHWf9f1/G8u97NM60uPoWY9c5gKm4rLvZ2VwPmo=",
+        "owner": "defn",
+        "repo": "lib",
+        "rev": "0a703ab1c64ace68e05d1716f39e1630beb5a13a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "defn",
+        "ref": "0.0.17",
+        "repo": "lib",
         "type": "github"
       }
     },
@@ -305,9 +306,8 @@
     },
     "root": {
       "inputs": {
-        "defn-lib": "defn-lib",
-        "dev": "dev_2",
-        "terraform": "terraform"
+        "dev": "dev",
+        "lib": "lib"
       }
     },
     "terraform": {
@@ -334,7 +334,6 @@
     "wrapper": {
       "inputs": {
         "nixpkgs": [
-          "defn-lib",
           "dev",
           "nixpkgs"
         ]
@@ -359,13 +358,11 @@
     "wrapper_2": {
       "inputs": {
         "flake-utils": [
-          "defn-lib",
           "dev",
           "yaegi",
           "flake-utils"
         ],
         "nixpkgs": [
-          "defn-lib",
           "dev",
           "yaegi",
           "nixpkgs"
@@ -391,6 +388,7 @@
     "wrapper_3": {
       "inputs": {
         "nixpkgs": [
+          "lib",
           "dev",
           "nixpkgs"
         ]
@@ -415,11 +413,13 @@
     "wrapper_4": {
       "inputs": {
         "flake-utils": [
+          "lib",
           "dev",
           "yaegi",
           "flake-utils"
         ],
         "nixpkgs": [
+          "lib",
           "dev",
           "yaegi",
           "nixpkgs"
