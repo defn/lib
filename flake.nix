@@ -20,7 +20,8 @@
 
       main = { src }: inputs.dev.main rec {
         inherit inputs;
-        inherit src;
+
+        src = builtins.path { path = src; name = (builtins.fromJSON(builtins.readFile ${src}/flake.json)).slug; };
 
         handler = { pkgs, wrap, system, builders, commands, config }: rec {
           defaultPackage = cdktf { inherit src; inherit wrap; };
