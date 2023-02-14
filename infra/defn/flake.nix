@@ -1,16 +1,7 @@
 {
-  inputs = {
-    dev.url = github:defn/pkg/dev-0.0.23?dir=dev;
-    lib.url = github:defn/lib/0.0.22;
-  };
+  inputs.lib.url = github:defn/lib/0.0.25;
 
-  outputs = inputs: inputs.dev.main rec {
-    inherit inputs;
-
+  outputs = inputs: inputs.lib.main rec {
     src = builtins.path { path = ./.; name = builtins.readFile ./SLUG; };
-
-    handler = { pkgs, wrap, system, builders, commands, config }: rec {
-      defaultPackage = inputs.lib.cdktf { inherit src; inherit wrap; };
-    };
   };
 }
