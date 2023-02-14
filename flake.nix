@@ -13,7 +13,6 @@
 
         installPhase = ''
           mkdir -p $out
-          env CDKTF_CONTEXT_JSON='{ "excludeStackIdFromLogicalIds": "true", "allowSepCharsInLogicalIds": "true" }' infra
           cp -a cdktf.out/. $out/.
         '';
       };

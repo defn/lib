@@ -229,6 +229,9 @@ func main() {
 
 	app := cdktf.NewApp(nil)
 
+	app.Node().SetContext(jsii.String("excludeStackIdFromLogicalIds"), "true")
+	app.Node().SetContext(jsii.String("allowSepCharsInLogicalIds"), "true")
+
 	workspaces := TfcOrganizationWorkspacesStack(app, aws_props.Terraform.Workspace)
 	cdktf.NewCloudBackend(workspaces, &cdktf.CloudBackendConfig{
 		Hostname:     js("app.terraform.io"),
