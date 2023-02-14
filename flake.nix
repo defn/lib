@@ -23,7 +23,7 @@
         inherit src;
 
         handler = { pkgs, wrap, system, builders, commands, config }: rec {
-          defaultPackage = inputs.lib.cdktf { inherit src; inherit wrap; };
+          defaultPackage = cdktf { inherit src; inherit wrap; };
         };
       };
     in
