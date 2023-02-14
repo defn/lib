@@ -354,17 +354,17 @@
       },
       "locked": {
         "dir": "cmd/infra",
-        "lastModified": 1676410726,
-        "narHash": "sha256-uEUtRmQLrfEt2hxTyCLhJCElutd8fDiO3HeDJgn43Dw=",
+        "lastModified": 1676411671,
+        "narHash": "sha256-NiwAc0SytrIIUhY9na5oYa/LJwrA2ueo6jhGptVFfAA=",
         "owner": "defn",
         "repo": "lib",
-        "rev": "7d14aa4397a17756d6ada3a4bbd77667b4747938",
+        "rev": "0e1a70fe0f7807c858d70c7218dac45ddc924b74",
         "type": "github"
       },
       "original": {
         "dir": "cmd/infra",
         "owner": "defn",
-        "ref": "infra-0.0.2",
+        "ref": "infra-0.0.3",
         "repo": "lib",
         "type": "github"
       }
@@ -375,16 +375,16 @@
         "terraform": "terraform"
       },
       "locked": {
-        "lastModified": 1676410548,
-        "narHash": "sha256-MHn8MkVIZVa1dO5PCKa89jyBORKnlrswV15ZC+dXh8M=",
+        "lastModified": 1676411550,
+        "narHash": "sha256-mXEQzKpTR2YB5sPemleL/FYDdZIXNu+QScoJWaG63og=",
         "owner": "defn",
         "repo": "lib",
-        "rev": "f95e9af0ddc6eb118988f3254ce7355e2183df97",
+        "rev": "1a7f3fc12cac13445c335c4dd57cd00084beae6e",
         "type": "github"
       },
       "original": {
         "owner": "defn",
-        "ref": "0.0.30",
+        "ref": "0.0.34",
         "repo": "lib",
         "type": "github"
       }
