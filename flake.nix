@@ -13,6 +13,7 @@
 
         installPhase = ''
           mkdir -p $out
+          infra
           cp -a cdktf.out/. $out/.
         '';
       };
