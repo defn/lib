@@ -1,4 +1,4 @@
-module github.com/defn/lib
+module github.com/defn/lib/cmd/infra
 
 go 1.19
 
