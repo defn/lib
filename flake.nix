@@ -6,21 +6,20 @@
 
   outputs = { self, ... }@inputs:
     let
-      cdktf = { system, src, wrap }: wrap.bashBuilder {
-        buildInputs = wrap.flakeInputs;
-
-        inherit src;
-
-        installPhase = ''
-          mkdir -p $out
-          ${self.packages.${system}.infra}/bin/infra
-          cp -a cdktf.out/. $out/.
-        '';
-      };
-
-      main = { src }:
+      cdktfMain = { src }:
         let
           s = src;
+          cdktf = { system, src, wrap }: wrap.bashBuilder {
+            buildInputs = wrap.flakeInputs;
+
+            inherit src;
+
+            installPhase = ''
+              mkdir -p $out
+              ${self.packages.${system}.infra}/bin/infra
+              cp -a cdktf.out/. $out/.
+            '';
+          };
         in
         inputs.dev.main rec {
           inherit inputs;
@@ -31,73 +30,56 @@
             defaultPackage = cdktf { inherit system; inherit src; inherit wrap; };
           };
         };
+
+      goMain = { src }:
+        let
+          s = src;
+        in
+        inputs.dev.main rec {
+          inherit inputs;
+
+          src = builtins.path { path = s; name = (builtins.fromJSON (builtins.readFile "${s}/flake.json")).slug; };
+
+          handler = { pkgs, wrap, system, builders, commands, config }:
+            let
+              goEnv = pkgs.mkGoEnv { pwd = src; };
+              goCmd = pkgs.buildGoApplication {
+                inherit src;
+                pwd = src;
+                pname = config.slug;
+                version = config.version;
+              };
+            in
+            rec {
+              devShell = wrap.devShell {
+                devInputs = [
+                  goEnv
+                  pkgs.gomod2nix
+                ];
+              };
+
+              defaultPackage = wrap.bashBuilder {
+                inherit src;
+
+                installPhase = ''
+                  mkdir -p $out/bin
+                  ls -ltrhd ${goCmd}/bin/*
+                  cp ${goCmd}/bin/${config.slug} $out/bin/
+                '';
+              };
+            };
+        };
     in
     {
-      inherit cdktf;
-      inherit main;
+      inherit cdktfMain;
+      inherit goMain;
     } // inputs.dev.main rec {
       inherit inputs;
 
-      src = builtins.path { path = ./.; name = builtins.readFile ./SLUG; };
+      src = builtins.path { path = ./.; name = (builtins.fromJSON (builtins.readFile "${./.}/flake.json")).slug; };
 
-      config = rec {
-        apps = [ "hello" "infra" ];
+      handler = { pkgs, wrap, system, builders, commands, config }: {
+        defaultPackage = wrap.nullBuilder { };
       };
-
-      handler = { pkgs, wrap, system, builders, commands, config }:
-        let
-          goEnv = pkgs.mkGoEnv {
-            pwd = src;
-          };
-
-          goCmd = pkgs.lib.genAttrs config.apps
-            (name: pkgs.buildGoApplication {
-              inherit src;
-              pwd = src;
-              version = config.version;
-              pname = name;
-              subPackages = [ "cmd/${name}" ];
-            });
-
-          deploy = {
-            deploy = wrap.bashBuilder {
-              inherit src;
-
-              installPhase = ''
-                mkdir -p $out/bin
-                cp nix-entrypoint $out/bin/
-              '';
-            };
-          };
-
-          packages = deploy // pkgs.lib.genAttrs config.apps
-            (name: wrap.bashBuilder {
-              inherit src;
-
-              installPhase = ''
-                mkdir -p $out/bin
-                cp ${goCmd.${name}}/bin/${name} $out/bin/${name}
-              '';
-            });
-
-          apps = pkgs.lib.genAttrs config.apps
-            (name: {
-              type = "app";
-              program = "${packages.${name}}/bin/${name}";
-            });
-        in
-        rec {
-          inherit apps;
-          inherit packages;
-
-          defaultPackage = wrap.nullBuilder {
-            propagatedBuildInputs = with pkgs; wrap.flakeInputs ++ [
-              goEnv
-              deploy.deploy
-              gomod2nix
-              nodejs-18_x
-            ];
-          };
-        };
     };
 }
