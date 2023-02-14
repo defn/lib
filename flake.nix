@@ -1,7 +1,7 @@
 {
   inputs = {
     dev.url = github:defn/pkg/dev-0.0.23?dir=dev;
-    terraform.url = github:defn/pkg/terraform-1.3.8?dir=terraform;
+    terraform.url = github:defn/pkg/terraform-1.3.8-0?dir=terraform;
   };
 
   outputs = inputs:
