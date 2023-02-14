@@ -18,15 +18,19 @@
         '';
       };
 
-      main = { src }: inputs.dev.main rec {
-        inherit inputs;
+      main = { src }:
+        let
+          s = src;
+        in
+        inputs.dev.main rec {
+          inherit inputs;
 
-        src = builtins.path { path = src; name = (builtins.fromJSON (builtins.readFile "${src}/flake.json")).slug; };
+          src = builtins.path { path = s; name = (builtins.fromJSON (builtins.readFile "${s}/flake.json")).slug; };
 
-        handler = { pkgs, wrap, system, builders, commands, config }: rec {
-          defaultPackage = cdktf { inherit src; inherit wrap; };
+          handler = { pkgs, wrap, system, builders, commands, config }: rec {
+            defaultPackage = cdktf { inherit src; inherit wrap; };
+          };
         };
-      };
     in
     {
       inherit cdktf;
