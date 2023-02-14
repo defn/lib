@@ -16,7 +16,7 @@
 
             installPhase = ''
               mkdir -p $out
-              ${self.packages.${system}.infra}/bin/infra
+              infra
               cp -a cdktf.out/. $out/.
             '';
           };
