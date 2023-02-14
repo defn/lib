@@ -17,8 +17,20 @@
           cp -a cdktf.out/. $out/.
         '';
       };
+
+      main = { inputs, src }: inputs.dev.main rec {
+        inherit inputs;
+        inherit src;
+
+        handler = { pkgs, wrap, system, builders, commands, config }: rec {
+          defaultPackage = inputs.lib.cdktf { inherit src; inherit wrap; };
+        };
+      };
     in
-    { inherit cdktf; } // inputs.dev.main rec {
+    {
+      inherit cdktf;
+      inherit main;
+    } // inputs.dev.main rec {
       inherit inputs;
 
       src = builtins.path { path = ./.; name = builtins.readFile ./SLUG; };
