@@ -9,14 +9,16 @@
       cdktfMain = { src, infra }:
         let
           s = src;
-          cdktf = { system, src, wrap }: wrap.bashBuilder {
-            buildInputs = wrap.flakeInputs ++ [ infra.defaultPackage.{system} ];
-
+          cdktf = { system, src, wrap, pkgs }: wrap.bashBuilder {
             inherit src;
+
+            buildInputs = wrap.flakeInputs ++ [
+              pkgs.nodejs-18_x
+            ];
 
             installPhase = ''
               mkdir -p $out
-              infra
+              ${infra.defaultPackage.${system}}/bin/infra
               cp -a cdktf.out/. $out/.
             '';
           };
@@ -27,7 +29,7 @@
           src = builtins.path { path = s; name = (builtins.fromJSON (builtins.readFile "${s}/flake.json")).slug; };
 
           handler = { pkgs, wrap, system, builders, commands, config }: rec {
-            defaultPackage = cdktf { inherit system; inherit src; inherit wrap; };
+            defaultPackage = cdktf { inherit system; inherit src; inherit wrap; inherit pkgs; };
           };
         };
 
