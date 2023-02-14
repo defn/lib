@@ -18,7 +18,7 @@
         '';
       };
 
-      main = { inputs, src }: inputs.dev.main rec {
+      main = { src }: inputs.dev.main rec {
         inherit inputs;
         inherit src;
 
