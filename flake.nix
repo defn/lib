@@ -41,7 +41,7 @@
       src = builtins.path { path = ./.; name = builtins.readFile ./SLUG; };
 
       config = rec {
-        apps = [ "hello" "bye" "api" "infra" ];
+        apps = [ "hello" "infra" ];
       };
 
       handler = { pkgs, wrap, system, builders, commands, config }:
