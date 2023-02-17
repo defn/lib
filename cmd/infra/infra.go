@@ -3,7 +3,6 @@ package main
 import (
 	_ "embed"
 	"fmt"
-	"sync"
 
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/cuecontext"
@@ -30,8 +29,6 @@ import (
 
 //go:embed schema/aws.cue
 var aws_schema_cue string
-
-var synth_lock sync.Mutex
 
 type TerraformCloud struct {
 	Organization string `json:"organization"`
@@ -60,6 +57,10 @@ type AwsProps struct {
 // alias
 func js(s string) *string {
 	return jsii.String(s)
+}
+
+func jsf(s string, a ...any) *string {
+	return js(fmt.Sprintf(s, a...))
 }
 
 func TfcOrganizationWorkspacesStack(scope constructs.Construct, id string) cdktf.TerraformStack {
@@ -136,7 +137,7 @@ func AwsOrganizationStack(scope constructs.Construct, org *AwsOrganization) cdkt
 	// Create initial users in the Administrators group
 	for _, adm := range org.Admins {
 		identitystore_user := identitystoreuser.NewIdentitystoreUser(stack,
-			js(fmt.Sprintf("admin_sso_user_%s", adm.Name)),
+			jsf("admin_sso_user_%s", adm.Name),
 			&identitystoreuser.IdentitystoreUserConfig{
 				DisplayName: js(adm.Name),
 				UserName:    js(adm.Name),
@@ -153,7 +154,7 @@ func AwsOrganizationStack(scope constructs.Construct, org *AwsOrganization) cdkt
 			})
 
 		identitystoregroupmembership.NewIdentitystoreGroupMembership(stack,
-			js(fmt.Sprintf("admin_sso_user_%s_membership", adm.Name)),
+			jsf("admin_sso_user_%s_membership", adm.Name),
 			&identitystoregroupmembership.IdentitystoreGroupMembershipConfig{
 				MemberId:        identitystore_user.UserId(),
 				GroupId:         identitystore_group.GroupId(),
@@ -171,14 +172,14 @@ func AwsOrganizationStack(scope constructs.Construct, org *AwsOrganization) cdkt
 			// iam_user_access_to_billing, role_name
 			organizations_account_config = organizationsaccount.OrganizationsAccountConfig{
 				Name:  js(acct),
-				Email: js(fmt.Sprintf("%s%s@%s", org.Prefix, org.Name, org.Domain)),
+				Email: jsf("%s%s@%s", org.Prefix, org.Name, org.Domain),
 				Tags:  &map[string]*string{"ManagedBy": js("Terraform")},
 			}
 		} else {
 			// Organization account
 			organizations_account_config = organizationsaccount.OrganizationsAccountConfig{
 				Name:                   js(acct),
-				Email:                  js(fmt.Sprintf("%s%s+%s@%s", org.Prefix, org.Name, acct, org.Domain)),
+				Email:                  jsf("%s%s+%s@%s", org.Prefix, org.Name, acct, org.Domain),
 				Tags:                   &map[string]*string{"ManagedBy": js("Terraform")},
 				IamUserAccessToBilling: js("ALLOW"),
 				RoleName:               js("OrganizationAccountAccessRole"),
@@ -191,7 +192,7 @@ func AwsOrganizationStack(scope constructs.Construct, org *AwsOrganization) cdkt
 
 		// Organization accounts grant Administrator permission set to the Administrators group
 		ssoadminaccountassignment.NewSsoadminAccountAssignment(stack,
-			js(fmt.Sprintf("%s_admin_sso_account_assignment", acct)),
+			jsf("%s_admin_sso_account_assignment", acct),
 			&ssoadminaccountassignment.SsoadminAccountAssignmentConfig{
 				InstanceArn:      sso_permission_set_admin.InstanceArn(),
 				PermissionSetArn: sso_permission_set_admin.PermissionSetArn(),
@@ -221,7 +222,6 @@ func LoadUserAwsProps() AwsProps {
 	return aws_props
 }
 
- 
 func main() {
 	aws_props := LoadUserAwsProps()
 
