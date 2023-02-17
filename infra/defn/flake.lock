@@ -354,17 +354,17 @@
       },
       "locked": {
         "dir": "cmd/infra",
-        "lastModified": 1676411671,
-        "narHash": "sha256-NiwAc0SytrIIUhY9na5oYa/LJwrA2ueo6jhGptVFfAA=",
+        "lastModified": 1676593154,
+        "narHash": "sha256-ZaywVKDSC3d9aKE/SRcQACjSUxgd6NoHwpeGUKcgEeI=",
         "owner": "defn",
         "repo": "lib",
-        "rev": "0e1a70fe0f7807c858d70c7218dac45ddc924b74",
+        "rev": "af807f58b4ab1a2f507aa0695eb20362938083e8",
         "type": "github"
       },
       "original": {
         "dir": "cmd/infra",
         "owner": "defn",
-        "ref": "infra-0.0.3",
+        "ref": "infra-0.0.4",
         "repo": "lib",
         "type": "github"
       }
