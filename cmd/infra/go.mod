@@ -4,11 +4,11 @@ go 1.19
 
 require (
 	cuelang.org/go v0.4.3
-	github.com/aws/constructs-go/constructs/v10 v10.1.250
+	github.com/aws/constructs-go/constructs/v10 v10.1.253
 	github.com/aws/jsii-runtime-go v1.75.0
 	github.com/cdktf/cdktf-provider-aws-go/aws/v12 v12.0.4
 	github.com/cdktf/cdktf-provider-tfe-go/tfe/v5 v5.0.1
-	github.com/hashicorp/terraform-cdk-go/cdktf v0.15.4
+	github.com/hashicorp/terraform-cdk-go/cdktf v0.15.5
 )
 
 require (

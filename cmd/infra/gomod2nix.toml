@@ -8,8 +8,8 @@ schema = 3
     version = "v3.2.0"
     hash = "sha256-JaGYNQwDxFCsLwzYVoJY4RUpP4dtiRlV14t2dVAg4oQ="
   [mod."github.com/aws/constructs-go/constructs/v10"]
-    version = "v10.1.250"
-    hash = "sha256-1TCT8Y3gH/M8ZHOQuFX4O5fK38L/EYbONUVFrbMsfkc="
+    version = "v10.1.253"
+    hash = "sha256-yvMis+Biovnfpd+UTkMs9uqlM2oZnx+dzwmHecTLIEU="
   [mod."github.com/aws/jsii-runtime-go"]
     version = "v1.75.0"
     hash = "sha256-MEiet5Zt3omOGUGi+8ZQ4OJQHUSPHYxXwgbFw5Zyh3M="
@@ -32,8 +32,8 @@ schema = 3
     version = "v1.3.0"
     hash = "sha256-QoR55eBtA94T2tBszyxfDtO7/pjZZSGb5vm7U0Xhs0Y="
   [mod."github.com/hashicorp/terraform-cdk-go/cdktf"]
-    version = "v0.15.4"
-    hash = "sha256-vuwJ7HDbMjB5tw9blE/mon46Tu6x2wZdsMgPs8v+ykQ="
+    version = "v0.15.5"
+    hash = "sha256-euFKA7yKjWy6kZpVokCWCJvc6a5BdwFsZ8hkbcgewmA="
   [mod."github.com/kr/text"]
     version = "v0.2.0"
     hash = "sha256-fadcWxZOORv44oak3jTxm6YcITcFxdGt4bpn869HxUE="
