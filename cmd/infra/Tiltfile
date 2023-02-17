@@ -1,5 +1,10 @@
 # tilt up --legacy --port 0
 local_resource(
     "build",
-    "time go install && time (echo && infra) && echo && (git diff cdktf.out || echo)",
+    "time go install && touch main.cue",
     deps=["infra.go", "go.mod", "go.sum"])
+
+local_resource(
+    "synth",
+    "time (echo && infra) && echo && (git diff cdktf.out || echo)",
+    deps=["main.cue"])
