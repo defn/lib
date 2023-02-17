@@ -59,8 +59,16 @@ func js(s string) *string {
 	return jsii.String(s)
 }
 
+func jsn(v float64) *float64 {
+	return jsii.Number(v)
+}
+
 func jsf(s string, a ...any) *string {
 	return js(fmt.Sprintf(s, a...))
+}
+
+func jstrue() *bool {
+	return jsii.Bool(true)
 }
 
 func TfcOrganizationWorkspacesStack(scope constructs.Construct, id string) cdktf.TerraformStack {
@@ -109,7 +117,7 @@ func AwsOrganizationStack(scope constructs.Construct, org *AwsOrganization) cdkt
 		js("admin_sso_permission_set"),
 		&ssoadminpermissionset.SsoadminPermissionSetConfig{
 			Name:            js("Administrator"),
-			InstanceArn:     js(cdktf.Fn_Element(ssoadmin_instance_arn.Expression(), jsii.Number(0)).(string)),
+			InstanceArn:     js(cdktf.Fn_Element(ssoadmin_instance_arn.Expression(), jsn(0)).(string)),
 			SessionDuration: js("PT2H"),
 			Tags:            &map[string]*string{"ManagedBy": js("Terraform")},
 		})
@@ -131,7 +139,7 @@ func AwsOrganizationStack(scope constructs.Construct, org *AwsOrganization) cdkt
 		js("administrators_sso_group"),
 		&identitystoregroup.IdentitystoreGroupConfig{
 			DisplayName:     js("Administrators"),
-			IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsii.Number(0)).(string)),
+			IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsn(0)).(string)),
 		})
 
 	// Create initial users in the Administrators group
@@ -146,11 +154,11 @@ func AwsOrganizationStack(scope constructs.Construct, org *AwsOrganization) cdkt
 					FamilyName: js(adm.Name),
 				},
 				Emails: &identitystoreuser.IdentitystoreUserEmails{
-					Primary: jsii.Bool(true),
+					Primary: jstrue(),
 					Type:    js("work"),
 					Value:   js(adm.Email),
 				},
-				IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsii.Number(0)).(string)),
+				IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsn(0)).(string)),
 			})
 
 		identitystoregroupmembership.NewIdentitystoreGroupMembership(stack,
@@ -158,7 +166,7 @@ func AwsOrganizationStack(scope constructs.Construct, org *AwsOrganization) cdkt
 			&identitystoregroupmembership.IdentitystoreGroupMembershipConfig{
 				MemberId:        identitystore_user.UserId(),
 				GroupId:         identitystore_group.GroupId(),
-				IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsii.Number(0)).(string)),
+				IdentityStoreId: js(cdktf.Fn_Element(ssoadmin_instance_isid.Expression(), jsn(0)).(string)),
 			})
 	}
 
