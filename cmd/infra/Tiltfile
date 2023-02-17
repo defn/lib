@@ -1,4 +1,6 @@
 # tilt up --legacy --port 0
+analytics_settings(False)
+
 local_resource(
     "build",
     "time go install && touch main.cue",
