@@ -4,77 +4,66 @@
     terraform.url = github:defn/pkg/terraform-1.4.0-beta2-1?dir=terraform;
   };
 
-  outputs = { self, ... }@inputs:
+  outputs = inputs:
     let
-      cdktfMain = { src, infra }:
+      goMain = caller:
         let
-          s = src;
-          cdktf = { system, src, wrap, pkgs }: wrap.bashBuilder {
-            inherit src;
+          go = ctx: ctx.wrap.bashBuilder {
+            installPhase = ''
+              mkdir -p $out/bin
+              ls -ltrhd ${goCmd}/bin/*
+              cp ${goCmd}/bin/${caller.config.slug} $out/bin/
+            '';
+          };
 
-            buildInputs = wrap.flakeInputs ++ [
-              pkgs.nodejs-18_x
+          goEnv = caller.pkgs.mkGoEnv { pwd = caller.src; };
+
+          goCmd = caller.pkgs.buildGoApplication rec {
+            src = caller.src;
+            pwd = src;
+            pname = caller.config.slug;
+            version = caller.config.version;
+          };
+        in
+        inputs.pkg.main rec {
+          src = caller.src;
+
+          defaultPackage = ctx: go (ctx // { inherit src; });
+
+          devShell = caller.wrap.devShell {
+            devInputs = [
+              goEnv
+              caller.pkgs.gomod2nix
+            ];
+          };
+        };
+
+      cdktfMain = caller:
+        let
+          cdktf = ctx: ctx.wrap.bashBuilder {
+            src = caller.src;
+
+            buildInputs = [
+              ctx.pkgs.nodejs-18_x
+              inputs.terraform.defaultPackage.${ctx.system}
             ];
 
             installPhase = ''
               mkdir -p $out
-              ${infra.defaultPackage.${system}}/bin/infra
+              ${caller.infra.defaultPackage.${ctx.system}}/bin/infra
               cp -a cdktf.out/. $out/.
             '';
           };
         in
-        inputs.dev.main rec {
-          inherit inputs;
+        inputs.pkg.main rec {
+          src = caller.src;
 
-          src = builtins.path { path = s; name = (builtins.fromJSON (builtins.readFile "${s}/flake.json")).slug; };
-
-          handler = { pkgs, wrap, system, builders, commands, config }: rec {
-            defaultPackage = cdktf { inherit system; inherit src; inherit wrap; inherit pkgs; };
-          };
-        };
-
-      goMain = { src }:
-        let
-          s = src;
-        in
-        inputs.dev.main rec {
-          inherit inputs;
-
-          src = builtins.path { path = s; name = (builtins.fromJSON (builtins.readFile "${s}/flake.json")).slug; };
-
-          handler = { pkgs, wrap, system, builders, commands, config }:
-            let
-              goEnv = pkgs.mkGoEnv { pwd = src; };
-              goCmd = pkgs.buildGoApplication {
-                inherit src;
-                pwd = src;
-                pname = config.slug;
-                version = config.version;
-              };
-            in
-            rec {
-              devShell = wrap.devShell {
-                devInputs = [
-                  goEnv
-                  pkgs.gomod2nix
-                ];
-              };
-
-              defaultPackage = wrap.bashBuilder {
-                inherit src;
-
-                installPhase = ''
-                  mkdir -p $out/bin
-                  ls -ltrhd ${goCmd}/bin/*
-                  cp ${goCmd}/bin/${config.slug} $out/bin/
-                '';
-              };
-            };
+          defaultPackage = ctx: cdktf (ctx // { inherit src; });
         };
     in
     {
-      inherit cdktfMain;
       inherit goMain;
+      inherit cdktfMain;
     } // inputs.pkg.main rec {
       src = ./.;
       defaultPackage = ctx: ctx.wrap.nullBuilder { };
