@@ -1,7 +1,7 @@
 {
   inputs = {
-    dev.url = github:defn/pkg/dev-0.0.23?dir=dev;
-    terraform.url = github:defn/pkg/terraform-1.3.8-0?dir=terraform;
+    pkg.url = github:defn/pkg/0.0.158;
+    terraform.url = github:defn/pkg/terraform-1.4.0-beta2-1?dir=terraform;
   };
 
   outputs = { self, ... }@inputs:
@@ -75,13 +75,8 @@
     {
       inherit cdktfMain;
       inherit goMain;
-    } // inputs.dev.main rec {
-      inherit inputs;
-
-      src = builtins.path { path = ./.; name = (builtins.fromJSON (builtins.readFile "${./.}/flake.json")).slug; };
-
-      handler = { pkgs, wrap, system, builders, commands, config }: {
-        defaultPackage = wrap.nullBuilder { };
-      };
+    } // inputs.pkg.main rec {
+      src = ./.;
+      defaultPackage = ctx: ctx.wrap.nullBuilder { };
     };
 }
