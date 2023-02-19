@@ -23,12 +23,12 @@
 
           defaultPackage = ctx:
             let
-              goEnv = caller.pkgs.mkGoEnv {
-                pwd = caller.src;
+              goEnv = ctx.pkgs.mkGoEnv {
+                pwd = src;
               };
 
-              goCmd = caller.pkgs.buildGoApplication rec {
-                src = caller.src;
+              goCmd = ctx.pkgs.buildGoApplication rec {
+                inherit src;
                 pwd = src;
                 pname = caller.config.slug;
                 version = caller.config.version;
