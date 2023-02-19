@@ -9,6 +9,8 @@
       goMain = caller:
         let
           go = ctx: ctx.wrap.bashBuilder {
+            src = caller.src;
+
             installPhase = ''
               mkdir -p $out/bin
               ls -ltrhd ${goCmd}/bin/*
@@ -16,7 +18,9 @@
             '';
           };
 
-          goEnv = caller.pkgs.mkGoEnv { pwd = caller.src; };
+          goEnv = caller.pkgs.mkGoEnv {
+            pwd = caller.src;
+          };
 
           goCmd = caller.pkgs.buildGoApplication rec {
             src = caller.src;
