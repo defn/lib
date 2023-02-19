@@ -1,6 +1,6 @@
 {
   inputs = {
-    pkg.url = github:defn/pkg/0.0.158;
+    pkg.url = github:defn/pkg/0.0.159;
     terraform.url = github:defn/pkg/terraform-1.4.0-beta2-1?dir=terraform;
   };
 
@@ -40,6 +40,8 @@
             caller.wrap.devShell {
               devInputs = [
                 ctx.pkgs.gomod2nix
+                ctx.pkgs.nodejs-18_x
+                inputs.terraform.defaultPackage.${ctx.system}
               ];
             };
         };
