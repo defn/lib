@@ -71,6 +71,7 @@
             devInputs = [
               ctx.pkgs.nodejs-18_x
               inputs.terraform.defaultPackage.${ctx.system}
+              caller.infra.defaultPackage.${ctx.system}
             ];
           };
         };
