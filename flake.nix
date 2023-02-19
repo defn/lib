@@ -36,9 +36,12 @@
             in
             go (ctx // { inherit src; inherit goCmd; });
 
-          devShell = caller.wrap.devShell {
-            devInputs = [ ]; # should be gomod2nix
-          };
+          devShell = ctx:
+            caller.wrap.devShell {
+              devInputs = [
+                ctx.pkgs.gomod2nix
+              ];
+            };
         };
 
       cdktfMain = caller:
@@ -62,6 +65,14 @@
           src = caller.src;
 
           defaultPackage = ctx: cdktf (ctx // { inherit src; });
+
+          devShell = ctx:
+            caller.wrap.devShell {
+              devInputs = [
+                ctx.pkgs.nodejs-18_x
+                inputs.terraform.defaultPackage.${ctx.system}
+              ];
+            };
         };
     in
     {
