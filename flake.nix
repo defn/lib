@@ -14,7 +14,7 @@
             installPhase = ''
               mkdir -p $out/bin
               ls -ltrhd ${ctx.goCmd}/bin/*
-              cp ${ctx.goCmd}/bin/${caller.config.slug} $out/bin/
+              cp ${ctx.goCmd}/bin/${ctx.config.slug} $out/bin/
             '';
           };
         in
