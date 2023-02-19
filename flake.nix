@@ -13,30 +13,31 @@
 
             installPhase = ''
               mkdir -p $out/bin
-              ls -ltrhd ${goCmd}/bin/*
-              cp ${goCmd}/bin/${caller.config.slug} $out/bin/
+              ls -ltrhd ${ctx.goCmd}/bin/*
+              cp ${ctx.goCmd}/bin/${caller.config.slug} $out/bin/
             '';
-          };
-
-          goEnv = caller.pkgs.mkGoEnv {
-            pwd = caller.src;
-          };
-
-          goCmd = caller.pkgs.buildGoApplication rec {
-            src = caller.src;
-            pwd = src;
-            pname = caller.config.slug;
-            version = caller.config.version;
           };
         in
         inputs.pkg.main rec {
           src = caller.src;
 
-          defaultPackage = ctx: go (ctx // { inherit src; });
+          defaultPackage = ctx:
+            let
+              goEnv = caller.pkgs.mkGoEnv {
+                pwd = caller.src;
+              };
+
+              goCmd = caller.pkgs.buildGoApplication rec {
+                src = caller.src;
+                pwd = src;
+                pname = caller.config.slug;
+                version = caller.config.version;
+              };
+            in
+            go (ctx // { inherit src; inherit goCmd; });
 
           devShell = caller.wrap.devShell {
             devInputs = [
-              goEnv
               caller.pkgs.gomod2nix
             ];
           };
