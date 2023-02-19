@@ -30,16 +30,14 @@
               goCmd = ctx.pkgs.buildGoApplication rec {
                 inherit src;
                 pwd = src;
-                pname = caller.config.slug;
-                version = caller.config.version;
+                pname = ctx.config.slug;
+                version = ctx.config.version;
               };
             in
             go (ctx // { inherit src; inherit goCmd; });
 
           devShell = caller.wrap.devShell {
-            devInputs = [
-              caller.pkgs.gomod2nix
-            ];
+            devInputs = [ ]; # should be gomod2nix
           };
         };
 
