@@ -46,12 +46,12 @@
 
         case "''${1:-}" in
           build)
-            cd ./$(git rev-parse --show-cdup)/flies/${name}
+            cd ./$(git rev-parse --show-cdup)/infra/flies/${name}
             time earthly --push --no-output +image --image=registry.fly.io/${name}:latest
             docker pull registry.fly.io/${name}:latest
             ;;
           deploy)
-            cd ./$(git rev-parse --show-cdup)/flies/${name}
+            cd ./$(git rev-parse --show-cdup)/infra/flies/${name}
             flyctl machine update -a ${name} --yes --dockerfile Dockerfile $(flyctl machine list -a ${name} --json | jq -r '.[].id')
             ;;
           *)
