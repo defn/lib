@@ -1,1 +1,1 @@
-FROM registry.fly.io/so:latest
+FROM registry.fly.io/wx:latest
