@@ -60,7 +60,7 @@ k3d:
 
     RUN . /home/ubuntu/.profile \
         && for a in git gnumake; do nix profile install nixpkgs#$a; done \
-        && nix profile install github:defn/pkg/tailscale-1.36.0-0?dir=tailscale
+        && nix profile install github:defn/pkg/tailscale-1.36.1-1?dir=tailscale
 
     RUN . /home/ubuntu/.profile \
         && git clone https://github.com/defn/dev dev \
