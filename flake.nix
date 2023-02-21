@@ -2,6 +2,8 @@
   inputs = {
     pkg.url = github:defn/pkg/0.0.159;
     terraform.url = github:defn/pkg/terraform-1.4.0-beta2-1?dir=terraform;
+    godev.url = github:defn/pkg/godev-0.0.1?dir=godev;
+    nodedev.url = github:defn/pkg/nodedev-0.0.1?dir=nodedev;
   };
 
   outputs = inputs:
@@ -10,6 +12,10 @@
         let
           go = ctx: ctx.wrap.bashBuilder {
             src = caller.src;
+
+            buildInputs = [
+              inputs.godev.defaultPackage.${ctx.system}
+            ];
 
             installPhase = ''
               mkdir -p $out/bin
@@ -39,7 +45,8 @@
           devShell = ctx: ctx.wrap.devShell {
             devInputs = [
               ctx.pkgs.gomod2nix
-              ctx.pkgs.nodejs-18_x
+              inputs.godev.defaultPackage.${ctx.system}
+              inputs.nodedev.defaultPackage.${ctx.system}
               inputs.terraform.defaultPackage.${ctx.system}
             ];
           };
@@ -51,7 +58,7 @@
             src = caller.src;
 
             buildInputs = [
-              ctx.pkgs.nodejs-18_x
+              inputs.nodedev.defaultPackage.${ctx.system}
               inputs.terraform.defaultPackage.${ctx.system}
             ];
 
@@ -69,7 +76,7 @@
 
           devShell = ctx: ctx.wrap.devShell {
             devInputs = [
-              ctx.pkgs.nodejs-18_x
+              inputs.nodedev.defaultPackage.${ctx.system}
               inputs.terraform.defaultPackage.${ctx.system}
               caller.infra.defaultPackage.${ctx.system}
             ];
