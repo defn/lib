@@ -42,7 +42,7 @@ fly: wh: {
 	fly_ip:           true
 	fly_machine_name: "defn2"
 	fly_mount:     "/cache"
-	fly_data_size: 10
+	fly_data_size: 60
 	fly_cpus:      2
 	fly_memorymb:  4096
 	fly_services: [{
