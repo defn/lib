@@ -8,14 +8,14 @@ schema = 3
     version = "v3.2.0"
     hash = "sha256-JaGYNQwDxFCsLwzYVoJY4RUpP4dtiRlV14t2dVAg4oQ="
   [mod."github.com/aws/constructs-go/constructs/v10"]
-    version = "v10.1.253"
-    hash = "sha256-yvMis+Biovnfpd+UTkMs9uqlM2oZnx+dzwmHecTLIEU="
+    version = "v10.1.256"
+    hash = "sha256-oXtddHA5EForUMYUSpNMgL3yUq3oZyaL/LVENMGUH6w="
   [mod."github.com/aws/jsii-runtime-go"]
     version = "v1.75.0"
     hash = "sha256-MEiet5Zt3omOGUGi+8ZQ4OJQHUSPHYxXwgbFw5Zyh3M="
   [mod."github.com/cdktf/cdktf-provider-aws-go/aws/v12"]
-    version = "v12.0.4"
-    hash = "sha256-I3uyQdzNHKbWelJPWMQ+0H5upNWbC7S88Bf6Fa8fijE="
+    version = "v12.0.5"
+    hash = "sha256-1LHfqt0bbpthvY7KIbuk8G8Bp6sifYTx85b3jmKN+FA="
   [mod."github.com/cdktf/cdktf-provider-tfe-go/tfe/v5"]
     version = "v5.0.1"
     hash = "sha256-FjzjUYhEFzVnoHINIFepFHBkuqJHJPmwmCik3unBaW8="

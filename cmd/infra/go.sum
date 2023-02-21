@@ -6,10 +6,14 @@ github.com/aws/constructs-go/constructs/v10 v10.1.250 h1:OGVOZkvABmst2ebNMygvbk/
 github.com/aws/constructs-go/constructs/v10 v10.1.250/go.mod h1:NQCsWiRt2o0knY6ZhoQqJXQuvVOPuWOijrVWJH+FEzE=
 github.com/aws/constructs-go/constructs/v10 v10.1.253 h1:YtRPWRzlFyCbu8KNNjWi1wKpNy942MzYYi7EU7Od61Q=
 github.com/aws/constructs-go/constructs/v10 v10.1.253/go.mod h1:DCdBSjN04Ck2pajCacTD4RKFqSA7Utya8d62XreYctI=
+github.com/aws/constructs-go/constructs/v10 v10.1.256 h1:EP3tu/qeCWGcdfVbOFRMhg3vte5t2T3NbMqK9/E+WwM=
+github.com/aws/constructs-go/constructs/v10 v10.1.256/go.mod h1:DCdBSjN04Ck2pajCacTD4RKFqSA7Utya8d62XreYctI=
 github.com/aws/jsii-runtime-go v1.75.0 h1:NhpUfyiL7/wsRuUekFsz8FFBCYLfPD/l61kKg9kL/a4=
 github.com/aws/jsii-runtime-go v1.75.0/go.mod h1:TKCyrtM0pygEPo4rDZzbMSDNCDNTSYSN6/mGyHI6O3I=
 github.com/cdktf/cdktf-provider-aws-go/aws/v12 v12.0.4 h1:tFnSfRnZ9LX2YQjbUvKS2UgXevNhpKph63P2tRccoSM=
 github.com/cdktf/cdktf-provider-aws-go/aws/v12 v12.0.4/go.mod h1:hWpiH+BtdOncgSZtdP1sxCSp67hfUMYDF/b53yyI0ME=
+github.com/cdktf/cdktf-provider-aws-go/aws/v12 v12.0.5 h1:YS69/2381t3e5z1T4gyCRepCHrDH4elMP0jw7XzjhQc=
+github.com/cdktf/cdktf-provider-aws-go/aws/v12 v12.0.5/go.mod h1:JdHHho5EGRgCzkQcDzXf35+tL5NuPlUtji6kREyTfwo=
 github.com/cdktf/cdktf-provider-tfe-go/tfe/v5 v5.0.1 h1:zFukceXP9E00lbv+OMtI+zDHM14T0a5sNncvpijTqXk=
 github.com/cdktf/cdktf-provider-tfe-go/tfe/v5 v5.0.1/go.mod h1:gED2aseaycvepf77i6ug7b9ZTqnVkMkthANuIE1cea8=
 github.com/cockroachdb/apd v1.1.0 h1:3LFP3629v+1aKXU5Q37mxmRxX/pIu1nijXydLShEq5I=
