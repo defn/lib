@@ -20,7 +20,7 @@ function main {
         nix build
         nix-store --query --requisites --include-outputs $(nix path-info --derivation) | xargs -n 500 | while read -r a; do 
                 echo $a | nix copy --verbose --to 'file:///cache/nix?compression-level=0&parallel-compression=true&secret-key=/tmp/cache-priv-key.pem'
-                nix-store --gc
+                #nix-store --gc
             done
     )
 
