@@ -1,6 +1,6 @@
 {
   inputs = {
-    pkg.url = github:defn/pkg/0.0.165;
+    pkg.url = github:defn/pkg/0.0.166;
     vault.url = github:defn/pkg/vault-1.12.3-2?dir=vault;
     kubernetes.url = github:defn/pkg/kubernetes-0.0.8?dir=kubernetes;
   };
@@ -28,7 +28,6 @@
         let
           flakeInputs = [
             inputs.vault.defaultPackage.${ctx.system}
-            inputs.k3d.defaultPackage.${ctx.system}
             inputs.kubernetes.defaultPackage.${ctx.system}
           ];
         in
