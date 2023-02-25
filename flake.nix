@@ -64,7 +64,7 @@
 
             installPhase = ''
               mkdir -p $out
-              ${caller.infra.defaultPackage.${ctx.system}}/bin/infra
+              ${caller.infra.defaultPackage.${ctx.system}}/bin/${caller.infra_cli}
               cp -a cdktf.out/. $out/.
             '';
           };
