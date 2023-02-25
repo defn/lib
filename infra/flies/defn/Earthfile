@@ -21,6 +21,6 @@ nix:
     SAVE ARTIFACT /app app
 
 build:
-    FROM ghcr.io/defn/dev:latest-nix-install
-    COPY +nix/store /nix-install/store
+    FROM ghcr.io/defn/dev:latest-nix-empty
+    COPY +nix/store /nix/store
     COPY +nix/app /app
