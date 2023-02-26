@@ -1,6 +1,6 @@
 module github.com/defn/lib/cmd/infra
 
-go 1.20
+go 1.19
 
 require (
 	cuelang.org/go v0.4.3
