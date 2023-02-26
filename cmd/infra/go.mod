@@ -1,12 +1,12 @@
 module github.com/defn/lib/cmd/infra
 
-go 1.19
+go 1.20
 
 require (
 	cuelang.org/go v0.4.3
-	github.com/aws/constructs-go/constructs/v10 v10.1.257
-	github.com/aws/jsii-runtime-go v1.75.0
-	github.com/cdktf/cdktf-provider-aws-go/aws/v12 v12.0.5
+	github.com/aws/constructs-go/constructs/v10 v10.1.261
+	github.com/aws/jsii-runtime-go v1.76.0
+	github.com/cdktf/cdktf-provider-aws-go/aws/v12 v12.0.6
 	github.com/cdktf/cdktf-provider-tfe-go/tfe/v5 v5.0.1
 	github.com/hashicorp/terraform-cdk-go/cdktf v0.15.5
 )
