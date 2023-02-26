@@ -1,8 +1,8 @@
 {
   inputs = {
-    pkg.url = github:defn/pkg/0.0.159;
-    terraform.url = github:defn/pkg/terraform-1.4.0-beta2-1?dir=terraform;
-    godev.url = github:defn/pkg/godev-0.0.1?dir=godev;
+    pkg.url = github:defn/pkg/0.0.166;
+    terraform.url = github:defn/pkg/terraform-1.4.0-rc1-2?dir=terraform;
+    godev.url = github:defn/pkg/godev-0.0.3?dir=godev;
     nodedev.url = github:defn/pkg/nodedev-0.0.1?dir=nodedev;
   };
 
@@ -63,6 +63,7 @@
             ];
 
             installPhase = ''
+              echo 1
               mkdir -p $out
               ${caller.infra.defaultPackage.${ctx.system}}/bin/${caller.infra_cli}
               cp -a cdktf.out/. $out/.
