@@ -21,6 +21,8 @@
               mkdir -p $out/bin
               ls -ltrhd ${ctx.goCmd}/bin/*
               cp ${ctx.goCmd}/bin/${ctx.config.slug} $out/bin/
+              mkdir -p $out/share/bash-completion/completions
+              $out/bin/${ctx.config.slug} completion bash > $out/share/bash-completion/completions/_${ctx.config.slug}
             '';
           };
         in
