@@ -24,7 +24,7 @@
               mkdir -p $out/share/bash-completion/completions
               $out/bin/${ctx.config.slug} completion bash > $out/share/bash-completion/completions/_${ctx.config.slug}
             '';
-          } // ctx.extend);
+          } // caller.extend);
         in
         inputs.pkg.main rec {
           src = caller.src;
@@ -70,7 +70,7 @@
               ${caller.infra.defaultPackage.${ctx.system}}/bin/${caller.infra_cli}
               cp -a cdktf.out/. $out/.
             '';
-          }) // ctx.extend;
+          }) // caller.extend;
         in
         inputs.pkg.main rec {
           src = caller.src;
