@@ -99,7 +99,7 @@ terraform: {
 	fly_data_name: string | *"data"
 	fly_ip:        bool | *false
 
-	fly_machine:      bool | *true
+	fly_machine:      bool | *false
 	fly_machine_name: string
 	fly_image:        string
 	fly_env: [string]: string
