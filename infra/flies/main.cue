@@ -8,7 +8,6 @@ fly: [N=string]: #FlyApp & {
 
 #FlyDevEnv: #FlyApp & {
 	fly_mount:     "/nix"
-	fly_memorymb:  2048
 	fly_env: DOCKER_HOST: "tcp://localhost:2375"
 	fly_services: [{
 		protocol:      "tcp"
@@ -21,7 +20,7 @@ fly: [N=string]: #FlyApp & {
 }
 
 fly: defn: #FlyDevEnv & {
-	fly_machine_name: "defn10"
+	fly_machine_name: "defn1"
 }
 
 fly: brie: {
@@ -39,10 +38,8 @@ fly: brie: {
 
 fly: wh: {
 	fly_ip:           true
-	fly_machine_name: "defn20"
+	fly_machine_name: "defn2"
 	fly_mount:     "/cache"
-	fly_cpus:      2
-	fly_memorymb:  4096
 	fly_services: [{
 		protocol:      "tcp"
 		internal_port: 8000
