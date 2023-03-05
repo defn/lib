@@ -10,7 +10,7 @@
     let
       goMain = caller:
         let
-          go = ctx: ctx.wrap.bashBuilder {
+          go = ctx: ctx.wrap.bashBuilder ({
             src = caller.src;
 
             buildInputs = [
@@ -24,7 +24,7 @@
               mkdir -p $out/share/bash-completion/completions
               $out/bin/${ctx.config.slug} completion bash > $out/share/bash-completion/completions/_${ctx.config.slug}
             '';
-          };
+          } // (caller.extend ctx));
         in
         inputs.pkg.main rec {
           src = caller.src;
@@ -56,21 +56,22 @@
 
       cdktfMain = caller:
         let
-          cdktf = ctx: ctx.wrap.bashBuilder {
-            src = caller.src;
+          cdktf = ctx: ctx.wrap.bashBuilder
+            ({
+              src = caller.src;
 
-            buildInputs = [
-              inputs.nodedev.defaultPackage.${ctx.system}
-              inputs.terraform.defaultPackage.${ctx.system}
-            ];
+              buildInputs = [
+                inputs.nodedev.defaultPackage.${ctx.system}
+                inputs.terraform.defaultPackage.${ctx.system}
+              ];
 
-            installPhase = ''
-              echo 1
-              mkdir -p $out
-              ${caller.infra.defaultPackage.${ctx.system}}/bin/${caller.infra_cli}
-              cp -a cdktf.out/. $out/.
-            '';
-          };
+              installPhase = ''
+                echo 1
+                mkdir -p $out
+                ${caller.infra.defaultPackage.${ctx.system}}/bin/${caller.infra_cli}
+                cp -a cdktf.out/. $out/.
+              '';
+            }) // (caller.extend ctx);
         in
         inputs.pkg.main rec {
           src = caller.src;
