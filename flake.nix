@@ -15,15 +15,7 @@
             extendShell = ctx: { };
           } // caller;
 
-          goShell = ctx: ctx.wrap.nullBuilder ({
-            scripts = { system }: { 
-              update = ''
-                go get -u ./...
-                go mod tidy
-                gomod2nix
-              '';
-            };
-          } // (defaultCaller.extendShell ctx));
+          goShell = ctx: ctx.wrap.nullBuilder ({ } // (defaultCaller.extendShell ctx));
 
           go = ctx: ctx.wrap.bashBuilder ({
             src = caller.src;
@@ -60,13 +52,21 @@
             go (ctx // { inherit src; inherit goCmd; });
 
           devShell = ctx: ctx.wrap.devShell {
-            devInputs = [
+            devInputs = ctx.commands ++ [
               ctx.pkgs.gomod2nix
               inputs.godev.defaultPackage.${ctx.system}
               inputs.nodedev.defaultPackage.${ctx.system}
               inputs.terraform.defaultPackage.${ctx.system}
               (goShell ctx)
             ];
+          };
+
+          scripts = { system }: {
+            update = ''
+              go get -u ./...
+              go mod tidy
+              gomod2nix
+            '';
           };
         };
 
@@ -102,7 +102,7 @@
           defaultPackage = ctx: cdktf (ctx // { inherit src; });
 
           devShell = ctx: ctx.wrap.devShell {
-            devInputs = [
+            devInputs = ctx.commands ++ [
               inputs.nodedev.defaultPackage.${ctx.system}
               inputs.terraform.defaultPackage.${ctx.system}
               caller.infra.defaultPackage.${ctx.system}
