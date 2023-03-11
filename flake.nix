@@ -64,6 +64,13 @@
 
       cdktfMain = caller:
         let
+          defaultCaller = {
+            extendBuild = ctx: { };
+            extendShell = ctx: { };
+          } // caller;
+
+          cdktfShell = ctx: ctx.wrap.nullBuilder ({ } // (defaultCaller.extendShell ctx));
+
           cdktf = ctx: ctx.wrap.bashBuilder
             ({
               src = caller.src;
@@ -79,7 +86,7 @@
                 ${caller.infra.defaultPackage.${ctx.system}}/bin/${caller.infra_cli}
                 cp -a cdktf.out/. $out/.
               '';
-            }) // (caller.extend ctx);
+            }) // (defaultCaller.extendBuild ctx);
         in
         inputs.pkg.main rec {
           src = caller.src;
@@ -91,6 +98,7 @@
               inputs.nodedev.defaultPackage.${ctx.system}
               inputs.terraform.defaultPackage.${ctx.system}
               caller.infra.defaultPackage.${ctx.system}
+              (cdktfShell ctx)
             ];
           };
         };
