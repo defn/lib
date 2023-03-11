@@ -4,9 +4,9 @@ go 1.19
 
 require (
 	cuelang.org/go v0.4.3
-	github.com/aws/constructs-go/constructs/v10 v10.1.261
-	github.com/aws/jsii-runtime-go v1.76.0
-	github.com/cdktf/cdktf-provider-aws-go/aws/v12 v12.0.6
+	github.com/aws/constructs-go/constructs/v10 v10.1.274
+	github.com/aws/jsii-runtime-go v1.77.0
+	github.com/cdktf/cdktf-provider-aws-go/aws/v12 v12.0.9
 	github.com/cdktf/cdktf-provider-tfe-go/tfe/v5 v5.0.1
 	github.com/hashicorp/terraform-cdk-go/cdktf v0.15.5
 )
@@ -23,14 +23,14 @@ require (
 	github.com/mpvl/unique v0.0.0-20150818121801-cbe035fff7de // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/protocolbuffers/txtpbfmt v0.0.0-20230130173531-76f626137dc9 // indirect
+	github.com/protocolbuffers/txtpbfmt v0.0.0-20230308175031-0e3c6a01a211 // indirect
 	github.com/yuin/goldmark v1.5.4 // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
-	golang.org/x/mod v0.8.0 // indirect
-	golang.org/x/net v0.7.0 // indirect
-	golang.org/x/sys v0.5.0 // indirect
-	golang.org/x/text v0.7.0 // indirect
-	golang.org/x/tools v0.6.0 // indirect
+	golang.org/x/mod v0.9.0 // indirect
+	golang.org/x/net v0.8.0 // indirect
+	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/text v0.8.0 // indirect
+	golang.org/x/tools v0.7.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
