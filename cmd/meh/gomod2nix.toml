@@ -11,8 +11,8 @@ schema = 3
     version = "v1.3.0"
     hash = "sha256-QoR55eBtA94T2tBszyxfDtO7/pjZZSGb5vm7U0Xhs0Y="
   [mod."github.com/klauspost/compress"]
-    version = "v1.15.15"
-    hash = "sha256-fMVJFz/P37vjZAf82nHjaItaB3gesOa+xV7uBuo3kmg="
+    version = "v1.16.0"
+    hash = "sha256-bMMwJhgK/uR3xq16XdqE2ge8x0fn6WK1NGkU3cKSWV4="
   [mod."github.com/mattn/go-colorable"]
     version = "v0.1.13"
     hash = "sha256-qb3Qbo0CELGRIzvw7NVM1g/aayaz4Tguppk9MD2/OI8="
@@ -47,5 +47,5 @@ schema = 3
     version = "v1.0.0"
     hash = "sha256-aP0CrNH6UNRMhzgA2NgPwKyZs6xry5aDlZnLgGuHZbs="
   [mod."golang.org/x/sys"]
-    version = "v0.5.0"
-    hash = "sha256-0LTr3KeJ1OMQAwYUQo1513dXJtQAJn5Dq8sFkc8ps1U="
+    version = "v0.6.0"
+    hash = "sha256-zAgxiTuL24sGhbXrna9R1UYqLQh46ldztpumOScmduY="
