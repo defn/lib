@@ -332,16 +332,16 @@
         "terraform": "terraform"
       },
       "locked": {
-        "lastModified": 1678560866,
-        "narHash": "sha256-zMcTGre5FmNlCBdV59GLD6sQQ1jGhNnOvDZsE851K+E=",
+        "lastModified": 1678562380,
+        "narHash": "sha256-91q+oytR+Z+Sufhw+bY7hTYmFc4CqkaAC/p1feBG33E=",
         "owner": "defn",
         "repo": "lib",
-        "rev": "8fd151f78d8fd69a8a6eaa7f6ad55fcfa3dbc4fb",
+        "rev": "cd45dbc0669176ce2c1d52cf69e92fecc95c74df",
         "type": "github"
       },
       "original": {
         "owner": "defn",
-        "ref": "0.0.52",
+        "ref": "0.0.56",
         "repo": "lib",
         "type": "github"
       }
