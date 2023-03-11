@@ -15,7 +15,15 @@
             extendShell = ctx: { };
           } // caller;
 
-          goShell = ctx: ctx.wrap.nullBuilder ({ } // (defaultCaller.extendShell ctx));
+          goShell = ctx: ctx.wrap.nullBuilder ({
+            scripts = { system }: { 
+              update = ''
+                go get -u ./...
+                go mod tidy
+                gomod2nix
+              '';
+            };
+          } // (defaultCaller.extendShell ctx));
 
           go = ctx: ctx.wrap.bashBuilder ({
             src = caller.src;
