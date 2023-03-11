@@ -11,8 +11,12 @@
       goMain = caller:
         let
           defaultCaller = {
-            extend = ctx: { };
+            extendBuild = ctx: { };
+            extendShell = ctx: { };
           } // caller;
+
+          goShell = ctx: ctx.wrap.nullBuilder ({ } // (defaultCaller.extendShell ctx));
+
           go = ctx: ctx.wrap.bashBuilder ({
             src = caller.src;
 
@@ -27,7 +31,7 @@
               mkdir -p $out/share/bash-completion/completions
               $out/bin/${ctx.config.slug} completion bash > $out/share/bash-completion/completions/_${ctx.config.slug}
             '';
-          } // (defaultCaller.extend ctx));
+          } // (defaultCaller.extendBuild ctx));
         in
         inputs.pkg.main rec {
           src = caller.src;
@@ -53,6 +57,7 @@
               inputs.godev.defaultPackage.${ctx.system}
               inputs.nodedev.defaultPackage.${ctx.system}
               inputs.terraform.defaultPackage.${ctx.system}
+              (goShell ctx)
             ];
           };
         };
