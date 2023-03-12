@@ -46,8 +46,6 @@ k3d:
     COPY --dir --chown=ubuntu:ubuntu +nix/ubuntu /home/
 
     RUN (echo export USER=ubuntu; echo export HOME=/home/ubuntu; echo export PATH="/bin:/usr/bin"; echo . /home/ubuntu/.nix-profile/etc/profile.d/nix.sh) > .profile
-    RUN mkdir -p .config/nix
-    COPY nix.conf .config/nix/nix.conf
 
     RUN . ./.profile && for a in bashInteractive; do nix profile install nixpkgs#$a; done
     RUN . ./.profile && for a in openssh; do nix profile install nixpkgs#$a; done
