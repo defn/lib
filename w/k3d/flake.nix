@@ -13,7 +13,6 @@
       clusters = {
         global = { };
         control = { };
-        smiley = { };
       };
     };
 
