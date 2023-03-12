@@ -1,8 +1,8 @@
 {
   inputs = {
     pkg.url = github:defn/pkg/0.0.166;
-    vault.url = github:defn/pkg/vault-1.12.3-2?dir=vault;
-    kubernetes.url = github:defn/pkg/kubernetes-0.0.8?dir=kubernetes;
+    vault.url = github:defn/pkg/vault-1.13.0-0?dir=vault;
+    kubernetes.url = github:defn/pkg/kubernetes-0.0.10?dir=kubernetes;
   };
 
   outputs = inputs: inputs.pkg.main rec {
