@@ -1,8 +1,8 @@
 VERSION --use-registry-for-with-docker --ci-arg 0.7
 
 build:
-    ARG K3S=1.24.10-k3s1
-    ARG image=quay.io/defn/dev:latest-k3d
+    ARG K3S
+    ARG image
     BUILD +build-k3d --image=${image} --K3S=${K3S}
 
 build-k3d:
@@ -43,33 +43,32 @@ k3d:
     WORKDIR /home/ubuntu
 
     COPY --dir --chown=ubuntu:ubuntu +nix/nix /nix
-    RUN mkdir -p /home/ubuntu/.config/nix
-    COPY nix.conf  /home/ubuntu/.config/nix/nix.conf
+    COPY --dir --chown=ubuntu:ubuntu +nix/ubuntu /home/
 
-    RUN ln -nfs /nix/var/nix/profiles/per-user/ubuntu/profile /home/ubuntu/.nix-profile \
-        && (echo export USER=ubuntu; echo export HOME=/home/ubuntu; echo export PATH="/bin:/usr/bin"; echo . /home/ubuntu/.nix-profile/etc/profile.d/nix.sh) > /home/ubuntu/.profile
+    RUN (echo export USER=ubuntu; echo export HOME=/home/ubuntu; echo export PATH="/bin:/usr/bin"; echo . /home/ubuntu/.nix-profile/etc/profile.d/nix.sh) > .profile
+    RUN mkdir -p .config/nix
+    COPY nix.conf .config/nix/nix.conf
 
-    RUN . /home/ubuntu/.profile \
-        && for a in bashInteractive; do nix profile install nixpkgs#$a; done
-
-    USER root
-    RUN ln -nfs $(ls -trhd /nix/store/*bash-interactive*/bin/bash | head -1) /bin/bash
-    RUN sed 's#/bin/sh#/bin/bash#' -i /etc/passwd
-
-    USER ubuntu
-
-    RUN . /home/ubuntu/.profile \
-        && for a in git gnumake; do nix profile install nixpkgs#$a; done \
+    RUN . ./.profile \
+        && for a in bashInteractive git gnumake nixpkgs-fmt; do nix profile install nixpkgs#$a; done \
         && nix profile install github:defn/pkg/tailscale-1.36.1-1?dir=tailscale
 
-    RUN . /home/ubuntu/.profile \
+    RUN . ./.profile \
+        && for a in openssh findutils; do nix profile install nixpkgs#$a; done \
+        && (ssh -o StrictHostKeyChecking=no git@github.com || true)
+
+    USER root
+    RUN install -d -m 0700 -o ubuntu -g ubuntu /cache \
+        && cp -a /home/ubuntu/.nix-profile/bin/bash /bin/bash \
+        && sed 's#/bin/sh#/bin/bash#' -i /etc/passwd
+    USER ubuntu
+
+    RUN --no-cache . ./.profile \
         && git clone https://github.com/defn/dev dev \
         && mv dev/.git . \
         && rm -rf dev \
         && git reset --hard \
         && make nix
-
-    RUN --no-cache . /home/ubuntu/.profile && git pull
 
     USER root
     WORKDIR /
@@ -77,3 +76,4 @@ k3d:
 nix:
     FROM quay.io/defn/dev:latest-nix-installed
     SAVE ARTIFACT /nix nix
+    SAVE ARTIFACT /home/ubuntu ubuntu
