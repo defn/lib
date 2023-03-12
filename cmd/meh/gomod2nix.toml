@@ -10,6 +10,9 @@ schema = 3
   [mod."github.com/google/uuid"]
     version = "v1.3.0"
     hash = "sha256-QoR55eBtA94T2tBszyxfDtO7/pjZZSGb5vm7U0Xhs0Y="
+  [mod."github.com/inconshreveable/mousetrap"]
+    version = "v1.1.0"
+    hash = "sha256-XWlYH0c8IcxAwQTnIi6WYqq44nOKUylSWxWO/vi+8pE="
   [mod."github.com/klauspost/compress"]
     version = "v1.16.0"
     hash = "sha256-bMMwJhgK/uR3xq16XdqE2ge8x0fn6WK1NGkU3cKSWV4="
@@ -34,6 +37,12 @@ schema = 3
   [mod."github.com/savsgio/gotils"]
     version = "v0.0.0-20230208104028-c358bd845dee"
     hash = "sha256-38uPEruTtVRqleBivVwx6oO1FSx4edqEujYdZNTriMo="
+  [mod."github.com/spf13/cobra"]
+    version = "v1.6.1"
+    hash = "sha256-80B5HcYdFisz6QLYkTyka7f9Dr6AfcVyPwp3QChoXwU="
+  [mod."github.com/spf13/pflag"]
+    version = "v1.0.5"
+    hash = "sha256-w9LLYzxxP74WHT4ouBspH/iQZXjuAh2WQCHsuvyEjAw="
   [mod."github.com/tinylib/msgp"]
     version = "v1.1.8"
     hash = "sha256-nwTpHiEe0pjloZosGmS+z1ZcsVm5dW4OaPhzJG2wAng="
