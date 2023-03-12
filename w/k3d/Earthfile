@@ -70,6 +70,7 @@ k3d:
     WORKDIR /
     RUN install -d -m 0700 -o ubuntu -g ubuntu /cache \
         && cp -a /home/ubuntu/.nix-profile/bin/bash /bin/bash \
+        && ln -nfs /bin/env /usr/bin/env \
         && sed 's#/bin/sh#/bin/bash#' -i /etc/passwd
 
 nix:
