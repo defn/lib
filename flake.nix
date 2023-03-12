@@ -33,8 +33,6 @@
                   inputs.godev.defaultPackage.${ctx.system}
                 ];
 
-                doInstallCheck = false;
-
                 installPhase = ''
                   mkdir -p $out/bin
                   ls -ltrhd ${ctx.goCmd}/bin/*
