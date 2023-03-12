@@ -49,19 +49,16 @@ k3d:
     RUN mkdir -p .config/nix
     COPY nix.conf .config/nix/nix.conf
 
-    RUN . ./.profile \
-        && for a in bashInteractive git gnumake nixpkgs-fmt; do nix profile install nixpkgs#$a; done \
-        && nix profile install github:defn/pkg/tailscale-1.36.1-1?dir=tailscale
+    RUN . ./.profile && for a in bashInteractive; do nix profile install nixpkgs#$a; done
+    RUN . ./.profile && for a in openssh; do nix profile install nixpkgs#$a; done
+    RUN . ./.profile && for a in findutils; do nix profile install nixpkgs#$a; done
+    RUN . ./.profile && for a in git; do nix profile install nixpkgs#$a; done
+    RUN . ./.profile && for a in gnumake; do nix profile install nixpkgs#$a; done
+    RUN . ./.profile && for a in nixpkgs-fmt; do nix profile install nixpkgs#$a; done
 
-    RUN . ./.profile \
-        && for a in openssh findutils; do nix profile install nixpkgs#$a; done \
-        && (ssh -o StrictHostKeyChecking=no git@github.com || true)
+    RUN . ./.profile && nix profile install github:defn/pkg/tailscale-1.36.1-1?dir=tailscale
 
-    USER root
-    RUN install -d -m 0700 -o ubuntu -g ubuntu /cache \
-        && cp -a /home/ubuntu/.nix-profile/bin/bash /bin/bash \
-        && sed 's#/bin/sh#/bin/bash#' -i /etc/passwd
-    USER ubuntu
+    RUN . ./.profile && ssh -o StrictHostKeyChecking=no git@github.com || true
 
     RUN --no-cache . ./.profile \
         && git clone https://github.com/defn/dev dev \
@@ -71,6 +68,9 @@ k3d:
 
     USER root
     WORKDIR /
+    RUN install -d -m 0700 -o ubuntu -g ubuntu /cache \
+        && cp -a /home/ubuntu/.nix-profile/bin/bash /bin/bash \
+        && sed 's#/bin/sh#/bin/bash#' -i /etc/passwd
 
 nix:
     FROM quay.io/defn/dev:latest-nix-installed
