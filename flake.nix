@@ -33,7 +33,6 @@
                   inputs.godev.defaultPackage.${ctx.system}
                 ];
 
-                doCheck = false;
                 doInstallCheck = false;
 
                 installPhase = ''
