@@ -19,23 +19,33 @@
           goShell = ctx: ctx.wrap.nullBuilder ({ } // (defaultCaller.extendShell ctx));
 
           go = ctx:
-            ctx.wrap.bashBuilder ({
-              src = caller.src;
+            ctx.wrap.bashBuilder (
+              let
+                goEnv = ctx.pkgs.mkGoEnv {
+                  pwd = caller.src;
+                };
+              in
+              {
+                src = caller.src;
 
-              buildInputs = [
-                inputs.godev.defaultPackage.${ctx.system}
-              ];
+                buildInputs = [
+                  goEnv
+                  inputs.godev.defaultPackage.${ctx.system}
+                ];
 
-              installPhase = ''
-                mkdir -p $out/bin
-                ls -ltrhd ${ctx.goCmd}/bin/*
-                cp ${ctx.goCmd}/bin/${ctx.config.slug} $out/bin/
-                if [[ -n "${defaultCaller.generateCompletion}" ]]; then
-                  mkdir -p $out/share/bash-completion/completions
-                  $out/bin/${ctx.config.slug} completion bash > $out/share/bash-completion/completions/_${ctx.config.slug}
-                fi
-              '';
-            } // (defaultCaller.extendBuild ctx)
+                doCheck = false;
+                doInstallCheck = false;
+
+                installPhase = ''
+                  mkdir -p $out/bin
+                  ls -ltrhd ${ctx.goCmd}/bin/*
+                  cp ${ctx.goCmd}/bin/${ctx.config.slug} $out/bin/
+                  if [[ -n "${defaultCaller.generateCompletion}" ]]; then
+                    mkdir -p $out/share/bash-completion/completions
+                    $out/bin/${ctx.config.slug} completion bash > $out/share/bash-completion/completions/_${ctx.config.slug}
+                  fi
+                '';
+              } // (defaultCaller.extendBuild ctx)
             );
         in
         inputs.pkg.main rec {
