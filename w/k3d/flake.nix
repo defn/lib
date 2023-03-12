@@ -131,12 +131,12 @@
         $nme vault-init
         $nme vault-config
 
-        if test -f ~/.dotfiles/e/k3d-$nme.yaml; then
+        if test -f ~/work/app/e/k3d-$nme.yaml; then
           kubectl config use-context k3d-global
           while ! argocd --core app list 2>/dev/null; do date; sleep 5; done
           argocd cluster add --core --yes --upsert k3d-$nme
 
-          kubectl --context k3d-global apply -f ~/.dotfiles/e/k3d-$nme.yaml
+          kubectl --context k3d-global apply -f ~/work/app/e/k3d-$nme.yaml
           while ! app wait argocd/k3d-$nme --timeout 30; do
             app sync argocd/k3d-$nme || true
             sleep 1
@@ -164,7 +164,7 @@
         docker volume create $name-manifest || true
         case "$name" in
           *-global)
-            kustomize build --enable-helm ~/.dotfiles/k/argo-cd | docker run --rm -i \
+            kustomize build --enable-helm ~/work/app/k/argo-cd | docker run --rm -i \
               -v $name-manifest:/var/lib/rancher/k3s/server/manifests \
               ubuntu bash -c 'tee /var/lib/rancher/k3s/server/manifests/defn-dev-argo-cd.yaml | wc -l'
             ;;
