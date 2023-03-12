@@ -50,7 +50,7 @@
 
         case "''${1:-}" in
           build)
-            earthly +k3d
+            earthly --push --no-output +image-k3d
             ;;
           create)
             export DEFN_DEV_HOST_API="$(host $host | grep 'has address' | awk '{print $NF}')"

@@ -67,8 +67,7 @@ k3d:
         && git clone https://github.com/defn/dev dev \
         && mv dev/.git . \
         && rm -rf dev \
-        && git reset --hard \
-        && make nix
+        && git reset --hard
 
     USER root
     WORKDIR /
