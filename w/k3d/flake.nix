@@ -50,12 +50,15 @@
 
         case "''${1:-}" in
           build)
-            earthly +build
+            earthly +image-k3d
             docker push quay.io/defn/dev:latest-k3d
             ;;
           create)
             export DEFN_DEV_HOST_API="$(host $host | grep 'has address' | awk '{print $NF}')"
             this-k3d-provision ${nme} $name
+            ;;
+          shell)
+            docker exec -ti -u ubuntu -w /home/ubuntu k3d-$name-server-0 bash
             ;;
           ssh)
             ssh $host
