@@ -1,9 +1,9 @@
 {
   inputs = {
-    pkg.url = github:defn/pkg/0.0.166;
-    tired-proxy.url = github:defn/lib/tired-proxy-0.0.1?dir=cmd/tired-proxy;
-    caddy.url = github:defn/pkg/caddy-2.6.3-2?dir=caddy;
-    webhook.url = github:defn/pkg/webhook-2.8.0-3?dir=webhook;
+    pkg.url = github:defn/pkg/0.0.170;
+    tired-proxy.url = github:defn/lib/tired-proxy-0.0.7?dir=cmd/tired-proxy;
+    caddy.url = github:defn/pkg/caddy-2.6.4-3?dir=caddy;
+    webhook.url = github:defn/pkg/webhook-2.8.0?dir=webhook;
   };
 
   outputs = inputs: inputs.pkg.main rec {
