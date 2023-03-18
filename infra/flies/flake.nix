@@ -1,9 +1,9 @@
 {
   inputs = {
-    pkg.url = github:defn/pkg/0.0.165;
-    kubernetes.url = github:defn/pkg/kubernetes-0.0.8?dir=kubernetes;
-    cloud.url = github:defn/pkg/cloud-0.0.4?dir=cloud;
-    terraform.url = github:defn/pkg/terraform-1.4.0-beta2-1?dir=terraform;
+    pkg.url = github:defn/pkg/0.0.170;
+    kubernetes.url = github:defn/pkg/kubernetes-0.0.15?dir=kubernetes;
+    cloud.url = github:defn/pkg/cloud-0.0.12?dir=cloud;
+    terraform.url = github:defn/pkg/terraform-1.4.0-2?dir=terraform;
   };
 
   outputs = inputs: inputs.pkg.main rec {
