@@ -1,8 +1,8 @@
 {
   inputs = {
     pkg.url = github:defn/pkg/0.0.170;
-    tired-proxy.url = github:defn/lib/tired-proxy-0.0.7?dir=cmd/tired-proxy;
-    moria.url = github:defn/lib/moria-0.0.9?dir=cmd/moria;
+    tired-proxy.url = github:defn/lib/tired-proxy-0.0.8?dir=cmd/tired-proxy;
+    moria.url = github:defn/lib/moria-0.0.10?dir=cmd/moria;
   };
 
   outputs = inputs: inputs.pkg.main rec {
