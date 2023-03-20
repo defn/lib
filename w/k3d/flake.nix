@@ -57,6 +57,9 @@
             export DEFN_DEV_HOST_API="$(host $host | grep 'has address' | awk '{print $NF}')"
             this-k3d-provision ${nme} $name
             ;;
+          root)
+            docker exec -ti -u root -w /home/ubuntu k3d-$name-server-0 bash
+            ;;
           shell)
             docker exec -ti -u ubuntu -w /home/ubuntu k3d-$name-server-0 bash
             ;;
