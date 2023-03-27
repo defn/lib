@@ -2,7 +2,7 @@
   inputs = {
     pkg.url = github:defn/pkg/0.0.170;
     terraform.url = github:defn/pkg/terraform-1.4.0-2?dir=terraform;
-    godev.url = github:defn/pkg/godev-0.0.17?dir=godev;
+    godev.url = github:defn/pkg/godev-0.0.18?dir=godev;
     nodedev.url = github:defn/pkg/nodedev-0.0.4?dir=nodedev;
   };
 
